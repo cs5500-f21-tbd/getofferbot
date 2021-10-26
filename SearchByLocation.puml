@@ -1,0 +1,18 @@
+@startuml
+actor User
+entity Bot
+participant SlashCommandHandler
+participant SearchCommandHandler
+participant LocationHandler
+database Database
+
+User -> Bot: /search in Seattle
+Bot -> SlashCommandHandler: onSlashCommand(event<name:"search in location">)
+SlashCommandHandler -> SlashCommandHandler: Find matching handler for event name "search in location"
+SlashCommandHandler -> LocationHandler: handleCommand()
+LocationHandler -> Database: <look up 10 jobs in Seattle> 
+Database -> LocationHandler: <format 10 jobs listings to display in Discord>
+LocationHandler -> SlashCommandHandler: <10 jobs ready to send as a message>
+SlashCommandHandler -> Bot
+Bot -> User
+@enduml
