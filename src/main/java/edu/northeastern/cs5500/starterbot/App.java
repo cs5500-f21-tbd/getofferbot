@@ -44,6 +44,32 @@ public class App {
                                                 "What the bot should say")
                                         .setRequired(true)));
 
+        // sort command
+        commands.addCommands(
+                new CommandData("sort", "Sort jobs based on a category.")
+                        .addOptions(
+                                new OptionData(
+                                                OptionType.STRING,
+                                                "category",
+                                                "What category do you want to sort?")
+                                        .setRequired(true)));
+
+        // filter command
+        commands.addCommands(
+                new CommandData("filter", "Filter jobs based on one or more categories.")
+                        .addOptions(
+                                new OptionData(
+                                                OptionType.STRING,
+                                                "category",
+                                                "What category do you want to filter?")
+                                        .setRequired(true)));
+
+        // help command
+        commands.addCommands(new CommandData("help", "Get Help"));
+
+        // search command
+        commands.addCommands(new CommandData("search", "Search for your dream job"));
+
         commands.queue();
 
         port(8080);
