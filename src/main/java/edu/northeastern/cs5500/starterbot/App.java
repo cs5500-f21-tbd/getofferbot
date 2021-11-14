@@ -3,6 +3,7 @@ package edu.northeastern.cs5500.starterbot;
 import static spark.Spark.*;
 
 import edu.northeastern.cs5500.starterbot.listeners.MessageListener;
+import edu.northeastern.cs5500.starterbot.listeners.commands.Command;
 import java.util.EnumSet;
 import javax.security.auth.login.LoginException;
 import net.dv8tion.jda.api.JDA;
@@ -28,12 +29,30 @@ public class App {
                     "The BOT_TOKEN environment variable is not defined.");
         }
 
+        MessageListener messageListener = new MessageListener();
+
         JDA jda =
                 JDABuilder.createLight(token, EnumSet.noneOf(GatewayIntent.class))
-                        .addEventListeners(new MessageListener())
+                        .addEventListeners(messageListener)
                         .build();
 
+        updateCommandList(jda, messageListener);
+
+        port(8080);
+
+        get(
+                "/",
+                (request, response) -> {
+                    return "{\"status\": \"OK\"}";
+                });
+    }
+
+    private static void updateCommandList(JDA jda, MessageListener messageListener) {
         CommandListUpdateAction commands = jda.updateCommands();
+
+        for (Command command : messageListener.getCommands().values()) {
+            commands.addCommands(command.getCommandData());
+        }
 
         commands.addCommands(
                 new CommandData("say", "Makes the bot say what you told it to say")
@@ -44,14 +63,22 @@ public class App {
                                                 "What the bot should say")
                                         .setRequired(true)));
 
+        // filter command
+        commands.addCommands(
+                new CommandData("filter", "Filter jobs based on one or more categories.")
+                        .addOptions(
+                                new OptionData(
+                                                OptionType.STRING,
+                                                "category",
+                                                "What category do you want to filter?")
+                                        .setRequired(true)));
+
+        // help command
+        commands.addCommands(new CommandData("help", "Get Help"));
+
+        // search command
+        commands.addCommands(new CommandData("search", "Search for your dream job"));
+
         commands.queue();
-
-        port(8080);
-
-        get(
-                "/",
-                (request, response) -> {
-                    return "{\"status\": \"OK\"}";
-                });
     }
 }
