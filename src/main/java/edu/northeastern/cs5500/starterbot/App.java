@@ -77,7 +77,7 @@ public class App {
         commands.addCommands(new CommandData("help", "Get Help"));
 
         // search command
-        commands.addCommands(new CommandData("search", "Search for your dream job"));
+        // commands.addCommands(new CommandData("search", "Search for your dream job"));
 
         commands.queue();
     }

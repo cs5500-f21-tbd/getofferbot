@@ -1,10 +1,12 @@
 package edu.northeastern.cs5500.starterbot.listeners;
 
 import edu.northeastern.cs5500.starterbot.listeners.commands.Command;
+import edu.northeastern.cs5500.starterbot.listeners.commands.SearchCommand;
 import edu.northeastern.cs5500.starterbot.listeners.commands.SortCommand;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Getter;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -15,6 +17,8 @@ public class MessageListener extends ListenerAdapter {
         commands = new HashMap<>();
         Command sort = new SortCommand();
         commands.put(sort.getName(), sort);
+        Command search = new SearchCommand();
+        commands.put(search.getName(), search);
     }
 
     @Override
@@ -28,7 +32,17 @@ public class MessageListener extends ListenerAdapter {
 
         switch (event.getName()) {
             case "say":
-                event.reply(event.getOption("content").getAsString()).queue();
+                String content = event.getOption("content").getAsString();
+                // TODO: CLARIFY HOW SEARCH & FILTER WORK TOGETHER
+                // IS IT TO CREATE NEW SEARCH WITH FILTER OPTIONS TOGETHER EACH TIME RUNNING FILTER?
+                // OR IS IT TO FILTER BASED ON LATEST SEARCH RESULTS PROVIDED BY THE BOT?
+                
+                // if (event.getChannel().hasLatestMessage()) {
+                //     String messageId = event.getChannel().getLatestMessageId();
+                //     Message lastMessage = event.getChannel().retrieveMessageById(messageId).complete();
+                //     content = messageId + "\n\n" + lastMessage.getContentDisplay() + "\n\n" + content;
+                // }
+                event.reply(content).queue();
                 break;
 
                 // filter command handler
