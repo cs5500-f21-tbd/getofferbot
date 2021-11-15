@@ -60,7 +60,7 @@ dependencies {
 
     // MongoDB client
     implementation 'org.mongodb:mongodb-driver:3.12.10'
-    
+
     // Jsoup
     implementation 'org.jsoup:jsoup:1.14.3'
 }
