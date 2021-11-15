@@ -6,6 +6,8 @@ package edu.northeastern.cs5500.starterbot.model;
 // import lombok.Getter;
 // import org.bson.types.ObjectId;
 
+// TODO(pxie2016): Delete this file before merging.
+
 /**
  * Zimeng (Parker) Xie, CS 5500, Fall 2021 A test utility class for future unit tests of Job and
  * Location classes. The content of this class will change pending progress of web scraping (for
