@@ -5,8 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Zimeng (Parker) Xie, CS 5500, Fall 2021
- * A location class, using Lombok to minimize boilerplate code
+ * Zimeng (Parker) Xie, CS 5500, Fall 2021 A location class, using Lombok to minimize boilerplate
+ * code
  */
 @Data // provides getters, setters, equals & hashcode
 @NoArgsConstructor // provides a default/no-arguments constructor, and
