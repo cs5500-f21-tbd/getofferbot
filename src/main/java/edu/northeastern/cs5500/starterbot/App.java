@@ -2,8 +2,14 @@ package edu.northeastern.cs5500.starterbot;
 
 import static spark.Spark.*;
 
+import edu.northeastern.cs5500.starterbot.controller.ExperienceController;
+import edu.northeastern.cs5500.starterbot.controller.JobController;
 import edu.northeastern.cs5500.starterbot.listeners.MessageListener;
 import edu.northeastern.cs5500.starterbot.listeners.commands.Command;
+import edu.northeastern.cs5500.starterbot.model.Experience;
+import edu.northeastern.cs5500.starterbot.model.Job;
+import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
+import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
 import java.util.EnumSet;
 import javax.security.auth.login.LoginException;
 import net.dv8tion.jda.api.JDA;
@@ -30,6 +36,11 @@ public class App {
         }
 
         MessageListener messageListener = new MessageListener();
+        GenericRepository<Job> jobRepository = new InMemoryRepository<>();
+        GenericRepository<Experience> experienceRepository = new InMemoryRepository<>();
+
+        ExperienceController experienceController = new ExperienceController(experienceRepository);
+        JobController jobController = new JobController(jobRepository, experienceController);
 
         JDA jda =
                 JDABuilder.createLight(token, EnumSet.noneOf(GatewayIntent.class))

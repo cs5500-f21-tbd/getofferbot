@@ -1,29 +1,27 @@
 package edu.northeastern.cs5500.starterbot.model;
 
 import java.time.LocalDate;
-import lombok.AllArgsConstructor;
+import javax.annotation.Nonnull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 
-/**
- * Zimeng (Parker) Xie, CS 5500, Fall 2021 A job posting class, using Lombok to minimize boilerplate
- * code
- */
-@Data // provides getters, setters, equals & hashcode
-@NoArgsConstructor // provides a default/no-arguments constructor, and
-@AllArgsConstructor // provides a fully-specified/all-arguments constructor
-public class Job {
-    private Integer jobId;
-    private String jobTitle;
-    private String jobType;
-    private Experience
-            experience; // An experience class has been used in lieu of its enum counterpart.
-    private String company;
-    private LocalDate created;
-    private float annualPay;
-    private float starRating;
-    private boolean sponsorship;
-    private String
-            linkToApply; // This might eventually be implemented using the URI class from java
-    private Location location;
+@Data
+@NoArgsConstructor
+@RequiredArgsConstructor
+public class Job implements Model {
+    private ObjectId id;
+    // TODO(pxie2016): remove nonnull if they can/may be null
+    @Nonnull private Integer jobId;
+    @Nonnull private String jobTitle;
+    @Nonnull private String jobType;
+    @Nonnull private ObjectId experience;
+    @Nonnull private String company;
+    @Nonnull private LocalDate created;
+    @Nonnull private Float annualPay;
+    @Nonnull private Float starRating;
+    @Nonnull private Boolean sponsorship;
+    @Nonnull private String linkToApply; // TODO: consider URI class
+    @Nonnull private Location location;
 }
