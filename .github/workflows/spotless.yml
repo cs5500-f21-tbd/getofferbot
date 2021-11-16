@@ -3,7 +3,7 @@ name: Code Formatting
 on: [pull_request]
 
 jobs:
-  build:
+  check_format:
     runs-on: ubuntu-latest
     env:
       BOT_TOKEN: "test"
