@@ -5,9 +5,7 @@ import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-/**
- * This class is all but identical to ExperienceController.java
- */
+/** This class is all but identical to ExperienceController.java */
 public class JobTypeController {
     GenericRepository<JobType> jobTypeRepository;
 
@@ -36,4 +34,3 @@ public class JobTypeController {
         return null;
     }
 }
-

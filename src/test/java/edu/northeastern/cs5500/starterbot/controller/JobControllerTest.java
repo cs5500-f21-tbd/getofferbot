@@ -7,9 +7,8 @@ import edu.northeastern.cs5500.starterbot.model.Job;
 import edu.northeastern.cs5500.starterbot.model.JobType;
 import edu.northeastern.cs5500.starterbot.model.Location;
 import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
+import org.junit.jupiter.api.Test;
 
 class JobControllerTest {
     @Test
@@ -21,8 +20,9 @@ class JobControllerTest {
         JobTypeController jobTypeController = new JobTypeController(jobTypeRepository);
         ExperienceController experienceController = new ExperienceController(experienceRepository);
         LocationController locationController = new LocationController(locationRepository);
-        JobController jobController = new JobController(jobRepository, jobTypeController,
-                experienceController, locationController);
+        JobController jobController =
+                new JobController(
+                        jobRepository, jobTypeController, experienceController, locationController);
 
         assertThat(jobRepository.getAll()).isNotEmpty();
         assertThat(jobRepository.getAll().size()).isEqualTo(3);
@@ -37,12 +37,13 @@ class JobControllerTest {
         JobTypeController jobTypeController = new JobTypeController(jobTypeRepository);
         ExperienceController experienceController = new ExperienceController(experienceRepository);
         LocationController locationController = new LocationController(locationRepository);
-        JobController jobController = new JobController(jobRepository, jobTypeController,
-                experienceController, locationController);
+        JobController jobController =
+                new JobController(
+                        jobRepository, jobTypeController, experienceController, locationController);
 
         ArrayList<Job> jobList = new ArrayList<>(jobController.getAll());
         boolean salarySpecified = true;
-        for (Job job: jobList) {
+        for (Job job : jobList) {
             if (job.getAnnualPay() == null) {
                 salarySpecified = false;
                 break;

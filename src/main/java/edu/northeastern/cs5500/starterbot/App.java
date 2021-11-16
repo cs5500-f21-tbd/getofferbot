@@ -3,9 +3,9 @@ package edu.northeastern.cs5500.starterbot;
 import static spark.Spark.*;
 
 import edu.northeastern.cs5500.starterbot.controller.ExperienceController;
-import edu.northeastern.cs5500.starterbot.controller.LocationController;
 import edu.northeastern.cs5500.starterbot.controller.JobController;
 import edu.northeastern.cs5500.starterbot.controller.JobTypeController;
+import edu.northeastern.cs5500.starterbot.controller.LocationController;
 import edu.northeastern.cs5500.starterbot.listeners.MessageListener;
 import edu.northeastern.cs5500.starterbot.listeners.commands.Command;
 import edu.northeastern.cs5500.starterbot.model.Experience;
@@ -48,8 +48,9 @@ public class App {
         JobTypeController jobTypeController = new JobTypeController(jobTypeRepository);
         ExperienceController experienceController = new ExperienceController(experienceRepository);
         LocationController locationController = new LocationController(locationRepository);
-        JobController jobController = new JobController(jobRepository, jobTypeController,
-                experienceController, locationController);
+        JobController jobController =
+                new JobController(
+                        jobRepository, jobTypeController, experienceController, locationController);
 
         JDA jda =
                 JDABuilder.createLight(token, EnumSet.noneOf(GatewayIntent.class))
