@@ -6,7 +6,6 @@ import edu.northeastern.cs5500.starterbot.listeners.commands.SortCommand;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Getter;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
