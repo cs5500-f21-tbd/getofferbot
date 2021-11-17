@@ -32,17 +32,6 @@ public class MessageListener extends ListenerAdapter {
         switch (event.getName()) {
             case "say":
                 String content = event.getOption("content").getAsString();
-                // TODO: CLARIFY HOW SEARCH & FILTER WORK TOGETHER
-                // IS IT TO CREATE NEW SEARCH WITH FILTER OPTIONS TOGETHER EACH TIME RUNNING FILTER?
-                // OR IS IT TO FILTER BASED ON LATEST SEARCH RESULTS PROVIDED BY THE BOT?
-
-                // if (event.getChannel().hasLatestMessage()) {
-                //     String messageId = event.getChannel().getLatestMessageId();
-                //     Message lastMessage =
-                // event.getChannel().retrieveMessageById(messageId).complete();
-                //     content = messageId + "\n\n" + lastMessage.getContentDisplay() + "\n\n" +
-                // content;
-                // }
                 event.reply(content).queue();
                 break;
 

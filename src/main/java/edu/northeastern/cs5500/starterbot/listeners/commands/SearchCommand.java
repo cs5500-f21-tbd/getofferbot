@@ -51,7 +51,7 @@ public class SearchCommand implements Command {
         }
 
         OptionData wfhOptions =
-                new OptionData(OptionType.STRING, "wfh", "What wfh do you want to search?");
+                new OptionData(OptionType.STRING, "wfh", "What wfh options do you want to search?");
         for (String choice : Arrays.asList("Yes", "No")) {
             wfhOptions.addChoice(choice, choice);
         }
@@ -60,7 +60,7 @@ public class SearchCommand implements Command {
                 new OptionData(
                         OptionType.STRING,
                         "sponsorship",
-                        "What sponsorship do you want to search?");
+                        "What sponsorship options do you want to search?");
         for (String choice : Arrays.asList("Yes", "No")) {
             sponsorshipOptions.addChoice(choice, choice);
         }
