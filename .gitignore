@@ -126,3 +126,9 @@ gradle-app.setting
 
 # used by direnv
 .envrc
+
+# let's stop overwriting this
+.classpath
+
+# add .idea
+.idea
