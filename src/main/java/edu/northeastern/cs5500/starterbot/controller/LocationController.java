@@ -6,14 +6,15 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * This is the controller class for Location, which converts location-related inputs into
- * concrete Location objects. Also creates default cases upon initialization with an empty repo.
+ * This is the controller class for Location, which converts location-related inputs into concrete
+ * Location objects. Also creates default cases upon initialization with an empty repo.
  */
 public class LocationController {
     GenericRepository<Location> locationRepository;
 
     /**
      * Constructor. Initializes the controller and create default cases if Location repo is empty.
+     *
      * @param locationRepository repo for Location objects
      */
     public LocationController(GenericRepository<Location> locationRepository) {
@@ -22,9 +23,7 @@ public class LocationController {
         createDefaults();
     }
 
-    /**
-     * Create default cases for location.
-     */
+    /** Create default cases for location. */
     private void createDefaults() {
         if (locationRepository.count() > 0) {
             // Only create default locations if none exist
@@ -44,6 +43,7 @@ public class LocationController {
 
     /**
      * Look up the Location object that matches the given zip code; returns null if no match
+     *
      * @param zipCode - a non-null string, such as "98101"
      * @return desired Location object
      */

@@ -6,8 +6,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * This is the controller class for JobType, which converts job type input (a String) into
- * concrete JobType objects. Also creates default cases upon initialization with an empty repo.
+ * This is the controller class for JobType, which converts job type input (a String) into concrete
+ * JobType objects. Also creates default cases upon initialization with an empty repo.
  */
 public class JobTypeController {
     GenericRepository<JobType> jobTypeRepository;

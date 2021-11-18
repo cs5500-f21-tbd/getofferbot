@@ -9,7 +9,6 @@ import edu.northeastern.cs5500.starterbot.model.JobType;
 import edu.northeastern.cs5500.starterbot.model.Location;
 import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
 import java.util.ArrayList;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +32,9 @@ class JobControllerTest {
         jobTypeController = new JobTypeController(jobTypeRepository);
         experienceController = new ExperienceController(experienceRepository);
         locationController = new LocationController(locationRepository);
-        jobController = new JobController(jobRepository, jobTypeController, experienceController, locationController);
+        jobController =
+                new JobController(
+                        jobRepository, jobTypeController, experienceController, locationController);
     }
 
     @Test

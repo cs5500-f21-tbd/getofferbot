@@ -6,9 +6,9 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 /**
- *  This is the controller class for Job, which, in conjunction with ExperienceController,
- *  JobTypeController, and LocationController, converts job-related inputs into
- *  concrete Job objects. Also creates default cases upon initialization with an empty repo.
+ * This is the controller class for Job, which, in conjunction with ExperienceController,
+ * JobTypeController, and LocationController, converts job-related inputs into concrete Job objects.
+ * Also creates default cases upon initialization with an empty repo.
  */
 public class JobController {
     GenericRepository<Job> jobRepository;
@@ -79,6 +79,7 @@ public class JobController {
 
     /**
      * Collect all instances of Jobs in the repo into a Collection
+     *
      * @return a Collection of Jobs
      */
     public Collection<Job> getAll() {

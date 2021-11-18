@@ -4,10 +4,7 @@ import javax.annotation.Nonnull;
 import lombok.Data;
 import org.bson.types.ObjectId;
 
-/**
- * A location class that represents a single zip code, using Lombok
- * to minimize boilerplate code
- */
+/** A location class that represents a single zip code, using Lombok to minimize boilerplate code */
 @Data
 public class Location implements Model {
     private ObjectId id;
