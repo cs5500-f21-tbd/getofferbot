@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import edu.northeastern.cs5500.starterbot.Job;
-import edu.northeastern.cs5500.starterbot.Location;
+import edu.northeastern.cs5500.starterbot.model.Job;
+import edu.northeastern.cs5500.starterbot.model.Location;
 
 public class IndeedScraper implements Scraper{
     /**
