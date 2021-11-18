@@ -1,5 +1,5 @@
 // Placeholder for task 71
-package edu.northeastern.cs5500.starterbot.model;
+package edu.northeastern.cs5500.model;
 
 import lombok.Data;
 import java.sql.Timestamp;
