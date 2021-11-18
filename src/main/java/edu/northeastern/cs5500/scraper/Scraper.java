@@ -1,4 +1,4 @@
-package edu.northeastern.cs5500.scraper
+package edu.northeastern.cs5500.scraper;
 
 import java.io.IOException;
 import java.util.ArrayList;
