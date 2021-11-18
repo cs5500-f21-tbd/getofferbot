@@ -7,10 +7,15 @@ package edu.northeastern.cs5500.starterbot.scraper;
 //   https://www.geeksforgeeks.org/scraping-indeed-job-data-using-python/
 //   https://www.youtube.com/watch?v=PPcgtx0sI2E
 
+import edu.northeastern.cs5500.starterbot.model.Experience;
 import edu.northeastern.cs5500.starterbot.model.Job;
+import edu.northeastern.cs5500.starterbot.model.JobType;
 import edu.northeastern.cs5500.starterbot.model.Location;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+
+import jdk.vm.ci.meta.Local;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -54,22 +59,21 @@ public class IndeedScraper implements Scraper {
     private Location _scrapeLocation(Element div) throws RuntimeException {
         // set location
         String loc_tmp;
-        Location location = new Location();
+        String zip, city, state, country;
         try {
             loc_tmp = div.select("div.companyLocation").text();
-            location.setCity(loc_tmp.split(",")[0]);
-            location.setState(loc_tmp.split(",")[1].substring(1, 3));
+            city = loc_tmp.split(",")[0];
+            state = loc_tmp.split(",")[1].substring(1, 3);
         } catch (Exception e) {
             throw new RuntimeException("Error: parsing location");
         }
-        location.setCountry("USA"); // No plans of supporting job search outside of US
+        country = "USA"; // No plans of supporting job search outside of US
         try {
-            String zip = loc_tmp.split(",")[1].substring(4, 9);
-            location.setZipCode(zip);
+            zip = loc_tmp.split(",")[1].substring(4, 9);
         } catch (Exception e) {
-            location.setZipCode(""); // some job location do not include zipcode, quietly move on
+            zip = ""; // some job location do not include zipcode, quietly move on
         }
-        return location;
+        return new Location(zip, city, state, country);
     }
 
     /**
@@ -167,17 +171,13 @@ public class IndeedScraper implements Scraper {
         */
 
         // load info into a new Job object and add it to returning array
-        Job job = new Job();
-        job.setCompany(company);
-        job.setJobTitle(job_title);
-        job.setLocation(location);
-        job.setLinkToApply(link_to_apply);
-        if (rating != 0.0f) {
-            job.setStarRating(rating);
-        }
-        if (payment != 0.0f) {
-            job.setAnnualPay(payment);
-        }
+        // TODO(poppymeow): Scrape job type, experience level, and created date and replace the
+        //                  hardcoded values below
+        Job job = new Job(job_title, new JobType("fulltime", "Full-time").getId(),
+                new Experience("entry", "Entry-level").getId(),
+                company, LocalDate.of(2021, 1, 1),
+                rating, link_to_apply, location.getId());
+
         return job;
     }
 
@@ -225,7 +225,7 @@ public class IndeedScraper implements Scraper {
      * @throws IOException
      * @throws RuntimeException
      */
-    public ArrayList<Job> ScrapeLocation(String location) throws IOException, RuntimeException {
+    public ArrayList<Job> scrapeLocation(String location) throws IOException, RuntimeException {
         StringBuilder search_link =
                 new StringBuilder("https://www.indeed.com/jobs?q=software+development+engineer&l=");
 
@@ -253,7 +253,7 @@ public class IndeedScraper implements Scraper {
      * @throws IOException
      * @throws RuntimeException
      */
-    public ArrayList<Job> Scrape(String filter) throws IOException, RuntimeException {
+    public ArrayList<Job> scrape(String filter) throws IOException, RuntimeException {
         StringBuilder search_link = new StringBuilder("https://www.indeed.com/jobs?q=");
         if (filter == null || filter.equalsIgnoreCase("")) {
             // que_not_location String empty
@@ -282,7 +282,7 @@ public class IndeedScraper implements Scraper {
      * @throws IOException
      * @throws RuntimeException
      */
-    public ArrayList<Job> Scrape(String filter, String location)
+    public ArrayList<Job> scrape(String filter, String location)
             throws IOException, RuntimeException {
         StringBuilder search_link = new StringBuilder("https://www.indeed.com/jobs?q=");
         if (filter == null || filter.equalsIgnoreCase("")) {

@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public interface Scraper {
-    public ArrayList<Job> ScrapeLocation(String location) throws IOException, RuntimeException;
+    public ArrayList<Job> scrapeLocation(String location) throws IOException, RuntimeException;
 
-    public ArrayList<Job> Scrape(String filter) throws IOException, RuntimeException;
+    public ArrayList<Job> scrape(String filter) throws IOException, RuntimeException;
 
-    public ArrayList<Job> Scrape(String filter, String location)
+    public ArrayList<Job> scrape(String filter, String location)
             throws IOException, RuntimeException;
 }
