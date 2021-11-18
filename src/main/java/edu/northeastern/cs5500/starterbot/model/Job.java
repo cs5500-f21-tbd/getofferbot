@@ -15,7 +15,7 @@ public class Job implements Model {
     @Nonnull private LocalDate created;
     private Float annualPay;
     @Nonnull private Float starRating;
-    private Boolean sponsorship;
+    @Nonnull private Boolean sponsorship = false;
     @Nonnull private String linkToApply; // Will be refactored into URI class next sprint
     @Nonnull private ObjectId location;
 }

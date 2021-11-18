@@ -5,13 +5,13 @@ import lombok.Data;
 import org.bson.types.ObjectId;
 
 /**
- * A location class that depicts a combination of zip code, city, state, and country, using Lombok
+ * A location class that represents a single zip code, using Lombok
  * to minimize boilerplate code
  */
-@Data // provides getters, setters, equals & hashcode
+@Data
 public class Location implements Model {
     private ObjectId id;
-    @Nonnull private Integer zipCode;
+    @Nonnull private String zipCode;
     @Nonnull private String city;
     @Nonnull private String state;
     @Nonnull private String country;

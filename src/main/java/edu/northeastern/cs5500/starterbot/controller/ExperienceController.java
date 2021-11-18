@@ -6,8 +6,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * This is the controller class of Experience, which converts experience input (a String) into
- * concrete Experience objects. Also create default cases upon initialization with an empty repo.
+ * This is the controller class for Experience, which converts experience input (a String) into
+ * concrete Experience objects. Also creates default cases upon initialization with an empty repo.
  */
 public class ExperienceController {
     GenericRepository<Experience> experienceRepository;
@@ -36,7 +36,7 @@ public class ExperienceController {
     }
 
     /**
-     * Produces Experience objects when supplied with String labels
+     * Look up the Experience object that matches the given label; returns null if no match
      *
      * @param label - a non-null string, such as "intern"
      * @return desired Experience object

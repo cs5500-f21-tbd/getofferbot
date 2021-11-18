@@ -4,23 +4,28 @@ import static com.google.common.truth.Truth.assertThat;
 
 import edu.northeastern.cs5500.starterbot.model.Location;
 import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class LocationControllerTest {
-    @Test
-    void testDefaultLocation() {
-        InMemoryRepository<Location> locationRepository = new InMemoryRepository<>();
-        LocationController locationController = new LocationController(locationRepository);
 
+    InMemoryRepository<Location> locationRepository;
+    LocationController locationController;
+
+    @BeforeEach
+    void setUpRepoAndController() {
+        locationRepository = new InMemoryRepository<>();
+        locationController = new LocationController(locationRepository);
+    }
+
+    @Test
+    void testDefaultLocationsAreCreated() {
         assertThat(locationRepository.getAll()).isNotEmpty();
         assertThat(locationRepository.getAll().size()).isEqualTo(3);
     }
 
     @Test
     void testDefaultLocationHas10001() {
-        InMemoryRepository<Location> locationRepository = new InMemoryRepository<>();
-        LocationController locationController = new LocationController(locationRepository);
-
-        assertThat(locationController.getLocationByZipCode(10001)).isNotNull();
+        assertThat(locationController.getLocationByZipCode("10001")).isNotNull();
     }
 }
