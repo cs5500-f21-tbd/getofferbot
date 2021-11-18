@@ -1,6 +1,7 @@
 package edu.northeastern.cs5500.starterbot.listeners;
 
 import edu.northeastern.cs5500.starterbot.listeners.commands.Command;
+import edu.northeastern.cs5500.starterbot.listeners.commands.SearchCommand;
 import edu.northeastern.cs5500.starterbot.listeners.commands.SortCommand;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +16,8 @@ public class MessageListener extends ListenerAdapter {
         commands = new HashMap<>();
         Command sort = new SortCommand();
         commands.put(sort.getName(), sort);
+        Command search = new SearchCommand();
+        commands.put(search.getName(), search);
     }
 
     @Override
@@ -28,7 +31,8 @@ public class MessageListener extends ListenerAdapter {
 
         switch (event.getName()) {
             case "say":
-                event.reply(event.getOption("content").getAsString()).queue();
+                String content = event.getOption("content").getAsString();
+                event.reply(content).queue();
                 break;
 
                 // filter command handler
