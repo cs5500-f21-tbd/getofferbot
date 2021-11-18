@@ -130,5 +130,5 @@ gradle-app.setting
 # let's stop overwriting this
 .classpath
 
-# IntelliJ stuff
-.idea/
+# add .idea
+.idea
