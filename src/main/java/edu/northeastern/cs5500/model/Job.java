@@ -4,7 +4,6 @@ package edu.northeastern.cs5500.model;
 import lombok.Data;
 import java.sql.Timestamp;
 
-
 enum Experience {
     intern,
     entry,
