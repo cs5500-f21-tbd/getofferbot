@@ -14,8 +14,6 @@ import edu.northeastern.cs5500.starterbot.model.Location;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
-import jdk.vm.ci.meta.Local;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -173,10 +171,16 @@ public class IndeedScraper implements Scraper {
         // load info into a new Job object and add it to returning array
         // TODO(poppymeow): Scrape job type, experience level, and created date and replace the
         //                  hardcoded values below
-        Job job = new Job(job_title, new JobType("fulltime", "Full-time").getId(),
-                new Experience("entry", "Entry-level").getId(),
-                company, LocalDate.of(2021, 1, 1),
-                rating, link_to_apply, location.getId());
+        Job job =
+                new Job(
+                        job_title,
+                        new JobType("fulltime", "Full-time").getId(),
+                        new Experience("entry", "Entry-level").getId(),
+                        company,
+                        LocalDate.of(2021, 1, 1),
+                        rating,
+                        link_to_apply,
+                        location.getId());
 
         return job;
     }
