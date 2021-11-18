@@ -5,7 +5,7 @@
 //   https://www.geeksforgeeks.org/scraping-indeed-job-data-using-python/
 //   https://www.youtube.com/watch?v=PPcgtx0sI2E
 
-package edu.northeastern.cs5500.scraper
+package edu.northeastern.cs5500.scraper;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
