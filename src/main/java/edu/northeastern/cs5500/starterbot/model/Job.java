@@ -9,13 +9,13 @@ import org.bson.types.ObjectId;
 public class Job implements Model {
     private ObjectId id;
     @Nonnull private String jobTitle;
-    @Nonnull private ObjectId jobType;
-    @Nonnull private ObjectId experience;
+    private ObjectId jobType;
+    private ObjectId experience;
     @Nonnull private String company;
-    @Nonnull private LocalDate created;
+    private LocalDate created;
     private Float annualPay;
-    @Nonnull private Float starRating;
+    private Float starRating;
     @Nonnull private Boolean sponsorship = false;
     @Nonnull private String linkToApply; // Will be refactored into URI class next sprint
-    @Nonnull private ObjectId location;
+    private ObjectId location;
 }
