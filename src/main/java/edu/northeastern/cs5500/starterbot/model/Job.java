@@ -17,5 +17,5 @@ public class Job implements Model {
     private Float starRating;
     @Nonnull private Boolean sponsorship = false;
     @Nonnull private String linkToApply; // Will be refactored into URI class next sprint
-    @Nonnull private ObjectId location;
+    private ObjectId location;
 }
