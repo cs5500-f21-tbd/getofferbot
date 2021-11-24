@@ -36,32 +36,19 @@ public class JobController {
             return;
         }
 
-        Job job1 =
-                new Job(
-                        "University Grad Software Engineer (USA)",
-                        "Pinterest",
-                        "pinterest.com");
+        Job job1 = new Job("University Grad Software Engineer (USA)", "Pinterest", "pinterest.com");
         job1.setStarRating(4.2f);
         job1.setExperience(experienceController.getExperienceByLabel("entry").getId());
         job1.setAnnualPay(140000f);
         job1.setSponsorship(true);
         job1.setLocation(locationController.getLocationByZipCode("98101").getId());
 
-        Job job2 =
-                new Job(
-                        "Software Engineer",
-                        "Splunk",
-                        "splunk.com");
+        Job job2 = new Job("Software Engineer", "Splunk", "splunk.com");
         job2.setCreated(LocalDate.of(2021, 11, 12));
         job2.setAnnualPay(80000f);
         job2.setLocation(locationController.getLocationByZipCode("10001").getId());
 
-        Job job3 =
-                new Job(
-                        "Staff Software Engineer",
-                        "Visa",
-                        "visa.com"
-                        );
+        Job job3 = new Job("Staff Software Engineer", "Visa", "visa.com");
         job3.setExperience(experienceController.getExperienceByLabel("senior").getId());
         job3.setLocation(locationController.getLocationByZipCode("94404").getId());
 
