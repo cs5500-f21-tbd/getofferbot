@@ -52,4 +52,14 @@ public class InMemoryRepository<T extends Model> implements GenericRepository<T>
     public long count() {
         return collection.size();
     }
+
+    @Override
+    public void addMany(Collection<T> items) {
+        for (T t : items) {
+            if (t.getId() == null) {
+                t.setId(new ObjectId());
+                collection.put(t.getId(), t);
+            }
+        }
+    }
 }

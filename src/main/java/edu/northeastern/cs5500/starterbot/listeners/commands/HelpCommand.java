@@ -1,11 +1,16 @@
 package edu.northeastern.cs5500.starterbot.listeners.commands;
 
+import edu.northeastern.cs5500.starterbot.model.Job;
+import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 public class HelpCommand implements Command {
+
+    private GenericRepository<Job> jobRepository;
+
     @Override
     public String getName() {
         return "help";
@@ -53,5 +58,10 @@ public class HelpCommand implements Command {
                                         "command list",
                                         "Command list to describe syntax and purpose")
                                 .setRequired(true));
+    }
+
+    @Override
+    public void setJobRepository(GenericRepository<Job> jobRepository) {
+        this.jobRepository = jobRepository;
     }
 }

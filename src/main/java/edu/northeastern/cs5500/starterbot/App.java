@@ -13,6 +13,7 @@ import edu.northeastern.cs5500.starterbot.model.Job;
 import edu.northeastern.cs5500.starterbot.model.JobType;
 import edu.northeastern.cs5500.starterbot.model.Location;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
+import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
 import edu.northeastern.cs5500.starterbot.repository.MongoDBRepository;
 import edu.northeastern.cs5500.starterbot.service.MongoDBService;
 import java.util.EnumSet;
@@ -39,44 +40,28 @@ public class App {
             throw new IllegalArgumentException(
                     "The BOT_TOKEN environment variable is not defined.");
         }
-
         MessageListener messageListener = new MessageListener();
-        // GenericRepository<Job> jobRepository = new InMemoryRepository<>();
-        // GenericRepository<Location> locationRepository = new InMemoryRepository<>();
-        // GenericRepository<Experience> experienceRepository = new InMemoryRepository<>();
-        // GenericRepository<JobType> jobTypeRepository = new InMemoryRepository<>();
+        GenericRepository<Job> jobRepository = new InMemoryRepository<>();
+        GenericRepository<Location> locationRepository = new InMemoryRepository<>();
+        GenericRepository<Experience> experienceRepository = new InMemoryRepository<>();
+        GenericRepository<JobType> jobTypeRepository = new InMemoryRepository<>();
+
+        JobTypeController jobTypeController = new JobTypeController(jobTypeRepository);
+        ExperienceController experienceController = new ExperienceController(experienceRepository);
+        LocationController locationController = new LocationController(locationRepository);
+        JobController jobController =
+                new JobController(
+                        jobRepository, jobTypeController, experienceController, locationController);
 
         MongoDBService mongoDBService = new MongoDBService();
-        GenericRepository<Job> jobRepository =
+        GenericRepository<Job> mongoJobRepository =
                 new MongoDBRepository<Job>(Job.class, mongoDBService);
-        GenericRepository<Location> locationRepository =
-                new MongoDBRepository<Location>(Location.class, mongoDBService);
-        GenericRepository<Experience> experienceRepository =
-                new MongoDBRepository<Experience>(Experience.class, mongoDBService);
-        GenericRepository<JobType> jobTypeRepository =
-                new MongoDBRepository<JobType>(JobType.class, mongoDBService);
 
-        if (jobRepository.count() == 0) {
-            JobTypeController jobTypeController = new JobTypeController(jobTypeRepository);
-            ExperienceController experienceController =
-                    new ExperienceController(experienceRepository);
-            LocationController locationController = new LocationController(locationRepository);
-            JobController jobController =
-                    new JobController(
-                            jobRepository,
-                            jobTypeController,
-                            experienceController,
-                            locationController);
+        if (mongoJobRepository.count() == 0) {
+            mongoJobRepository.addMany(jobController.getAll());
         }
 
-        // JobTypeController jobTypeController = new JobTypeController(jobTypeRepository);
-        // ExperienceController experienceController = new
-        // ExperienceController(experienceRepository);
-        // LocationController locationController = new LocationController(locationRepository);
-        // JobController jobController =
-        //         new JobController(
-        //                 jobRepository, jobTypeController, experienceController,
-        // locationController);
+        messageListener.getCommands().get("testmongo").setJobRepository(mongoJobRepository);
 
         JDA jda =
                 JDABuilder.createLight(token, EnumSet.noneOf(GatewayIntent.class))
