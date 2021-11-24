@@ -3,10 +3,14 @@ package edu.northeastern.cs5500.starterbot.listeners.commands;
 import edu.northeastern.cs5500.starterbot.model.Job;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import java.util.Arrays;
+
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
+import net.dv8tion.jda.api.utils.data.DataObject;
 
 public class SearchCommand implements Command {
 
@@ -20,6 +24,7 @@ public class SearchCommand implements Command {
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         // TODO: replace this with actual DB query
+        // TODO: use embeds to show messages
         String content =
                 "JobId     Company     Level   Location\n"
                         + "0         Amazon      Intern  Seattle\n"

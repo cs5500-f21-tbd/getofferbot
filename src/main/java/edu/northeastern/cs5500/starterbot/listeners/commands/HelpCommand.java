@@ -51,13 +51,7 @@ public class HelpCommand implements Command {
     @Override
     //
     public CommandData getCommandData() {
-        return new CommandData("help", "Help menu of the bot")
-                .addOptions(
-                        new OptionData(
-                                        OptionType.STRING,
-                                        "command list",
-                                        "Command list to describe syntax and purpose")
-                                .setRequired(true));
+        return new CommandData("help", "Help menu of the bot");
     }
 
     @Override

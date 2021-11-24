@@ -86,31 +86,6 @@ public class App {
             commands.addCommands(command.getCommandData());
         }
 
-        commands.addCommands(
-                new CommandData("say", "Makes the bot say what you told it to say")
-                        .addOptions(
-                                new OptionData(
-                                                OptionType.STRING,
-                                                "content",
-                                                "What the bot should say")
-                                        .setRequired(true)));
-
-        // filter command
-        commands.addCommands(
-                new CommandData("filter", "Filter jobs based on one or more categories.")
-                        .addOptions(
-                                new OptionData(
-                                                OptionType.STRING,
-                                                "category",
-                                                "What category do you want to filter?")
-                                        .setRequired(true)));
-
-        // help command
-        commands.addCommands(new CommandData("help", "Get Help"));
-
-        // search command
-        commands.addCommands(new CommandData("search", "Search for your dream job"));
-
         commands.queue();
     }
 }
