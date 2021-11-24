@@ -3,9 +3,13 @@ package edu.northeastern.cs5500.starterbot.model;
 import java.time.LocalDate;
 import javax.annotation.Nonnull;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 
 @Data
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Job implements Model {
     private ObjectId id;
     @Nonnull private String jobTitle;

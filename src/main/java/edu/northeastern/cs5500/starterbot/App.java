@@ -14,6 +14,8 @@ import edu.northeastern.cs5500.starterbot.model.JobType;
 import edu.northeastern.cs5500.starterbot.model.Location;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
+import edu.northeastern.cs5500.starterbot.repository.MongoDBRepository;
+import edu.northeastern.cs5500.starterbot.service.MongoDBService;
 import java.util.EnumSet;
 import javax.security.auth.login.LoginException;
 import net.dv8tion.jda.api.JDA;
@@ -38,7 +40,6 @@ public class App {
             throw new IllegalArgumentException(
                     "The BOT_TOKEN environment variable is not defined.");
         }
-
         MessageListener messageListener = new MessageListener();
         GenericRepository<Job> jobRepository = new InMemoryRepository<>();
         GenericRepository<Location> locationRepository = new InMemoryRepository<>();
@@ -51,6 +52,16 @@ public class App {
         JobController jobController =
                 new JobController(
                         jobRepository, jobTypeController, experienceController, locationController);
+
+        MongoDBService mongoDBService = new MongoDBService();
+        GenericRepository<Job> mongoJobRepository =
+                new MongoDBRepository<Job>(Job.class, mongoDBService);
+
+        if (mongoJobRepository.count() == 0) {
+            mongoJobRepository.addMany(jobController.getAll());
+        }
+
+        messageListener.getCommands().get("testmongo").setJobRepository(mongoJobRepository);
 
         JDA jda =
                 JDABuilder.createLight(token, EnumSet.noneOf(GatewayIntent.class))
