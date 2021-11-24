@@ -177,7 +177,7 @@ public class IndeedScraper implements Scraper {
 
         Job job = new Job(job_title, company, link_to_apply);
         if (location != null) {
-            job.setLocation(location);
+            job.setLocation(location.getId());
         }
         if (rating != null) {
             job.setStarRating(rating);
