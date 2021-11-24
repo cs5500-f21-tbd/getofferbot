@@ -36,41 +36,21 @@ public class JobController {
             return;
         }
 
-        Job job1 =
-                new Job(
-                        "University Grad Software Engineer (USA)",
-                        jobTypeController.getJobTypeByLabel("fulltime").getId(),
-                        experienceController.getExperienceByLabel("entry").getId(),
-                        "Pinterest",
-                        LocalDate.of(2021, 8, 20),
-                        4.2f,
-                        "pinterest.com",
-                        locationController.getLocationByZipCode("98101").getId());
+        Job job1 = new Job("University Grad Software Engineer (USA)", "Pinterest", "pinterest.com");
+        job1.setStarRating(4.2f);
+        job1.setExperience(experienceController.getExperienceByLabel("entry").getId());
         job1.setAnnualPay(140000f);
         job1.setSponsorship(true);
+        job1.setLocation(locationController.getLocationByZipCode("98101").getId());
 
-        Job job2 =
-                new Job(
-                        "Software Engineer",
-                        jobTypeController.getJobTypeByLabel("fulltime").getId(),
-                        experienceController.getExperienceByLabel("entry").getId(),
-                        "Splunk",
-                        LocalDate.of(2021, 11, 12),
-                        4.0f,
-                        "splunk.com",
-                        locationController.getLocationByZipCode("10001").getId());
+        Job job2 = new Job("Software Engineer", "Splunk", "splunk.com");
+        job2.setCreated(LocalDate.of(2021, 11, 12));
         job2.setAnnualPay(80000f);
+        job2.setLocation(locationController.getLocationByZipCode("10001").getId());
 
-        Job job3 =
-                new Job(
-                        "Staff Software Engineer",
-                        jobTypeController.getJobTypeByLabel("fulltime").getId(),
-                        experienceController.getExperienceByLabel("senior").getId(),
-                        "Visa",
-                        LocalDate.of(2021, 11, 9),
-                        4.1f,
-                        "visa.com",
-                        locationController.getLocationByZipCode("94404").getId());
+        Job job3 = new Job("Staff Software Engineer", "Visa", "visa.com");
+        job3.setExperience(experienceController.getExperienceByLabel("senior").getId());
+        job3.setLocation(locationController.getLocationByZipCode("94404").getId());
 
         jobRepository.add(job1);
         jobRepository.add(job2);
