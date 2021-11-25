@@ -20,9 +20,6 @@ import java.util.EnumSet;
 import javax.security.auth.login.LoginException;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.interactions.commands.OptionType;
-import net.dv8tion.jda.api.interactions.commands.build.CommandData;
-import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 
@@ -85,31 +82,6 @@ public class App {
         for (Command command : messageListener.getCommands().values()) {
             commands.addCommands(command.getCommandData());
         }
-
-        commands.addCommands(
-                new CommandData("say", "Makes the bot say what you told it to say")
-                        .addOptions(
-                                new OptionData(
-                                                OptionType.STRING,
-                                                "content",
-                                                "What the bot should say")
-                                        .setRequired(true)));
-
-        // filter command
-        commands.addCommands(
-                new CommandData("filter", "Filter jobs based on one or more categories.")
-                        .addOptions(
-                                new OptionData(
-                                                OptionType.STRING,
-                                                "category",
-                                                "What category do you want to filter?")
-                                        .setRequired(true)));
-
-        // help command
-        commands.addCommands(new CommandData("help", "Get Help"));
-
-        // search command
-        commands.addCommands(new CommandData("search", "Search for your dream job"));
 
         commands.queue();
     }

@@ -20,6 +20,7 @@ public class SearchCommand implements Command {
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         // TODO: replace this with actual DB query
+        // TODO: use embeds to show messages
         String content =
                 "JobId     Company     Level   Location\n"
                         + "0         Amazon      Intern  Seattle\n"
