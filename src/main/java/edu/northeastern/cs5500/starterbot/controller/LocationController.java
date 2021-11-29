@@ -36,9 +36,21 @@ public class LocationController {
 
         Location location3 = new Location("94404", "San Mateo", "CA", "USA");
 
+        Location location4 = new Location("80528", "Fort Collins", "CO", "USA");
+
+        Location location5 = new Location("98004", "Bellevue", "CWA", "USA");
+
+        Location location6 = new Location("60644", "Chicago", "IL", "USA");
+
+        Location location7 = new Location("83616", "Eagle", "ID", "USA");
+
         locationRepository.add(location1);
         locationRepository.add(location2);
         locationRepository.add(location3);
+        locationRepository.add(location4);
+        locationRepository.add(location5);
+        locationRepository.add(location6);
+        locationRepository.add(location7);
     }
 
     /**
