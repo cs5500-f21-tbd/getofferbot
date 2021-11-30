@@ -40,7 +40,7 @@ class JobControllerTest {
     @Test
     void testDefaultJobsAreCreated() {
         assertThat(jobRepository.getAll()).isNotEmpty();
-        assertThat(jobRepository.getAll().size()).isEqualTo(3);
+        assertThat(jobRepository.getAll().size()).isEqualTo(27);
     }
 
     @Test

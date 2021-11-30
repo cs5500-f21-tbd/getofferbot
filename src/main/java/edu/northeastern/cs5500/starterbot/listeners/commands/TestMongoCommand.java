@@ -24,17 +24,9 @@ public class TestMongoCommand implements Command {
     public void onSlashCommand(SlashCommandEvent event) {
         Job job = null;
         StringBuilder sb = new StringBuilder();
-        // if (this.jobRepository.count() > 0) {
-        //     sb.append("job repo not empty");
-        // } else {
-        //     sb.append("Empty");
-        // }
         for (Job j : this.jobRepository.getAll()) {
             job = j;
             System.out.print(job.getJobTitle());
-            // EmbedBuilder eb = new EmbedBuilder();
-            // eb.setTitle(job.getJobTitle());
-            // String content = "";
             sb.append(job.getJobTitle());
             sb.append('\n');
         }
