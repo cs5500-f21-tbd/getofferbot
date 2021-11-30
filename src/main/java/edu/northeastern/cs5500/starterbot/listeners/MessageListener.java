@@ -24,7 +24,6 @@ public class MessageListener extends ListenerAdapter {
         commands.put(search.getName(), search);
 
         Command testMongo = new TestMongoCommand();
-        // testMongo.setJobRepository(this.jobRepository);
         commands.put(testMongo.getName(), testMongo);
 
         Command help = new HelpCommand();
