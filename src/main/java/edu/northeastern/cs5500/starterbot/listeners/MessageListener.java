@@ -20,6 +20,9 @@ public class MessageListener extends ListenerAdapter {
         Command sort = new SortCommand();
         commands.put(sort.getName(), sort);
 
+        Command filter = new FilterCommand();
+        commands.put(filter.getName(), filter);
+
         Command search = new SearchCommand();
         commands.put(search.getName(), search);
 
