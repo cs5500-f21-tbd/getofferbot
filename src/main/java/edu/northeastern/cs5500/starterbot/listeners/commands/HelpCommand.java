@@ -36,7 +36,7 @@ public class HelpCommand implements Command {
                         + "title:       The title of job           /filter --title<Intern> \n"
                         + "type:        The type of job            /filter --type[ft/pt] \n"
                         + "company:     The name of company        /filter --company<Meta> \n"
-                        + "location:    The location of job        /filter --location<Seattle> \n"
+                        + "distance:    The max distance of job    /filter --distance<zipcode><miles> \n"
                         + "post time:   The post date of job       /filter --timeposted<Number of days> \n"
                         + "rating:      The rating of the company  /filter --rating<Rating number> \n"
                         + "annual pay   The annual pay of the job  /filter --annualpay<Salary number> \n"
