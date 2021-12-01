@@ -4,12 +4,14 @@ import edu.northeastern.cs5500.starterbot.model.Job;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import java.time.LocalDate;
 import java.util.Collection;
+import lombok.Data;
 
 /**
  * This is the controller class for Job, which, in conjunction with ExperienceController,
  * JobTypeController, and LocationController, converts job-related inputs into concrete Job objects.
  * Also creates default cases upon initialization with an empty repo.
  */
+@Data
 public class JobController {
     GenericRepository<Job> jobRepository;
     JobTypeController jobTypeController;

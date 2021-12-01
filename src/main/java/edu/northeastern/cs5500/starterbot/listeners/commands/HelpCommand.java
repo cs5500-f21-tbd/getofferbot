@@ -1,13 +1,12 @@
 package edu.northeastern.cs5500.starterbot.listeners.commands;
 
-import edu.northeastern.cs5500.starterbot.model.Job;
-import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
+import edu.northeastern.cs5500.starterbot.controller.JobController;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 
 public class HelpCommand implements Command {
 
-    private GenericRepository<Job> jobRepository;
+    private JobController jobController;
 
     @Override
     public String getName() {
@@ -53,7 +52,7 @@ public class HelpCommand implements Command {
     }
 
     @Override
-    public void setJobRepository(GenericRepository<Job> jobRepository) {
-        this.jobRepository = jobRepository;
+    public void setJobController(JobController jobController) {
+        this.jobController = jobController;
     }
 }

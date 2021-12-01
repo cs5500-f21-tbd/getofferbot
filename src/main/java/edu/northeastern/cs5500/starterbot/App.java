@@ -51,14 +51,30 @@ public class App {
                         jobRepository, jobTypeController, experienceController, locationController);
 
         MongoDBService mongoDBService = new MongoDBService();
+
         GenericRepository<Job> mongoJobRepository =
                 new MongoDBRepository<Job>(Job.class, mongoDBService);
+        GenericRepository<Location> mongoLocationRepository =
+                new MongoDBRepository<>(Location.class, mongoDBService);
+        GenericRepository<Experience> mongoExperienceRepository =
+                new MongoDBRepository<>(Experience.class, mongoDBService);
+        GenericRepository<JobType> mongoJobTypeRepository =
+                new MongoDBRepository<>(JobType.class, mongoDBService);
 
-        if (mongoJobRepository.count() == 0) {
-            mongoJobRepository.addMany(jobController.getAll());
-        }
+        JobTypeController mongoJobTypeController = new JobTypeController(mongoJobTypeRepository);
+        ExperienceController mongoExperienceController =
+                new ExperienceController(mongoExperienceRepository);
+        LocationController mongoLocationController =
+                new LocationController(mongoLocationRepository);
 
-        messageListener.getCommands().get("testmongo").setJobRepository(mongoJobRepository);
+        JobController mongoJobController =
+                new JobController(
+                        mongoJobRepository,
+                        mongoJobTypeController,
+                        mongoExperienceController,
+                        mongoLocationController);
+
+        messageListener.getCommands().get("testmongo").setJobController(mongoJobController);
 
         JDA jda =
                 JDABuilder.createLight(token, EnumSet.noneOf(GatewayIntent.class))

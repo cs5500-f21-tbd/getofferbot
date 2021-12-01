@@ -4,11 +4,13 @@ import edu.northeastern.cs5500.starterbot.model.JobType;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import lombok.Data;
 
 /**
  * This is the controller class for JobType, which converts job type input (a String) into concrete
  * JobType objects. Also creates default cases upon initialization with an empty repo.
  */
+@Data
 public class JobTypeController {
     GenericRepository<JobType> jobTypeRepository;
 

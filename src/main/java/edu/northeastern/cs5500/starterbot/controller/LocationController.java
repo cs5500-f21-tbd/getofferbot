@@ -4,11 +4,13 @@ import edu.northeastern.cs5500.starterbot.model.Location;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import lombok.Data;
 
 /**
  * This is the controller class for Location, which converts location-related inputs into concrete
  * Location objects. Also creates default cases upon initialization with an empty repo.
  */
+@Data
 public class LocationController {
     GenericRepository<Location> locationRepository;
 
