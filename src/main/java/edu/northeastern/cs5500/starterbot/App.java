@@ -75,6 +75,7 @@ public class App {
                         mongoLocationController);
 
         messageListener.getCommands().get("testmongo").setJobController(mongoJobController);
+        messageListener.getCommands().get("sort").setJobController(mongoJobController);
 
         JDA jda =
                 JDABuilder.createLight(token, EnumSet.noneOf(GatewayIntent.class))
