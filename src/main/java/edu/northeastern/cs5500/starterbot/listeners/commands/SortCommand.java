@@ -135,7 +135,7 @@ public class SortCommand implements Command {
                                     Job::getCreated,
                                     Comparator.nullsFirst(Comparator.naturalOrder()))
                             .reversed());
-        // TODO: implement sort by location
+            // TODO: implement sort by location
         } else if (category.equals("location")) {
             return new ArrayList<>();
         }
