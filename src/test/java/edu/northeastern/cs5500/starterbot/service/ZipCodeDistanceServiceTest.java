@@ -1,11 +1,10 @@
 package edu.northeastern.cs5500.starterbot.service;
 
-import org.junit.jupiter.api.Test;
+import static com.google.common.truth.Truth.assertThat;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-
-import static com.google.common.truth.Truth.assertThat;
+import org.junit.jupiter.api.Test;
 
 class ZipCodeDistanceServiceTest {
     @Test
