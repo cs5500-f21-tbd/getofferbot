@@ -8,6 +8,7 @@ import edu.northeastern.cs5500.starterbot.model.Model;
 import edu.northeastern.cs5500.starterbot.service.MongoDBService;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import org.bson.types.ObjectId;
@@ -56,5 +57,17 @@ public class MongoDBRepository<T extends Model> implements GenericRepository<T> 
     @Override
     public long count() {
         return collection.countDocuments();
+    }
+
+    @Override
+    public void addMany(Collection<T> items) {
+        List<T> insertItems = new ArrayList<>();
+        for (T t : items) {
+            if (t.getId() == null) {
+                t.setId(new ObjectId());
+            }
+            insertItems.add(t);
+        }
+        collection.insertMany(insertItems);
     }
 }

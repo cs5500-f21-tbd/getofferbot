@@ -21,7 +21,7 @@ public class LocationControllerTest {
     @Test
     void testDefaultLocationsAreCreated() {
         assertThat(locationRepository.getAll()).isNotEmpty();
-        assertThat(locationRepository.getAll().size()).isEqualTo(3);
+        assertThat(locationRepository.getAll().size()).isEqualTo(7);
     }
 
     @Test

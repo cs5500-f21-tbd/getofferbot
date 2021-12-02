@@ -14,13 +14,12 @@ import edu.northeastern.cs5500.starterbot.model.JobType;
 import edu.northeastern.cs5500.starterbot.model.Location;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
+import edu.northeastern.cs5500.starterbot.repository.MongoDBRepository;
+import edu.northeastern.cs5500.starterbot.service.MongoDBService;
 import java.util.EnumSet;
 import javax.security.auth.login.LoginException;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.interactions.commands.OptionType;
-import net.dv8tion.jda.api.interactions.commands.build.CommandData;
-import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 
@@ -38,7 +37,6 @@ public class App {
             throw new IllegalArgumentException(
                     "The BOT_TOKEN environment variable is not defined.");
         }
-
         MessageListener messageListener = new MessageListener();
         GenericRepository<Job> jobRepository = new InMemoryRepository<>();
         GenericRepository<Location> locationRepository = new InMemoryRepository<>();
@@ -51,6 +49,32 @@ public class App {
         JobController jobController =
                 new JobController(
                         jobRepository, jobTypeController, experienceController, locationController);
+
+        MongoDBService mongoDBService = new MongoDBService();
+
+        GenericRepository<Job> mongoJobRepository =
+                new MongoDBRepository<Job>(Job.class, mongoDBService);
+        GenericRepository<Location> mongoLocationRepository =
+                new MongoDBRepository<>(Location.class, mongoDBService);
+        GenericRepository<Experience> mongoExperienceRepository =
+                new MongoDBRepository<>(Experience.class, mongoDBService);
+        GenericRepository<JobType> mongoJobTypeRepository =
+                new MongoDBRepository<>(JobType.class, mongoDBService);
+
+        JobTypeController mongoJobTypeController = new JobTypeController(mongoJobTypeRepository);
+        ExperienceController mongoExperienceController =
+                new ExperienceController(mongoExperienceRepository);
+        LocationController mongoLocationController =
+                new LocationController(mongoLocationRepository);
+
+        JobController mongoJobController =
+                new JobController(
+                        mongoJobRepository,
+                        mongoJobTypeController,
+                        mongoExperienceController,
+                        mongoLocationController);
+
+        messageListener.getCommands().get("testmongo").setJobController(mongoJobController);
 
         JDA jda =
                 JDABuilder.createLight(token, EnumSet.noneOf(GatewayIntent.class))
@@ -74,31 +98,6 @@ public class App {
         for (Command command : messageListener.getCommands().values()) {
             commands.addCommands(command.getCommandData());
         }
-
-        commands.addCommands(
-                new CommandData("say", "Makes the bot say what you told it to say")
-                        .addOptions(
-                                new OptionData(
-                                                OptionType.STRING,
-                                                "content",
-                                                "What the bot should say")
-                                        .setRequired(true)));
-
-        // filter command
-        commands.addCommands(
-                new CommandData("filter", "Filter jobs based on one or more categories.")
-                        .addOptions(
-                                new OptionData(
-                                                OptionType.STRING,
-                                                "category",
-                                                "What category do you want to filter?")
-                                        .setRequired(true)));
-
-        // help command
-        commands.addCommands(new CommandData("help", "Get Help"));
-
-        // search command
-        commands.addCommands(new CommandData("search", "Search for your dream job"));
 
         commands.queue();
     }

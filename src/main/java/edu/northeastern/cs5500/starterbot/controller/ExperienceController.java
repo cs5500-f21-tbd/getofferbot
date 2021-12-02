@@ -4,11 +4,13 @@ import edu.northeastern.cs5500.starterbot.model.Experience;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import lombok.Data;
 
 /**
  * This is the controller class for Experience, which converts experience input (a String) into
  * concrete Experience objects. Also creates default cases upon initialization with an empty repo.
  */
+@Data
 public class ExperienceController {
     GenericRepository<Experience> experienceRepository;
 

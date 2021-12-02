@@ -1,11 +1,13 @@
 package edu.northeastern.cs5500.starterbot.listeners.commands;
 
+import edu.northeastern.cs5500.starterbot.controller.JobController;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
-import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 public class HelpCommand implements Command {
+
+    private JobController jobController;
+
     @Override
     public String getName() {
         return "help";
@@ -34,7 +36,7 @@ public class HelpCommand implements Command {
                         + "title:       The title of job           /filter --title<Intern> \n"
                         + "type:        The type of job            /filter --type[ft/pt] \n"
                         + "company:     The name of company        /filter --company<Meta> \n"
-                        + "location:    The location of job        /filter --location<Seattle> \n"
+                        + "distance:    The max distance of job    /filter --distance<zipcode><miles> \n"
                         + "post time:   The post date of job       /filter --timeposted<Number of days> \n"
                         + "rating:      The rating of the company  /filter --rating<Rating number> \n"
                         + "annual pay   The annual pay of the job  /filter --annualpay<Salary number> \n"
@@ -46,12 +48,11 @@ public class HelpCommand implements Command {
     @Override
     //
     public CommandData getCommandData() {
-        return new CommandData("help", "Help menu of the bot")
-                .addOptions(
-                        new OptionData(
-                                        OptionType.STRING,
-                                        "command list",
-                                        "Command list to describe syntax and purpose")
-                                .setRequired(true));
+        return new CommandData("help", "Help menu of the bot");
+    }
+
+    @Override
+    public void setJobController(JobController jobController) {
+        this.jobController = jobController;
     }
 }
