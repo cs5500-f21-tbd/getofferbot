@@ -26,7 +26,7 @@ public class SortCommand implements Command {
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
 
-        List<Job> jobList = new ArrayList<Job>(this.jobController.getJobRepository().getAll());
+        List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
         String category = event.getOption("category").getAsString();
         jobList = sortJob(jobList, category);
 
