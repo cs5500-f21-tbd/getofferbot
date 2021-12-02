@@ -1,6 +1,7 @@
 package edu.northeastern.cs5500.starterbot.reader;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.northeastern.cs5500.starterbot.model.Education;
 import java.io.File;
 import java.io.FileNotFoundException;
 
