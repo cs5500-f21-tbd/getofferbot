@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ZipCodeDistanceService implements Service {
 
-    static final Double KILOMETERS_IN_A_MILE = 1.609344d;
+    public static final Double KILOMETERS_IN_A_MILE = 1.609344d;
     Gson gson;
 
     // can never throw MalformedURLException because all inputs are validated before creating the
