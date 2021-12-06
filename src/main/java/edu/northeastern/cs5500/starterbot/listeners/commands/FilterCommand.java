@@ -1,7 +1,12 @@
 package edu.northeastern.cs5500.starterbot.listeners.commands;
 
 import edu.northeastern.cs5500.starterbot.controller.JobController;
+import edu.northeastern.cs5500.starterbot.model.Job;
+import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -18,10 +23,89 @@ public class FilterCommand implements Command {
 
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
-        event.reply(
-                        "Here are the jobs filtered based on "
-                                + event.getOption("category").getAsString())
-                .queue();
+        List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
+        String title = event.getOption("title").getAsString();
+        String type = event.getOption("type").getAsString();
+        String company = event.getOption("company").getAsString();
+        String distance = event.getOption("distance").getAsString();
+        String timeposted = event.getOption("timeposted").getAsString();
+        String rating = event.getOption("rating").getAsString();
+        String annaulpay = event.getOption("annaulpay").getAsString();
+        String visa = event.getOption("visa").getAsString();
+
+        // String[] options = option.split(" ");
+        // String optionType = options[0];
+        // String optionVal = options[1];
+
+        jobList = filterJobs(jobList, rating);
+        event.reply("Here are the jobs filtered based on " + "val").queue();
+
+        Job job = null;
+        int size = this.jobController.getJobRepository().getAll().size();
+        int length = 10;
+        if (size < 10) {
+            length = size;
+        }
+
+        // Object[] jobArray = this.jobController.getAll().toArray();
+        // for (int i = 0; i < length; i++) {
+        for (Object castJob : jobController.getAll().toArray()) {
+            // job = (Job) jobArray[i];
+            job = (Job) castJob;
+            EmbedBuilder eb = new EmbedBuilder();
+            eb.setTitle(job.getJobTitle());
+            eb.setColor(Color.CYAN);
+            eb.addField("Company", job.getCompany(), false);
+            eb.addField("Link to apply", job.getLinkToApply(), false);
+            if (job.getJobType() != null) {
+                eb.addField(
+                        "Job type",
+                        this.jobController
+                                .getJobTypeController()
+                                .getJobTypeRepository()
+                                .get(job.getJobType())
+                                .toString(),
+                        false);
+            }
+            if (job.getExperience() != null) {
+                eb.addField(
+                        "Experience",
+                        this.jobController
+                                .getExperienceController()
+                                .getExperienceRepository()
+                                .get(job.getExperience())
+                                .toString(),
+                        false);
+            }
+
+            if (job.getLocation() != null) {
+                eb.addField(
+                        "Location",
+                        this.jobController
+                                .getLocationController()
+                                .getLocationRepository()
+                                .get(job.getLocation())
+                                .toString(),
+                        false);
+            }
+
+            if (job.getCreated() != null) {
+                eb.addField("Date posted", job.getCreated().toString(), false);
+            }
+
+            if (job.getSponsorship()) {
+                eb.addField("Visa sponsorship", "Yes", false);
+            }
+
+            if (job.getAnnualPay() != null) {
+                eb.addField("Annual pay", job.getAnnualPay().toString() + "+", false);
+            }
+
+            if (job.getStarRating() != null) {
+                eb.addField("Rating", job.getStarRating().toString(), false);
+            }
+            // event.getChannel().sendMessage(eb.build()).queue();
+        }
     }
 
     @Override
@@ -44,7 +128,7 @@ public class FilterCommand implements Command {
                 new OptionData(
                         OptionType.STRING, "company", "What companies do you want to display?");
         for (String choice : Arrays.asList("Amazon", "Meta", "Google")) {
-            titleOptions.addChoice(choice, choice);
+            companyOptions.addChoice(choice, choice);
         }
 
         OptionData distanceOptions =
@@ -57,16 +141,16 @@ public class FilterCommand implements Command {
                         "10 miles/locally",
                         "50 miles/in the same metro",
                         "1500 miles/on the same coast")) {
-            titleOptions.addChoice(choice, choice);
+            distanceOptions.addChoice(choice, choice);
         }
 
         OptionData postTimeOptions =
                 new OptionData(
                         OptionType.STRING,
-                        "posttime",
-                        "What is the max posting time of jobs do you want to display?");
+                        "time_posted",
+                        "What is the earliest job do you'd like to see?");
         for (String choice : Arrays.asList("1 day", "3 days", "1 week", "1 month")) {
-            titleOptions.addChoice(choice, choice);
+            postTimeOptions.addChoice(choice, choice);
         }
 
         OptionData ratingOptions =
@@ -75,7 +159,7 @@ public class FilterCommand implements Command {
                         "rating",
                         "What is the min rating of jobs do you want to display?");
         for (String choice : Arrays.asList("3.0", "4.0", "4.5")) {
-            titleOptions.addChoice(choice, choice);
+            ratingOptions.addChoice(choice, choice);
         }
 
         OptionData annualPayOptions =
@@ -84,16 +168,16 @@ public class FilterCommand implements Command {
                         "annualpay",
                         "What is the min annual pay of jobs do you want to display?");
         for (String choice : Arrays.asList("50000 USD", "100000 USD", "150000 USD")) {
-            titleOptions.addChoice(choice, choice);
+            annualPayOptions.addChoice(choice, choice);
         }
 
         OptionData visaOptions =
                 new OptionData(
                         OptionType.STRING,
-                        "title",
+                        "visa",
                         "Do you want to ignore jobs that does not sponsor work visa in the US?");
         for (String choice : Arrays.asList("Yes", "No")) {
-            titleOptions.addChoice(choice, choice);
+            visaOptions.addChoice(choice, choice);
         }
 
         return new CommandData(this.getName(), "Filter for jobs.")
@@ -111,5 +195,47 @@ public class FilterCommand implements Command {
     @Override
     public void setJobController(JobController jobController) {
         this.jobController = jobController;
+    }
+
+    private List<Job> filterJobs(List<Job> jobList, String option) {
+        List<Job> newJobList = new ArrayList<>();
+
+        switch (option) {
+            case "title":
+                for (Job job : jobList) {
+                    if (job.getJobTitle() == option) {
+                        newJobList.add(job);
+                    }
+                }
+                // filter command handler
+            case "type":
+                for (Job job : jobList) {
+                    // if ((JobType)job.getJobType() == optionVal) {
+                    //     newJobList.add(job);
+                    // }
+                }
+                break;
+
+            case "company":
+                // event.reply("The help menu will be added soon...").queue();
+                // // todo: change event.reply with help function call
+                // break;
+
+            case "timeposted":
+                //
+
+            case "location":
+
+            case "visa":
+
+            default:
+        }
+
+        int size = 5;
+        if (jobList.size() < size) {
+            size = jobList.size();
+        }
+        return jobList.subList(0, size);
+        // return new ArrayList<>();
     }
 }
