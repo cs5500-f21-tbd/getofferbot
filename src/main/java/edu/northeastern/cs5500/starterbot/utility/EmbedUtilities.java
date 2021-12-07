@@ -5,7 +5,16 @@ import edu.northeastern.cs5500.starterbot.model.Job;
 import java.awt.Color;
 import net.dv8tion.jda.api.EmbedBuilder;
 
+/** EmbedUtilities class contains the methods that generate embed messages. */
 public final class EmbedUtilities {
+
+    /**
+     * Genrates an EmbedBuilder based on input Job and Jobcontroller.
+     *
+     * @param job - Job, input job
+     * @param jobController - JobController, input jobController
+     * @return EmbedBuilder
+     */
     public static EmbedBuilder generateJobEmbed(Job job, JobController jobController) {
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle(job.getJobTitle());
@@ -62,6 +71,11 @@ public final class EmbedUtilities {
         return embedBuilder;
     }
 
+    /**
+     * Generates an EmbedBuilder that contains help menu for GetOfferBot.
+     *
+     * @return EmbedBuilder
+     */
     public static EmbedBuilder generateHelpEmbed() {
         // TODO: polish embed message such as adding emoji and using some fun fonts.
         // TODO: make sure commands and options in help menu matches the features supported by final
