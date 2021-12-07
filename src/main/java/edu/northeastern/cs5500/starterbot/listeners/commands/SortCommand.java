@@ -18,6 +18,10 @@ public class SortCommand implements Command {
 
     private JobController jobController;
 
+    public SortCommand(JobController jobController) {
+        this.jobController = jobController;
+    }
+
     @Override
     public String getName() {
         return "sort";
@@ -101,11 +105,6 @@ public class SortCommand implements Command {
 
         return new CommandData("sort", "Sort jobs based on a category.")
                 .addOptions(categoryOptions.setRequired(true));
-    }
-
-    @Override
-    public void setJobController(JobController jobController) {
-        this.jobController = jobController;
     }
 
     // TODO: 1.add parameter to allow users change the size

@@ -1,12 +1,9 @@
 package edu.northeastern.cs5500.starterbot.listeners.commands;
 
-import edu.northeastern.cs5500.starterbot.controller.JobController;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 
 public class HelpCommand implements Command {
-
-    private JobController jobController;
 
     @Override
     public String getName() {
@@ -49,10 +46,5 @@ public class HelpCommand implements Command {
     //
     public CommandData getCommandData() {
         return new CommandData("help", "Help menu of the bot");
-    }
-
-    @Override
-    public void setJobController(JobController jobController) {
-        this.jobController = jobController;
     }
 }

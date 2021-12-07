@@ -133,3 +133,5 @@ gradle-app.setting
 # add .idea
 .idea
 
+# VSCode-generated test folder
+bin/
