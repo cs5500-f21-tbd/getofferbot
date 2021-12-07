@@ -23,7 +23,6 @@ public class PreferenceCommand implements Command {
 
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
-        // TODO Auto-generated method stub
         User user = userController.getUserByDiscordId(event.getUser().getIdLong());
         OptionMapping zipcodeOption = event.getOption("zipcode");
         OptionMapping radiusOption = event.getOption("radius");

@@ -39,7 +39,7 @@ public class App {
         MongoDBService mongoDBService = new MongoDBService();
 
         GenericRepository<Job> mongoJobRepository =
-                new MongoDBRepository<Job>(Job.class, mongoDBService);
+                new MongoDBRepository<>(Job.class, mongoDBService);
         GenericRepository<Location> mongoLocationRepository =
                 new MongoDBRepository<>(Location.class, mongoDBService);
         GenericRepository<Experience> mongoExperienceRepository =

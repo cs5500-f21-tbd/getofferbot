@@ -14,7 +14,7 @@ import org.bson.types.ObjectId;
 public class User implements Model {
     private ObjectId id;
     // event.getUser().getIdLong() gets this value
-    @Nonnull private long discordId;
+    @Nonnull private Long discordId;
     @Nullable private String zipcode;
     // search radius, in kilometers, for the user
     @Nullable private Double searchRadiusKilometers;

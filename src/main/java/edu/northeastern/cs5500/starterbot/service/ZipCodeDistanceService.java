@@ -32,10 +32,8 @@ public class ZipCodeDistanceService implements Service {
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("toZip was not a valid 5-digit numeric zip code");
         }
-        StringBuilder sb = new StringBuilder("https://zipcode-radius.glitch.me/v1/distance/");
-        sb.append(fromZip).append("/").append(toZip);
 
-        return new URL(sb.toString());
+        return new URL("https://zipcode-radius.glitch.me/v1/distance/" + fromZip + "/" + toZip);
     }
 
     Double extractKilometersFromJsonReader(InputStreamReader reader) {
