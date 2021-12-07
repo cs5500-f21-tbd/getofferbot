@@ -1,8 +1,11 @@
 package edu.northeastern.cs5500.starterbot.command;
 
 import static com.google.common.truth.Truth.assertThat;
-import static com.google.common.truth.Truth.assertWithMessage;
 
+import edu.northeastern.cs5500.starterbot.controller.ExperienceController;
+import edu.northeastern.cs5500.starterbot.controller.JobController;
+import edu.northeastern.cs5500.starterbot.controller.JobTypeController;
+import edu.northeastern.cs5500.starterbot.controller.LocationController;
 import edu.northeastern.cs5500.starterbot.listeners.commands.FilterCommand;
 import edu.northeastern.cs5500.starterbot.model.Experience;
 import edu.northeastern.cs5500.starterbot.model.Job;
@@ -10,6 +13,7 @@ import edu.northeastern.cs5500.starterbot.model.JobType;
 import edu.northeastern.cs5500.starterbot.model.Location;
 import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,8 +23,11 @@ class FilterCommandTest {
     InMemoryRepository<JobType> jobTypeRepository;
     InMemoryRepository<Experience> experienceRepository;
     InMemoryRepository<Location> locationRepository;
+    JobTypeController jobTypeController;
+    ExperienceController experienceController;
+    LocationController locationController;
+    JobController jobController;
     FilterCommand filterCommand;
-
 
     @BeforeEach
     void setUpReposAndControllers() {
@@ -28,7 +35,16 @@ class FilterCommandTest {
         jobTypeRepository = new InMemoryRepository<>();
         experienceRepository = new InMemoryRepository<>();
         locationRepository = new InMemoryRepository<>();
+        jobTypeController = new JobTypeController(jobTypeRepository);
+        experienceController = new ExperienceController(experienceRepository);
+        locationController = new LocationController(locationRepository);
+
+        jobController =
+                new JobController(
+                        jobRepository, jobTypeController, experienceController, locationController);
+
         filterCommand = new FilterCommand();
+        filterCommand.setJobController(jobController);
     }
 
     @Test
@@ -37,24 +53,12 @@ class FilterCommandTest {
         assertThat(jobRepository.getAll().size()).isEqualTo(27);
     }
 
-    // @Test
-    // void testJobWithoutSalarySpecifiedExists() {
-    //     ArrayList<Job> jobList = new ArrayList<>(jobController.getAll());
-    //     for (Job job : jobList) {
-    //         if (job.getAnnualPay() == null) {
-    //             return;
-    //         }
-    //     }
-    //     assertWithMessage("All jobs had salaries specified").that(false).isTrue();
-    // }
-
     @Test
     void testgetCompanyName() {
         ArrayList<String> companyList = filterCommand.getCompanyName();
-        if (companyList.size() > 10) {
-            assertWithMessage("All companies have been added").that(false).isTrue();
-        }
+        Logger logger = Logger.getLogger("FilterCommandTest");
+        logger.info(String.valueOf(companyList.size()));
+        System.out.println("c" + String.valueOf(companyList.size()));
+        assertThat(companyList.size()).isAtLeast(20);
     }
-    
 }
-
