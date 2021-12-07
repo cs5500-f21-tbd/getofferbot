@@ -77,10 +77,9 @@ public final class EmbedUtilities {
         // embedBuilder.addField("level:\tthe level of the job\t/search --level-intern", "", false);
         // embedBuilder.addField("  ", "", true);
         embedBuilder.addField("/sort", "Sort the jobs based on input keywords", false);
-        embedBuilder.addField(
-                "OPTIONS", "required options for sort, only one option is allowed", false);
+        embedBuilder.addField("OPTIONS for sort", "required, only one option is allowed", false);
         // embedBuilder.addField("\t", "", true);
-        embedBuilder.addField("anual pay", "/sort anual pay", true);
+        embedBuilder.addField("annual pay", "/sort annual pay", true);
         // embedBuilder.addField("\t", "", true);
         // embedBuilder.addField("\t", "", false);
         embedBuilder.addField("rating", "/sort rating", true);
@@ -89,7 +88,7 @@ public final class EmbedUtilities {
 
         embedBuilder.addField("/filter", "Filter the jobs base on one or more keywords", false);
         embedBuilder.addField(
-                "OPTIONS", "required options for filter, one or more options are allowed", false);
+                "OPTIONS for filter", "required, one or more options are allowed", false);
         embedBuilder.addField("experience", "/filter experience", true);
         embedBuilder.addField("level", "/filter level", true);
         return embedBuilder;

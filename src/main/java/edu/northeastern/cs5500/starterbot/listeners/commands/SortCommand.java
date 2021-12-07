@@ -2,7 +2,7 @@ package edu.northeastern.cs5500.starterbot.listeners.commands;
 
 import edu.northeastern.cs5500.starterbot.controller.JobController;
 import edu.northeastern.cs5500.starterbot.model.Job;
-import java.awt.Color;
+import edu.northeastern.cs5500.starterbot.utility.EmbedUtilities;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -38,66 +38,15 @@ public class SortCommand implements Command {
         Job job = null;
         for (Job j : jobList) {
             job = j;
-            EmbedBuilder eb = new EmbedBuilder();
-            eb.setTitle(job.getJobTitle());
-            eb.setColor(Color.CYAN);
-            eb.addField("Company", job.getCompany(), false);
-            eb.addField("Link to apply", job.getLinkToApply(), false);
-            if (job.getJobType() != null) {
-                eb.addField(
-                        "Job type",
-                        this.jobController
-                                .getJobTypeController()
-                                .getJobTypeRepository()
-                                .get(job.getJobType())
-                                .toString(),
-                        false);
-            }
-            if (job.getExperience() != null) {
-                eb.addField(
-                        "Experience",
-                        this.jobController
-                                .getExperienceController()
-                                .getExperienceRepository()
-                                .get(job.getExperience())
-                                .toString(),
-                        false);
-            }
-
-            if (job.getLocation() != null) {
-                eb.addField(
-                        "Location",
-                        this.jobController
-                                .getLocationController()
-                                .getLocationRepository()
-                                .get(job.getLocation())
-                                .toString(),
-                        false);
-            }
-
-            if (job.getCreated() != null) {
-                eb.addField("Date posted", job.getCreated().toString(), false);
-            }
-
-            if (job.getSponsorship()) {
-                eb.addField("Visa sponsorship", "Yes", false);
-            }
-
-            if (job.getAnnualPay() != null) {
-                eb.addField("Annual pay", job.getAnnualPay().toString() + "+", false);
-            }
-
-            if (job.getStarRating() != null) {
-                eb.addField("Rating", job.getStarRating().toString(), false);
-            }
-            event.getChannel().sendMessage(eb.build()).queue();
+            EmbedBuilder embedBuilder = EmbedUtilities.generateJobEmbed(job, jobController);
+            event.getChannel().sendMessage(embedBuilder.build()).queue();
         }
     }
 
     @Override
     public CommandData getCommandData() {
         OptionData categoryOptions =
-                new OptionData(OptionType.STRING, "category", "What category do you want to sort?")
+                new OptionData(OptionType.STRING, "category", "What category do you want to sort? (Try 'annual pay', 'location', 'post date', or 'rating')")
                         .setRequired(true);
         for (String choice : Arrays.asList("annual pay", "location", "post date", "rating")) {
             categoryOptions.addChoice(choice, choice);
