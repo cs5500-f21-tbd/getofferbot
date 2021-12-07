@@ -59,7 +59,7 @@ public class App {
                         mongoJobTypeController,
                         mongoExperienceController,
                         mongoLocationController);
-                        
+
         MessageListener messageListener = new MessageListener(mongoJobController);
 
         JDA jda =

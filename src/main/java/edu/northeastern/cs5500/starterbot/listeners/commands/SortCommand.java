@@ -46,7 +46,10 @@ public class SortCommand implements Command {
     @Override
     public CommandData getCommandData() {
         OptionData categoryOptions =
-                new OptionData(OptionType.STRING, "category", "What category do you want to sort? (Try 'annual pay', 'location', 'post date', or 'rating')")
+                new OptionData(
+                                OptionType.STRING,
+                                "category",
+                                "What category do you want to sort? (Try 'annual pay', 'location', 'post date', or 'rating')")
                         .setRequired(true);
         for (String choice : Arrays.asList("annual pay", "location", "post date", "rating")) {
             categoryOptions.addChoice(choice, choice);
