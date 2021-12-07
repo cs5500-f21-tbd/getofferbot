@@ -14,11 +14,11 @@ public class MessageListener extends ListenerAdapter {
 
     @Getter Map<String, Command> commands;
 
-    public MessageListener(JobController jobControlller) {
+    public MessageListener(JobController jobController) {
 
         commands = new HashMap<>();
 
-        Command sort = new SortCommand(jobControlller);
+        Command sort = new SortCommand(jobController);
         commands.put(sort.getName(), sort);
 
         Command filter = new FilterCommand();
@@ -27,7 +27,7 @@ public class MessageListener extends ListenerAdapter {
         Command search = new SearchCommand();
         commands.put(search.getName(), search);
 
-        Command testMongo = new TestMongoCommand(jobControlller);
+        Command testMongo = new TestMongoCommand(jobController);
         commands.put(testMongo.getName(), testMongo);
 
         Command help = new HelpCommand();

@@ -36,11 +36,10 @@ public class App {
             throw new IllegalArgumentException(
                     "The BOT_TOKEN environment variable is not defined.");
         }
-
         MongoDBService mongoDBService = new MongoDBService();
 
         GenericRepository<Job> mongoJobRepository =
-                new MongoDBRepository<Job>(Job.class, mongoDBService);
+                new MongoDBRepository<>(Job.class, mongoDBService);
         GenericRepository<Location> mongoLocationRepository =
                 new MongoDBRepository<>(Location.class, mongoDBService);
         GenericRepository<Experience> mongoExperienceRepository =
@@ -60,6 +59,7 @@ public class App {
                         mongoJobTypeController,
                         mongoExperienceController,
                         mongoLocationController);
+                        
         MessageListener messageListener = new MessageListener(mongoJobController);
 
         JDA jda =

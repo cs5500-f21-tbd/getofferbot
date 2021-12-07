@@ -13,10 +13,10 @@ import lombok.Data;
  */
 @Data
 public class JobController {
-    GenericRepository<Job> jobRepository;
-    JobTypeController jobTypeController;
-    ExperienceController experienceController;
-    LocationController locationController;
+    private GenericRepository<Job> jobRepository;
+    private JobTypeController jobTypeController;
+    private ExperienceController experienceController;
+    private LocationController locationController;
 
     public JobController(
             GenericRepository<Job> jobRepository,

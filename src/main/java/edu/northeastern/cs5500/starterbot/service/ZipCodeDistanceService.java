@@ -15,7 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ZipCodeDistanceService implements Service {
 
-    static final Double KILOMETERS_IN_A_MILE = 1.609344d;
+    public static final Double KILOMETERS_IN_A_MILE = 1.609344d;
+    private static final String URL_TEMPLATE = "https://zipcode-radius.glitch.me/v1/distance/%s/%s";
     Gson gson;
 
     // can never throw MalformedURLException because all inputs are validated before creating the
@@ -32,10 +33,8 @@ public class ZipCodeDistanceService implements Service {
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("toZip was not a valid 5-digit numeric zip code");
         }
-        StringBuilder sb = new StringBuilder("https://zipcode-radius.glitch.me/v1/distance/");
-        sb.append(fromZip).append("/").append(toZip);
 
-        return new URL(sb.toString());
+        return new URL(String.format(URL_TEMPLATE, fromZip, toZip));
     }
 
     Double extractKilometersFromJsonReader(InputStreamReader reader) {
