@@ -1,11 +1,11 @@
 package edu.northeastern.cs5500.starterbot.controller;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import edu.northeastern.cs5500.starterbot.model.User;
 import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static com.google.common.truth.Truth.assertThat;
 
 class UserControllerTest {
 

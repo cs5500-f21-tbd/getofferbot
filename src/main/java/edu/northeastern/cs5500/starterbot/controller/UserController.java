@@ -2,12 +2,11 @@ package edu.northeastern.cs5500.starterbot.controller;
 
 import edu.northeastern.cs5500.starterbot.model.User;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
-
 import javax.annotation.Nullable;
 
 /**
- * This is the controller class for User, which converts user-related inputs into concrete
- * User objects.
+ * This is the controller class for User, which converts user-related inputs into concrete User
+ * objects.
  */
 public class UserController {
     GenericRepository<User> userRepository;
@@ -18,7 +17,7 @@ public class UserController {
 
     @Nullable
     public User getUserByDiscordId(Long discordId) {
-        for (User user: userRepository.getAll()) {
+        for (User user : userRepository.getAll()) {
             if (user.getDiscordId().equals(discordId)) {
                 return user;
             }
