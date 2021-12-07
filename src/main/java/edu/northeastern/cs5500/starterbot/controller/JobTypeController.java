@@ -12,7 +12,7 @@ import lombok.Data;
  */
 @Data
 public class JobTypeController {
-    GenericRepository<JobType> jobTypeRepository;
+    private GenericRepository<JobType> jobTypeRepository;
 
     /**
      * Constructor. Initializes the controller and create default cases if JobType repo is empty.
