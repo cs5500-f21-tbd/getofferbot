@@ -12,7 +12,7 @@ import lombok.Data;
  */
 @Data
 public class ExperienceController {
-    GenericRepository<Experience> experienceRepository;
+    private GenericRepository<Experience> experienceRepository;
 
     /**
      * Constructor. Initializes the controller and create default cases if Experience repo is empty.

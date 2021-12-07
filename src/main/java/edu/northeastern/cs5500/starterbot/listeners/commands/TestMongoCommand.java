@@ -17,6 +17,10 @@ public class TestMongoCommand implements Command {
 
     private JobController jobController;
 
+    public TestMongoCommand(JobController jobController) {
+        this.jobController = jobController;
+    }
+
     @Override
     public String getName() {
         return "testmongo";
@@ -113,10 +117,5 @@ public class TestMongoCommand implements Command {
     public CommandData getCommandData() {
         return new CommandData(
                 "testmongo", "verify that Job can be stored and retrieved from MongoDB");
-    }
-
-    @Override
-    public void setJobController(JobController jobController) {
-        this.jobController = jobController;
     }
 }
