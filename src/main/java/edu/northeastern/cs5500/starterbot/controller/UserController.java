@@ -17,8 +17,9 @@ public class UserController {
 
     @Nullable
     public User getUserByDiscordId(Long discordId) {
+        if (discordId == null) return null;
         for (User user : userRepository.getAll()) {
-            if (user.getDiscordId().equals(discordId)) {
+            if (discordId.equals(user.getDiscordId())) {
                 return user;
             }
         }
@@ -29,6 +30,7 @@ public class UserController {
         User user = getUserByDiscordId(discordId);
         if (user != null) {
             user.setZipcode(zipcode);
+            userRepository.add(user);
         } else {
             User newUser = new User(discordId);
             newUser.setZipcode(zipcode);
@@ -40,6 +42,7 @@ public class UserController {
         User user = getUserByDiscordId(discordId);
         if (user != null) {
             user.setSearchRadiusMiles(searchRadiusMiles);
+            userRepository.add(user);
         } else {
             User newUser = new User(discordId);
             newUser.setSearchRadiusMiles(searchRadiusMiles);

@@ -20,10 +20,15 @@ public class User implements Model {
     @Nullable private Double searchRadiusKilometers;
 
     public Double getSearchRadiusMiles() {
-        return searchRadiusKilometers / ZipCodeDistanceService.KILOMETERS_IN_A_MILE;
+        return (searchRadiusKilometers == null)
+                ? null
+                : (searchRadiusKilometers / ZipCodeDistanceService.KILOMETERS_IN_A_MILE);
     }
 
     public void setSearchRadiusMiles(Double searchRadiusMiles) {
-        searchRadiusKilometers = searchRadiusMiles * ZipCodeDistanceService.KILOMETERS_IN_A_MILE;
+        searchRadiusKilometers =
+                (searchRadiusMiles == null)
+                        ? null
+                        : (searchRadiusMiles * ZipCodeDistanceService.KILOMETERS_IN_A_MILE);
     }
 }
