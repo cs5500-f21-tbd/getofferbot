@@ -24,6 +24,9 @@ public class FilterCommand implements Command {
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
+
+        String category = event.getOption("category").getAsString();
+
         String title = event.getOption("title").getAsString();
         String type = event.getOption("type").getAsString();
         String company = event.getOption("company").getAsString();
@@ -111,6 +114,26 @@ public class FilterCommand implements Command {
     @Override
     public CommandData getCommandData() {
         // TODO: This will be connected to the DB in Sprint 4
+
+        OptionData categoryOptions =
+                new OptionData(
+                                OptionType.STRING,
+                                "category",
+                                "What category do you want to filter?")
+                        .setRequired(true);
+        for (String choice :
+                Arrays.asList(
+                        "title",
+                        "type",
+                        "company",
+                        "distance",
+                        "time_posted",
+                        "rating",
+                        "annualpay",
+                        "visa")) {
+            categoryOptions.addChoice(choice, choice);
+        }
+
         OptionData titleOptions =
                 new OptionData(
                         OptionType.STRING, "title", "What job titles do you want to display?");
@@ -127,7 +150,16 @@ public class FilterCommand implements Command {
         OptionData companyOptions =
                 new OptionData(
                         OptionType.STRING, "company", "What companies do you want to display?");
-        for (String choice : Arrays.asList("Amazon", "Meta", "Google")) {
+        for (String choice :
+                Arrays.asList(
+                        "Amazon",
+                        "Meta",
+                        "Google",
+                        "HP",
+                        "Microsoft",
+                        "TikTok",
+                        "Rogue Fabrication, LLC",
+                        "Discovery,Inc.")) {
             companyOptions.addChoice(choice, choice);
         }
 
@@ -237,5 +269,17 @@ public class FilterCommand implements Command {
         }
         return jobList.subList(0, size);
         // return new ArrayList<>();
+    }
+
+    public ArrayList<String> getCompanyName() {
+        ArrayList<String> companyList = new ArrayList<>();
+
+        List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
+        for (Job job : jobList) {
+            if (companyList.contains(job.getCompany()) == false) {
+                companyList.add(job.getCompany());
+            }
+        }
+        return companyList;
     }
 }
