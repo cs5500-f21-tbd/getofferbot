@@ -10,7 +10,7 @@ package edu.northeastern.cs5500.starterbot.scraper;
 import edu.northeastern.cs5500.starterbot.model.Job;
 import edu.northeastern.cs5500.starterbot.model.Location;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 import javax.annotation.Nullable;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -199,7 +199,7 @@ public class IndeedScraper implements Scraper {
      * @throws IOException
      * @throws RuntimeException
      */
-    private ArrayList<Job> _scrape(String URL) throws IOException, RuntimeException {
+    private List<Job> _scrape(String URL) throws IOException, RuntimeException {
 
         Document document;
         try {
@@ -209,7 +209,7 @@ public class IndeedScraper implements Scraper {
         }
 
         Elements divs = document.select("a[class^=tapItem fs-unmask]");
-        ArrayList<Job> jobs = new ArrayList<Job>();
+        List<Job> jobs = new ArrayList<Job>();
 
         for (Element div_tmp : divs) {
             Job job;
@@ -234,7 +234,7 @@ public class IndeedScraper implements Scraper {
      *     scraping failed
      */
     @Nullable
-    public ArrayList<Job> Scrape(@Nullable String filter, @Nullable String location) {
+    public List<Job> Scrape(@Nullable String filter, @Nullable String location) {
         StringBuilder search_link = new StringBuilder("https://www.indeed.com/jobs?q=");
         if (filter == null || filter.equalsIgnoreCase("")) {
             search_link.append("software+development+engineer");
