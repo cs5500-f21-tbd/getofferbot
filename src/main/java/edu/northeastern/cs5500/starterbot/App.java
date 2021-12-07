@@ -13,7 +13,6 @@ import edu.northeastern.cs5500.starterbot.model.Job;
 import edu.northeastern.cs5500.starterbot.model.JobType;
 import edu.northeastern.cs5500.starterbot.model.Location;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
-import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
 import edu.northeastern.cs5500.starterbot.repository.MongoDBRepository;
 import edu.northeastern.cs5500.starterbot.service.MongoDBService;
 import java.util.EnumSet;
@@ -37,18 +36,6 @@ public class App {
             throw new IllegalArgumentException(
                     "The BOT_TOKEN environment variable is not defined.");
         }
-        MessageListener messageListener = new MessageListener();
-        GenericRepository<Job> jobRepository = new InMemoryRepository<>();
-        GenericRepository<Location> locationRepository = new InMemoryRepository<>();
-        GenericRepository<Experience> experienceRepository = new InMemoryRepository<>();
-        GenericRepository<JobType> jobTypeRepository = new InMemoryRepository<>();
-
-        JobTypeController jobTypeController = new JobTypeController(jobTypeRepository);
-        ExperienceController experienceController = new ExperienceController(experienceRepository);
-        LocationController locationController = new LocationController(locationRepository);
-        JobController jobController =
-                new JobController(
-                        jobRepository, jobTypeController, experienceController, locationController);
 
         MongoDBService mongoDBService = new MongoDBService();
 
@@ -73,9 +60,7 @@ public class App {
                         mongoJobTypeController,
                         mongoExperienceController,
                         mongoLocationController);
-
-        messageListener.getCommands().get("testmongo").setJobController(mongoJobController);
-        messageListener.getCommands().get("sort").setJobController(mongoJobController);
+        MessageListener messageListener = new MessageListener(mongoJobController);
 
         JDA jda =
                 JDABuilder.createLight(token, EnumSet.noneOf(GatewayIntent.class))
