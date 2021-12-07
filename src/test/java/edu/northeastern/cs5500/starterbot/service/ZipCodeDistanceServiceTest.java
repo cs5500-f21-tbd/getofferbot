@@ -6,10 +6,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ZipCodeDistanceServiceTest {
-    static ZipCodeDistanceService zipcodeDistanceService;
+    ZipCodeDistanceService zipcodeDistanceService;
 
     @BeforeEach
-    static void setUp() {
+    void setUp() {
         zipcodeDistanceService = new ZipCodeDistanceService();
     }
 
