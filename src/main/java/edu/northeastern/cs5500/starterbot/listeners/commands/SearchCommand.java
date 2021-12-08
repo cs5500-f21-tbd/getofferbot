@@ -21,8 +21,9 @@ public class SearchCommand implements Command {
         return "search";
     }
     /**
-     * This method retrieves all jobs from job repository, sort them by creation date in descending order, and then
-     * return the top X items (defined by global variable RESULT_SIZE) back to discord, rendered in embed format.
+     * This method retrieves all jobs from job repository, sort them by creation date in descending
+     * order, and then return the top X items (defined by global variable RESULT_SIZE) back to
+     * discord, rendered in embed format.
      *
      * @param event discord command event.
      */
