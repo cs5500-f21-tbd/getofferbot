@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 public class FilterCommand implements Command {
+
     private JobController jobController;
 
     public FilterCommand(JobController jobController) {
@@ -62,7 +63,7 @@ public class FilterCommand implements Command {
                         "1500 miles/on the same coast")) {
             distanceOptions.addChoice(choice, choice);
         }
-        //
+
         OptionData postTimeOptions =
                 new OptionData(
                         OptionType.STRING,
