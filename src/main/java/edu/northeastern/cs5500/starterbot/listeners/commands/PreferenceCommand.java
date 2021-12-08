@@ -36,8 +36,8 @@ public class PreferenceCommand implements Command {
                 zipcode = zipcodeOption.getAsString();
             }
             if (radiusOption != null) {
-                // cast the long to doulbe here 
-                radius = (double)(radiusOption.getAsLong()); 
+                // cast the long to doulbe here
+                radius = (double) (radiusOption.getAsLong());
             }
             setPreferences(user, event, zipcode, radius);
         }
@@ -49,8 +49,9 @@ public class PreferenceCommand implements Command {
             return;
         }
         // TODO: tell the user what their preferences are. Does radius have a default?
-        event.reply("What is the zipcode of your address?"); 
-        event.reply("Do you want to look for jobs that near your zipcode? If yes, please enter the range of radius.");
+        event.reply("What is the zipcode of your address?");
+        event.reply(
+                "Do you want to look for jobs that near your zipcode? If yes, please enter the range of radius.");
     }
 
     void setPreferences(
@@ -60,13 +61,11 @@ public class PreferenceCommand implements Command {
             @Nullable Double radius) {
         // TODO: call the correct methods of userController to set one or both of these preferences
         if (user == null) {
-            event.reply("You have not set any preferences yet."); 
-            return; 
+            event.reply("You have not set any preferences yet.");
+            return;
         }
-        user.setZipcode(zipcode); 
+        user.setZipcode(zipcode);
         user.setSearchRadiusMiles(radius);
-
-
     }
 
     @Override
