@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.listeners;
 
+import edu.northeastern.cs5500.starterbot.controller.JobController;
 import edu.northeastern.cs5500.starterbot.listeners.commands.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,11 +14,11 @@ public class MessageListener extends ListenerAdapter {
 
     @Getter Map<String, Command> commands;
 
-    public MessageListener() {
+    public MessageListener(JobController jobController) {
 
         commands = new HashMap<>();
 
-        Command sort = new SortCommand();
+        Command sort = new SortCommand(jobController);
         commands.put(sort.getName(), sort);
 
         Command filter = new FilterCommand();
@@ -26,7 +27,7 @@ public class MessageListener extends ListenerAdapter {
         Command search = new SearchCommand();
         commands.put(search.getName(), search);
 
-        Command testMongo = new TestMongoCommand();
+        Command testMongo = new TestMongoCommand(jobController);
         commands.put(testMongo.getName(), testMongo);
 
         Command help = new HelpCommand();

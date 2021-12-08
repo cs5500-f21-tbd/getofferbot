@@ -109,6 +109,10 @@ public class FilterCommand implements Command {
             }
             // event.getChannel().sendMessage(eb.build()).queue();
         }
+        event.reply(
+                        "Here are the jobs filtered based on "
+                                + event.getOption("category").getAsString())
+                .queue();
     }
 
     @Override

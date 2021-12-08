@@ -1,12 +1,9 @@
 package edu.northeastern.cs5500.starterbot.listeners.commands;
 
-import edu.northeastern.cs5500.starterbot.controller.JobController;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 
 public class HelpCommand implements Command {
-
-    private JobController jobController;
 
     @Override
     public String getName() {
@@ -31,13 +28,13 @@ public class HelpCommand implements Command {
                         + "rating:      Sort by company rating     /sort --rating -asc/-desc \n"
                         + "location:    Sort by distance to user   /sort --location -asc/-desc \n"
                         + "postdate     Sort by post date          /sort --time -old/new \n"
-                        + "filter:      Filter base on one or more keywords \n"
+                        + "/filter:      Filter base on one or more keywords \n"
                         + "OPTIONS: \n"
                         + "title:       The title of job           /filter --title<Intern> \n"
                         + "type:        The type of job            /filter --type[ft/pt] \n"
                         + "company:     The name of company        /filter --company<Meta> \n"
                         + "distance:    The max distance of job    /filter --distance<zipcode><miles> \n"
-                        + "post time:   The post date of job       /filter --timeposted<Number of days> \n"
+                        + "time_posted:   The post date of job       /filter --timeposted<Number of days> \n"
                         + "rating:      The rating of the company  /filter --rating<Rating number> \n"
                         + "annual pay   The annual pay of the job  /filter --annualpay<Salary number> \n"
                         + "visa:        The visa sponsorship       /filter --visa[-true/-false] \n";
@@ -49,10 +46,5 @@ public class HelpCommand implements Command {
     //
     public CommandData getCommandData() {
         return new CommandData("help", "Help menu of the bot");
-    }
-
-    @Override
-    public void setJobController(JobController jobController) {
-        this.jobController = jobController;
     }
 }
