@@ -8,8 +8,11 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 public class FilterCommand implements Command {
-
     private JobController jobController;
+
+    public FilterCommand(JobController jobController) {
+        this.jobController = jobController;
+    }
 
     @Override
     public String getName() {
@@ -44,7 +47,7 @@ public class FilterCommand implements Command {
                 new OptionData(
                         OptionType.STRING, "company", "What companies do you want to display?");
         for (String choice : Arrays.asList("Amazon", "Meta", "Google")) {
-            titleOptions.addChoice(choice, choice);
+            companyOptions.addChoice(choice, choice);
         }
 
         OptionData distanceOptions =
@@ -57,16 +60,16 @@ public class FilterCommand implements Command {
                         "10 miles/locally",
                         "50 miles/in the same metro",
                         "1500 miles/on the same coast")) {
-            titleOptions.addChoice(choice, choice);
+            distanceOptions.addChoice(choice, choice);
         }
-
+        //
         OptionData postTimeOptions =
                 new OptionData(
                         OptionType.STRING,
                         "posttime",
                         "What is the max posting time of jobs do you want to display?");
         for (String choice : Arrays.asList("1 day", "3 days", "1 week", "1 month")) {
-            titleOptions.addChoice(choice, choice);
+            postTimeOptions.addChoice(choice, choice);
         }
 
         OptionData ratingOptions =
@@ -75,7 +78,7 @@ public class FilterCommand implements Command {
                         "rating",
                         "What is the min rating of jobs do you want to display?");
         for (String choice : Arrays.asList("3.0", "4.0", "4.5")) {
-            titleOptions.addChoice(choice, choice);
+            ratingOptions.addChoice(choice, choice);
         }
 
         OptionData annualPayOptions =
@@ -84,16 +87,16 @@ public class FilterCommand implements Command {
                         "annualpay",
                         "What is the min annual pay of jobs do you want to display?");
         for (String choice : Arrays.asList("50000 USD", "100000 USD", "150000 USD")) {
-            titleOptions.addChoice(choice, choice);
+            annualPayOptions.addChoice(choice, choice);
         }
 
         OptionData visaOptions =
                 new OptionData(
                         OptionType.STRING,
-                        "title",
+                        "visa",
                         "Do you want to ignore jobs that does not sponsor work visa in the US?");
         for (String choice : Arrays.asList("Yes", "No")) {
-            titleOptions.addChoice(choice, choice);
+            visaOptions.addChoice(choice, choice);
         }
 
         return new CommandData(this.getName(), "Filter for jobs.")
@@ -106,10 +109,5 @@ public class FilterCommand implements Command {
                         ratingOptions,
                         annualPayOptions,
                         visaOptions);
-    }
-
-    @Override
-    public void setJobController(JobController jobController) {
-        this.jobController = jobController;
     }
 }
