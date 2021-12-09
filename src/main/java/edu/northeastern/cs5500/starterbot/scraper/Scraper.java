@@ -1,7 +1,7 @@
 package edu.northeastern.cs5500.starterbot.scraper;
 
 import edu.northeastern.cs5500.starterbot.model.Job;
-import java.util.ArrayList;
+import java.util.List;
 
 public interface Scraper {
     /**
@@ -14,5 +14,5 @@ public interface Scraper {
      * @return a list of Job object from the web scrapping based on job details, returns null if
      *     scraping failed
      */
-    ArrayList<Job> Scrape(String filter, String location);
+    List<Job> scrape(String filter, String location);
 }
