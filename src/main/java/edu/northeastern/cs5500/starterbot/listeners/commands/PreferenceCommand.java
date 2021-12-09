@@ -51,9 +51,17 @@ public class PreferenceCommand implements Command {
         // TODO: tell the user what their preferences are. Does radius have a default?
         // get users' zipcode and radius via getters of @Data and displayed them
         String zipcode = user.getZipcode();
+        if (zipcode == null) {
+            event.reply("You have not set any zipcode yet.");
+        } else {
+            event.reply("Your zipcode is:" + zipcode);
+        }
         Double radius = user.getSearchRadiusKilometers();
-        event.reply("Your zipcode is:" + zipcode);
-        event.reply("Your search radius:" + radius);
+        if (radius == null) {
+            event.reply("You have not set any radius yet.");
+        } else {
+            event.reply("Your search radius:" + radius);
+        }
     }
 
     void setPreferences(
