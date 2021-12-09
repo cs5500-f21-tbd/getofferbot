@@ -21,10 +21,10 @@ public class MessageListener extends ListenerAdapter {
         Command sort = new SortCommand(jobController);
         commands.put(sort.getName(), sort);
 
-        Command filter = new FilterCommand();
+        Command filter = new FilterCommand(jobController);
         commands.put(filter.getName(), filter);
 
-        Command search = new SearchCommand();
+        Command search = new SearchCommand(jobController);
         commands.put(search.getName(), search);
 
         Command testMongo = new TestMongoCommand(jobController);
