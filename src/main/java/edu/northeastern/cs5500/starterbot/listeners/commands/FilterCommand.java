@@ -255,25 +255,19 @@ public class FilterCommand implements Command {
                 //             filteredJobList.add(job);
                 //         }
                 //     }
-                // case "experience":
-                //     for (Job job : jobList) {
-                //         if (job.getExperience()
-                //                 .equals(
-                //                         jobController
-                //                                 .getExperienceController()
-                //                                 .getExperienceByLabel(Option)
-                //                                 .getId())) {
-                //             filteredJobList.add(job);
-                //         }
-                //     }
+            case "experience":
+                for (Job job : jobList) {
+                    if (job.getExperience()
+                            .equals(
+                                    jobController
+                                            .getExperienceController()
+                                            .getExperienceByLabel(Option)
+                                            .getId())) {
+                        filteredJobList.add(job);
+                    }
+                }
             default:
         }
-
-        // for (Job job : filteredJobList) {
-        //     if (job.getJobTitle().equals(Option)) {
-        //         filteredJobList.add(job);
-        //     }
-        // }
 
         int size = 5;
         if (filteredJobList.size() < size) {

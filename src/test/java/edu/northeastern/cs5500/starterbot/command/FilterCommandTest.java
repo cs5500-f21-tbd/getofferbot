@@ -43,8 +43,7 @@ class FilterCommandTest {
                 new JobController(
                         jobRepository, jobTypeController, experienceController, locationController);
 
-        filterCommand = new FilterCommand();
-        filterCommand.setJobController(jobController);
+        filterCommand = new FilterCommand(jobController);
     }
 
     @Test
@@ -55,7 +54,7 @@ class FilterCommandTest {
 
     @Test
     void testgetCompanyName() {
-        ArrayList<String> companyList = filterCommand.getCompanyName();
+        ArrayList<String> companyList = filterCommand.getCompanyNameList();
         Logger logger = Logger.getLogger("FilterCommandTest");
         logger.info(String.valueOf(companyList.size()));
         System.out.println("c" + String.valueOf(companyList.size()));

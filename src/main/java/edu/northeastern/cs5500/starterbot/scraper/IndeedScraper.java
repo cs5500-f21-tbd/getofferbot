@@ -11,6 +11,7 @@ import edu.northeastern.cs5500.starterbot.model.Job;
 import edu.northeastern.cs5500.starterbot.model.Location;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Nullable;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -24,7 +25,7 @@ public class IndeedScraper implements Scraper {
      * @param div Element to parse
      * @return String containing link to apply
      */
-    private String _scrapeLinkToApply(Element div) throws RuntimeException {
+    private String scrapeLinkToApply(Element div) throws RuntimeException {
         String tmp_link = div.attr("href");
         if (tmp_link.equals("")) {
             throw new RuntimeException("Error: parsing link to apply.");
@@ -38,7 +39,7 @@ public class IndeedScraper implements Scraper {
      * @param div Element to parse
      * @return String containing link to apply
      */
-    private String _scrapeCompany(Element div) {
+    private String scrapeCompany(Element div) {
         String tmp_company = div.select("span.companyName").text();
         if (tmp_company.equals("")) {
             throw new RuntimeException("Error: parsing company name");
@@ -53,7 +54,7 @@ public class IndeedScraper implements Scraper {
      * @param div Element to parse
      * @return a location object, null if zipCode not available
      */
-    private Location _scrapeLocation(Element div) throws RuntimeException {
+    private Location scrapeLocation(Element div) throws RuntimeException {
         String loc_tmp;
         String city;
         String state;
@@ -90,7 +91,7 @@ public class IndeedScraper implements Scraper {
      * @param div Element to parse
      * @return company rating, 0.0f indicates rating missing
      */
-    private Float _scrapeRating(Element div) {
+    private Float scrapeRating(Element div) {
         Float rating;
         try {
             rating =
@@ -109,7 +110,7 @@ public class IndeedScraper implements Scraper {
      * @return the title of the job
      * @throws RuntimeException
      */
-    private String _scrapeJobTitle(Element div) throws RuntimeException {
+    private String scrapeJobTitle(Element div) throws RuntimeException {
         Elements job_title_tmp = div.select("span");
         String job_title;
         try {
@@ -132,7 +133,7 @@ public class IndeedScraper implements Scraper {
      * @return the annual payment in float, or null if the job posting does not include the right
      *     info
      */
-    private Float _scrapeAnnualPayment(Element div) {
+    private Float scrapeAnnualPayment(Element div) {
         Float payment = null;
         try {
             String[] tmp_str = div.select("div.attribute_snippet").toString().split("\\$");
@@ -156,24 +157,24 @@ public class IndeedScraper implements Scraper {
      * @return a Job object
      * @throws RuntimeException
      */
-    private Job _scrapeOneJob(Element div_tmp) throws RuntimeException {
+    private Job scrapeOneJob(Element div_tmp) throws RuntimeException {
         String link_to_apply;
         String company;
         Element div;
         Location location;
         String job_title;
         try {
-            link_to_apply = _scrapeLinkToApply(div_tmp);
+            link_to_apply = scrapeLinkToApply(div_tmp);
             div = div_tmp.select("div.job_seen_beacon").first();
-            company = _scrapeCompany(div);
-            job_title = _scrapeJobTitle(div);
-            location = _scrapeLocation(div);
+            company = scrapeCompany(div);
+            job_title = scrapeJobTitle(div);
+            location = scrapeLocation(div);
         } catch (RuntimeException e) {
             throw new RuntimeException("Error: error parsing key components");
         }
 
-        Float rating = _scrapeRating(div);
-        Float payment = _scrapeAnnualPayment(div);
+        Float rating = scrapeRating(div);
+        Float payment = scrapeAnnualPayment(div);
 
         Job job = new Job(job_title, company, link_to_apply);
         if (location != null) {
@@ -199,7 +200,7 @@ public class IndeedScraper implements Scraper {
      * @throws IOException
      * @throws RuntimeException
      */
-    private ArrayList<Job> _scrape(String URL) throws IOException, RuntimeException {
+    private List<Job> scrape(String URL) throws IOException, RuntimeException {
 
         Document document;
         try {
@@ -209,12 +210,12 @@ public class IndeedScraper implements Scraper {
         }
 
         Elements divs = document.select("a[class^=tapItem fs-unmask]");
-        ArrayList<Job> jobs = new ArrayList<Job>();
+        List<Job> jobs = new ArrayList<Job>();
 
         for (Element div_tmp : divs) {
             Job job;
             try {
-                job = _scrapeOneJob(div_tmp);
+                job = scrapeOneJob(div_tmp);
             } catch (RuntimeException e) {
                 throw new RuntimeException("Error: Jsoup Element parsing error.");
             }
@@ -234,7 +235,7 @@ public class IndeedScraper implements Scraper {
      *     scraping failed
      */
     @Nullable
-    public ArrayList<Job> Scrape(@Nullable String filter, @Nullable String location) {
+    public List<Job> scrape(@Nullable String filter, @Nullable String location) {
         StringBuilder search_link = new StringBuilder("https://www.indeed.com/jobs?q=");
         if (filter == null || filter.equalsIgnoreCase("")) {
             search_link.append("software+development+engineer");
@@ -251,7 +252,7 @@ public class IndeedScraper implements Scraper {
         }
 
         try {
-            return _scrape(search_link.toString());
+            return scrape(search_link.toString());
         } catch (Exception e) {
             return null;
         }

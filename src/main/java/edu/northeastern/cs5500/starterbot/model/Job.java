@@ -3,6 +3,7 @@ package edu.northeastern.cs5500.starterbot.model;
 import java.time.LocalDate;
 import javax.annotation.Nonnull;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
@@ -10,8 +11,9 @@ import org.bson.types.ObjectId;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
+@EqualsAndHashCode
 public class Job implements Model {
-    private ObjectId id;
+    @EqualsAndHashCode.Exclude private ObjectId id;
     @Nonnull private String jobTitle;
     private ObjectId jobType;
     private ObjectId experience;
