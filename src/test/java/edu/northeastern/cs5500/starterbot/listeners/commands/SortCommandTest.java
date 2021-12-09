@@ -16,7 +16,6 @@
 // import edu.northeastern.cs5500.starterbot.utility.JobUtilities;
 // import java.util.ArrayList;
 // import java.util.List;
-// import net.dv8tion.jda.api.JDA;
 // import org.junit.Before;
 // import org.junit.jupiter.api.Test;
 
@@ -29,8 +28,6 @@
 //     JobTypeController jobTypeController;
 //     ExperienceController experienceController;
 //     LocationController locationController;
-
-//     JDA jda;
 
 //     @Before
 //     void setUpReposAndControllers() {
