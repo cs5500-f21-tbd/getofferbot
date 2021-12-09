@@ -4,7 +4,6 @@ import edu.northeastern.cs5500.starterbot.controller.JobController;
 import edu.northeastern.cs5500.starterbot.model.Job;
 import java.awt.Color;
 import java.util.ArrayList;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
@@ -32,7 +31,6 @@ public class FilterCommand implements Command {
                         "rating",
                         "annualpay",
                         "visa");
-
     }
 
     @Override
@@ -180,7 +178,6 @@ public class FilterCommand implements Command {
         for (String choice :
                 Arrays.asList("internship", "entry-level", "mid-level", "senior-level")) {
             experience.addChoice(choice, choice);
-
         }
 
         OptionData ratingOptions =
@@ -260,17 +257,17 @@ public class FilterCommand implements Command {
                 //             filteredJobList.add(job);
                 //         }
                 //     }
-            case "experience":
-                for (Job job : jobList) {
-                    if (job.getExperience()
-                            .equals(
-                                    jobController
-                                            .getExperienceController()
-                                            .getExperienceByLabel(Option)
-                                            .getId())) {
-                        filteredJobList.add(job);
-                    }
-                }
+                // case "experience":
+                //     for (Job job : jobList) {
+                //         if (job.getExperience()
+                //                 .equals(
+                //                         jobController
+                //                                 .getExperienceController()
+                //                                 .getExperienceByLabel(Option)
+                //                                 .getId())) {
+                //             filteredJobList.add(job);
+                //         }
+                //     }
             default:
         }
 
