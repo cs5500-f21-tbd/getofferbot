@@ -12,7 +12,7 @@ import lombok.Data;
  */
 @Data
 public class LocationController {
-    GenericRepository<Location> locationRepository;
+    private GenericRepository<Location> locationRepository;
 
     /**
      * Constructor. Initializes the controller and create default cases if Location repo is empty.
@@ -40,7 +40,7 @@ public class LocationController {
 
         Location location4 = new Location("80528", "Fort Collins", "CO", "USA");
 
-        Location location5 = new Location("98004", "Bellevue", "CWA", "USA");
+        Location location5 = new Location("98004", "Bellevue", "WA", "USA");
 
         Location location6 = new Location("60644", "Chicago", "IL", "USA");
 

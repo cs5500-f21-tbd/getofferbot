@@ -1,6 +1,5 @@
 package edu.northeastern.cs5500.starterbot.listeners.commands;
 
-import edu.northeastern.cs5500.starterbot.controller.JobController;
 import java.util.Arrays;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -14,7 +13,7 @@ public class FilterCommand implements Command {
     public FilterCommand(JobController jobController) {
         this.jobController = jobController;
     }
-
+  
     @Override
     public String getName() {
         return "filter";
