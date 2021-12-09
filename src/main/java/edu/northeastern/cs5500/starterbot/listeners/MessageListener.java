@@ -21,7 +21,7 @@ public class MessageListener extends ListenerAdapter {
         Command sort = new SortCommand(jobController);
         commands.put(sort.getName(), sort);
 
-        Command filter = new FilterCommand();
+        Command filter = new FilterCommand(jobController);
         commands.put(filter.getName(), filter);
 
         Command search = new SearchCommand(jobController);
