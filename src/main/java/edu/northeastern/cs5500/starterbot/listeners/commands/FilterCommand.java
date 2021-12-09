@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -15,6 +16,22 @@ import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 public class FilterCommand implements Command {
 
     private JobController jobController;
+    private List<String> commandList;
+
+    public FilterCommand(JobController jobController) {
+        this.jobController = jobController;
+        commandList =
+                Arrays.asList(
+                        "title",
+                        "jobtype",
+                        "company",
+                        "distance",
+                        "time_posted",
+                        "experience",
+                        "rating",
+                        "annualpay",
+                        "visa");
+    }
 
     @Override
     public String getName() {
@@ -24,37 +41,19 @@ public class FilterCommand implements Command {
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
+        // String option = event.getOption("category").getAsString();
+        String category = getCategory(event);
+        String optionInput = event.getOption(category).getAsString();
+        List<Job> jobListFiltered = filterJobs(jobList, category, optionInput);
+        event.reply(category + " Here are the jobs filtered based on " + optionInput).queue();
 
-        String category = event.getOption("category").getAsString();
+        // jobListFiltered = jobList.subList(2, 7);
 
-        String title = event.getOption("title").getAsString();
-        String type = event.getOption("type").getAsString();
-        String company = event.getOption("company").getAsString();
-        String distance = event.getOption("distance").getAsString();
-        String timeposted = event.getOption("timeposted").getAsString();
-        String rating = event.getOption("rating").getAsString();
-        String annaulpay = event.getOption("annaulpay").getAsString();
-        String visa = event.getOption("visa").getAsString();
+        Logger logger = Logger.getLogger("FilterCommandTest");
+        logger.info(String.valueOf(jobListFiltered.size()));
 
-        // String[] options = option.split(" ");
-        // String optionType = options[0];
-        // String optionVal = options[1];
-
-        jobList = filterJobs(jobList, rating);
-        event.reply("Here are the jobs filtered based on " + "val").queue();
-
-        Job job = null;
-        int size = this.jobController.getJobRepository().getAll().size();
-        int length = 10;
-        if (size < 10) {
-            length = size;
-        }
-
-        // Object[] jobArray = this.jobController.getAll().toArray();
-        // for (int i = 0; i < length; i++) {
-        for (Object castJob : jobController.getAll().toArray()) {
-            // job = (Job) jobArray[i];
-            job = (Job) castJob;
+        for (Job job : jobListFiltered) {
+            // job = (Job) castJob;
             EmbedBuilder eb = new EmbedBuilder();
             eb.setTitle(job.getJobTitle());
             eb.setColor(Color.CYAN);
@@ -107,63 +106,44 @@ public class FilterCommand implements Command {
             if (job.getStarRating() != null) {
                 eb.addField("Rating", job.getStarRating().toString(), false);
             }
-            // event.getChannel().sendMessage(eb.build()).queue();
+            event.getChannel().sendMessage(eb.build()).queue();
         }
-        event.reply(
-                        "Here are the jobs filtered based on "
-                                + event.getOption("category").getAsString())
-                .queue();
     }
 
     @Override
     public CommandData getCommandData() {
-        // TODO: This will be connected to the DB in Sprint 4
 
-        OptionData categoryOptions =
-                new OptionData(
-                                OptionType.STRING,
-                                "category",
-                                "What category do you want to filter?")
-                        .setRequired(true);
-        for (String choice :
-                Arrays.asList(
-                        "title",
-                        "type",
-                        "company",
-                        "distance",
-                        "time_posted",
-                        "rating",
-                        "annualpay",
-                        "visa")) {
-            categoryOptions.addChoice(choice, choice);
-        }
+        // OptionData categoryOptions =
+        //         new OptionData(
+        //                         OptionType.STRING,
+        //                         "category",
+        //                         "What category do you want to filter?")
+        //                 .setRequired(true);
+        // for (String choice : commandList) {
+        //     categoryOptions.addChoice(choice, choice);
+        // }
 
         OptionData titleOptions =
                 new OptionData(
-                        OptionType.STRING, "title", "What job titles do you want to display?");
+                        OptionType.STRING, "title", "What job titles do you want to filter for?");
         for (String choice : Arrays.asList("Software Engineer", "Backend", "University")) {
             titleOptions.addChoice(choice, choice);
         }
 
         OptionData typeOptions =
-                new OptionData(OptionType.STRING, "type", "What job types do you want to display?");
+                new OptionData(
+                        OptionType.STRING,
+                        "jobtype",
+                        "What type of job do you want to filter for?");
         for (String choice : Arrays.asList("Full-time", "Part-time")) {
             typeOptions.addChoice(choice, choice);
         }
 
         OptionData companyOptions =
                 new OptionData(
-                        OptionType.STRING, "company", "What companies do you want to display?");
-        for (String choice :
-                Arrays.asList(
-                        "Amazon",
-                        "Meta",
-                        "Google",
-                        "HP",
-                        "Microsoft",
-                        "TikTok",
-                        "Rogue Fabrication, LLC",
-                        "Discovery,Inc.")) {
+                        OptionType.STRING, "company", "What company do you want to filter for?");
+
+        for (String choice : getCompanyNameList()) {
             companyOptions.addChoice(choice, choice);
         }
 
@@ -171,7 +151,7 @@ public class FilterCommand implements Command {
                 new OptionData(
                         OptionType.STRING,
                         "distance",
-                        "What is the max distance of jobs do you want to display?");
+                        "What are the farthest jobs do you want to filter for?");
         for (String choice :
                 Arrays.asList(
                         "10 miles/locally",
@@ -184,16 +164,26 @@ public class FilterCommand implements Command {
                 new OptionData(
                         OptionType.STRING,
                         "time_posted",
-                        "What is the earliest job do you'd like to see?");
+                        "What are the earliest jobs posted do you'd like to filter for?");
         for (String choice : Arrays.asList("1 day", "3 days", "1 week", "1 month")) {
             postTimeOptions.addChoice(choice, choice);
+        }
+
+        OptionData experience =
+                new OptionData(
+                        OptionType.STRING,
+                        "experience",
+                        "What job experience level do you'd like to filter for?");
+        for (String choice :
+                Arrays.asList("internship", "entry-level", "mid-level", "senior-level")) {
+            experience.addChoice(choice, choice);
         }
 
         OptionData ratingOptions =
                 new OptionData(
                         OptionType.STRING,
                         "rating",
-                        "What is the min rating of jobs do you want to display?");
+                        "What is the lowest star rating of jobs you want to filter for?");
         for (String choice : Arrays.asList("3.0", "4.0", "4.5")) {
             ratingOptions.addChoice(choice, choice);
         }
@@ -202,8 +192,8 @@ public class FilterCommand implements Command {
                 new OptionData(
                         OptionType.STRING,
                         "annualpay",
-                        "What is the min annual pay of jobs do you want to display?");
-        for (String choice : Arrays.asList("50000 USD", "100000 USD", "150000 USD")) {
+                        "What is the min annual pay of jobs you want to filter for? (in USD)");
+        for (String choice : Arrays.asList("50000", "100000", "150000")) {
             annualPayOptions.addChoice(choice, choice);
         }
 
@@ -218,64 +208,83 @@ public class FilterCommand implements Command {
 
         return new CommandData(this.getName(), "Filter for jobs.")
                 .addOptions(
+                        // categoryOptions.setRequired(true),
                         titleOptions,
                         typeOptions,
                         companyOptions,
                         distanceOptions,
+                        experience,
                         postTimeOptions,
                         ratingOptions,
                         annualPayOptions,
                         visaOptions);
     }
 
-    @Override
-    public void setJobController(JobController jobController) {
-        this.jobController = jobController;
-    }
+    private List<Job> filterJobs(List<Job> jobList, String Category, String Option) {
 
-    private List<Job> filterJobs(List<Job> jobList, String option) {
-        List<Job> newJobList = new ArrayList<>();
+        List<Job> filteredJobList = new ArrayList<>();
+        // String x = "Software Engineer";
 
-        switch (option) {
+        // for (Job job : jobList) {
+        //     System.out.println(job.getJobTitle());
+        //     if (job.getJobTitle().equals(Option)) {
+        //         filteredJobList.add(job);
+        //     }
+        // }
+
+        switch (Category) {
             case "title":
                 for (Job job : jobList) {
-                    if (job.getJobTitle() == option) {
-                        newJobList.add(job);
+                    if (containsKeyword(job.getJobTitle(), Option)) {
+                        // if (job.getJobTitle().equals(Option)) {
+                        filteredJobList.add(job);
                     }
                 }
-                // filter command handler
-            case "type":
-                for (Job job : jobList) {
-                    // if ((JobType)job.getJobType() == optionVal) {
-                    //     newJobList.add(job);
-                    // }
-                }
-                break;
 
             case "company":
-                // event.reply("The help menu will be added soon...").queue();
-                // // todo: change event.reply with help function call
-                // break;
+                for (Job job : jobList) {
+                    if (containsKeyword(job.getCompany(), Option)) {
+                        filteredJobList.add(job);
+                    }
+                }
 
-            case "timeposted":
-                //
-
-            case "location":
-
-            case "visa":
-
+                // case "annualpay":
+                //     for (Job job : jobList) {
+                //         // if (Option)
+                //         if (Float.compare(job.getAnnualPay(), 60000f) == 1) {
+                //             filteredJobList.add(job);
+                //         }
+                //     }
+                // case "experience":
+                //     for (Job job : jobList) {
+                //         if (job.getExperience()
+                //                 .equals(
+                //                         jobController
+                //                                 .getExperienceController()
+                //                                 .getExperienceByLabel(Option)
+                //                                 .getId())) {
+                //             filteredJobList.add(job);
+                //         }
+                //     }
             default:
         }
 
+        // for (Job job : filteredJobList) {
+        //     if (job.getJobTitle().equals(Option)) {
+        //         filteredJobList.add(job);
+        //     }
+        // }
+
         int size = 5;
-        if (jobList.size() < size) {
-            size = jobList.size();
+        if (filteredJobList.size() < size) {
+            size = filteredJobList.size();
         }
-        return jobList.subList(0, size);
-        // return new ArrayList<>();
+
+        // return filteredJobList.subList(0, size);
+        return filteredJobList;
     }
 
-    public ArrayList<String> getCompanyName() {
+    public ArrayList<String> getCompanyNameList() {
         ArrayList<String> companyList = new ArrayList<>();
 
         List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
@@ -285,5 +294,23 @@ public class FilterCommand implements Command {
             }
         }
         return companyList;
+    }
+
+    public String getCategory(SlashCommandEvent event) {
+        String option = null;
+        for (String command : commandList) {
+            if (event.getOption(command) != null) {
+                option = command;
+                return option;
+            }
+        }
+        return option;
+    }
+
+    public Boolean containsKeyword(String title, String keyword) {
+        if (title.indexOf(keyword) != -1) {
+            return true;
+        }
+        return false;
     }
 }
