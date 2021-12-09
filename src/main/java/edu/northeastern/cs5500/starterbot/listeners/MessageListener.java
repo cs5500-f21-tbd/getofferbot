@@ -24,7 +24,7 @@ public class MessageListener extends ListenerAdapter {
         Command filter = new FilterCommand();
         commands.put(filter.getName(), filter);
 
-        Command search = new SearchCommand();
+        Command search = new SearchCommand(jobController);
         commands.put(search.getName(), search);
 
         Command testMongo = new TestMongoCommand(jobController);
