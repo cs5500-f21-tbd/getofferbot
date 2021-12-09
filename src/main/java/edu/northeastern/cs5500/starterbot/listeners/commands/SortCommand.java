@@ -70,9 +70,9 @@ public class SortCommand implements Command {
             orderOptions.addChoice(choice, choice);
         }
         OptionData sizeOptions =
-                new OptionData(OptionType.STRING, "size", "how many job do you want to sort?");
+                new OptionData(OptionType.STRING, "size", "how many jobs do you want to sort?");
 
-        return new CommandData("sort", "Sort jobs based on a category.")
+        return new CommandData(this.getName(), "Sort jobs based on a category.")
                 .addOptions(
                         categoryOptions.setRequired(true),
                         orderOptions.setRequired(true),
