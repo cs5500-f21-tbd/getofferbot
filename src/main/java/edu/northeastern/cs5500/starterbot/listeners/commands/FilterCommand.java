@@ -4,6 +4,7 @@ import edu.northeastern.cs5500.starterbot.controller.JobController;
 import edu.northeastern.cs5500.starterbot.model.Job;
 import java.awt.Color;
 import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
@@ -31,6 +32,7 @@ public class FilterCommand implements Command {
                         "rating",
                         "annualpay",
                         "visa");
+
     }
 
     @Override
@@ -144,6 +146,7 @@ public class FilterCommand implements Command {
                         OptionType.STRING, "company", "What company do you want to filter for?");
 
         for (String choice : getCompanyNameList()) {
+
             companyOptions.addChoice(choice, choice);
         }
 
@@ -177,6 +180,7 @@ public class FilterCommand implements Command {
         for (String choice :
                 Arrays.asList("internship", "entry-level", "mid-level", "senior-level")) {
             experience.addChoice(choice, choice);
+
         }
 
         OptionData ratingOptions =
@@ -194,6 +198,7 @@ public class FilterCommand implements Command {
                         "annualpay",
                         "What is the min annual pay of jobs you want to filter for? (in USD)");
         for (String choice : Arrays.asList("50000", "100000", "150000")) {
+
             annualPayOptions.addChoice(choice, choice);
         }
 
