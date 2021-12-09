@@ -31,21 +31,4 @@ public class User implements Model {
                         ? null
                         : (searchRadiusMiles * ZipCodeDistanceService.KILOMETERS_IN_A_MILE);
     }
-
-    // add setter to set the zipcode
-    public void setZipcode(String zipcode) {
-        zipcode = (zipcode == null) ? null : zipcode;
-    }
-
-    @Override
-    public ObjectId getId() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public void setId(ObjectId id) {
-        // TODO Auto-generated method stub
-        
-    }
 }
