@@ -12,6 +12,11 @@ import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
 import java.time.LocalDate;
 import lombok.experimental.UtilityClass;
 
+/**
+ * JobUtilities class contains methods that genrate various jobs covering each job attribute. When a
+ * class wants to use a default job, it can call appropriate method in JobUtilities to generate a
+ * Job with or without a specific attribute.
+ */
 @UtilityClass
 public class JobUtilities {
 
