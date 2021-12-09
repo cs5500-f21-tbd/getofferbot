@@ -82,7 +82,7 @@ public class JobUtilities {
         return jobStarRating3;
     }
 
-    public Job generateJobStarRating4() {
+    public Job generateJobStarRating4NoStarRating() {
         Job jobStarRating4NoStarRating = new Job("Software Engineer", "Partnercubed", "indeed.com");
         return jobStarRating4NoStarRating;
     }
