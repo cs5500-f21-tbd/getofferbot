@@ -15,7 +15,8 @@ import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 /**
  * FilterCommand is created by messageListenenr to filter job from jobList. When slashCommand
  * /filter along with Option entered correctly on getofferbot enterd, the bot will return filtered
- * jobs based on the specified option.
+ * jobs based on the specified option and prompt user to change their input when there is no
+ * matching jobs to show.
  */
 public class FilterCommand implements Command {
 
@@ -24,6 +25,7 @@ public class FilterCommand implements Command {
     private List<String> experienceList;
     private List<String> ratingList;
     private List<String> payList;
+    private int numToRetuen;
 
     public FilterCommand(JobController jobController) {
         this.jobController = jobController;
@@ -41,7 +43,9 @@ public class FilterCommand implements Command {
 
         experienceList = Arrays.asList("intern", "entry", "mid", "senior");
         ratingList = Arrays.asList("3.0", "3.5", "4.0", "4.5");
-        payList = Arrays.asList("50000", "100000", "150000");
+        payList = Arrays.asList("50000", "80000", "110000", "130000");
+
+        numToRetuen = 6;
     }
 
     @Override
@@ -51,7 +55,8 @@ public class FilterCommand implements Command {
 
     /**
      * This method retrieves all jobs from job repository in MongoDB, call filter funtion to start
-     * filter returned job list then rendered in embed format and returned back to discord.
+     * filter job list, jobs will be rendered in embed format and returned back to discord in card
+     * format.
      *
      * @param event discord command event
      */
@@ -63,8 +68,8 @@ public class FilterCommand implements Command {
         List<Job> jobListFiltered = filterJobs(jobList, category, optionInput);
 
         int sizeToreturn = jobListFiltered.size();
-        if (sizeToreturn > 6) {
-            sizeToreturn = 6;
+        if (sizeToreturn > numToRetuen) {
+            sizeToreturn = numToRetuen;
         }
 
         jobListFiltered = jobListFiltered.subList(0, sizeToreturn);
@@ -183,10 +188,10 @@ public class FilterCommand implements Command {
     }
 
     /**
-     * @param String Category, filter function to filter jobs for all categories if the option input
-     *     is valid
+     * @param String Category, filter function to determine the filtering category and then filter
+     *     jobs for if the option input is valid
      * @param String Option, user option input
-     * @return List jobList, jobList after filtering
+     * @return List jobList, return a new jobList filtered from original jobList
      */
     private List<Job> filterJobs(List<Job> jobList, String Category, String Option) {
 
@@ -249,7 +254,7 @@ public class FilterCommand implements Command {
     }
 
     /**
-     * Helper function to see which category our user is using
+     * Helper function to see which filter category our user is using
      *
      * @param SlashCommandEvent event, JDA event passed in for matching
      * @return String option, option being used
@@ -282,10 +287,10 @@ public class FilterCommand implements Command {
     }
 
     /**
-     * Helper function to remove the job if the experience attribute is null
+     * Helper function to return a new list of job with experience attribute that is not null
      *
-     * @param jobList List, joblist to be removed
-     * @return jobList List, jobList after the removal
+     * @param jobList List, original joblist to be filtered on experience
+     * @return jobList List, a new jobList without experience
      */
     public List<Job> removeNullforexperience(List<Job> jobList) {
         List<Job> newJobList = new ArrayList<>();
