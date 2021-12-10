@@ -12,6 +12,11 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
+/**
+ * FilterCommand is created by messageListenenr to filter job from jobList. When slashCommand
+ * /filter along with Option entered correctly on getofferbot enterd, the bot will return filtered
+ * jobs based on the specified option.
+ */
 public class FilterCommand implements Command {
 
     private JobController jobController;
@@ -44,6 +49,12 @@ public class FilterCommand implements Command {
         return "filter";
     }
 
+    /**
+     * This method retrieves all jobs from job repository in MongoDB, call filter funtion to start
+     * filter returned job list then rendered in embed format and returned back to discord.
+     *
+     * @param event discord command event
+     */
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
