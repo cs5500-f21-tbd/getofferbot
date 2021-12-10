@@ -146,16 +146,6 @@ public class FilterCommand implements Command {
     @Override
     public CommandData getCommandData() {
 
-        // OptionData categoryOptions =
-        //         new OptionData(
-        //                         OptionType.STRING,
-        //                         "category",
-        //                         "What category do you want to filter?")
-        //                 .setRequired(true);
-        // for (String choice : commandList) {
-        //     categoryOptions.addChoice(choice, choice);
-        // }
-
         OptionData titleOptions =
                 new OptionData(
                         OptionType.STRING, "title", "What job titles do you want to filter for?");
