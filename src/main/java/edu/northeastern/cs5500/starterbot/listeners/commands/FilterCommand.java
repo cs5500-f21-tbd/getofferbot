@@ -2,17 +2,15 @@ package edu.northeastern.cs5500.starterbot.listeners.commands;
 
 import edu.northeastern.cs5500.starterbot.controller.JobController;
 import edu.northeastern.cs5500.starterbot.model.Job;
-import java.awt.Color;
+import edu.northeastern.cs5500.starterbot.utility.EmbedUtilities;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
-import org.bson.types.ObjectId;
 
 /**
  * FilterCommand is created by messageListenenr to filter job from jobList. When slashCommand
@@ -68,78 +66,13 @@ public class FilterCommand implements Command {
         }
 
         jobListFiltered = jobListFiltered.subList(0, sizeToreturn);
-        ObjectId internID =
-                jobController.getExperienceController().getExperienceByLabel("intern").getId();
-        ObjectId jobID = jobList.get(21).getExperience();
 
-        // temp testing
-        System.out.println("testtesttesttesttesttesttesttesttesttesttesttest");
-        System.out.println(internID);
-        System.out.println(jobID);
-        System.out.println("testtesttesttesttesttesttesttesttesttesttesttest");
-
-        // System.out.println(Float.parseFloat(optionInput));
-
-        event.reply(category + " Here are the jobs filtered based on " + optionInput).queue();
-
-        Logger logger = Logger.getLogger("FilterCommandTest");
-        logger.info(String.valueOf(jobListFiltered.size()));
+        event.reply("Based on " + category + " Here are the jobs filtered for " + optionInput)
+                .queue();
 
         for (Job job : jobListFiltered) {
-            // job = (Job) castJob;
-            EmbedBuilder eb = new EmbedBuilder();
-            eb.setTitle(job.getJobTitle());
-            eb.setColor(Color.CYAN);
-            eb.addField("Company", job.getCompany(), false);
-            eb.addField("Link to apply", job.getLinkToApply(), false);
-            if (job.getJobType() != null) {
-                eb.addField(
-                        "Job type",
-                        this.jobController
-                                .getJobTypeController()
-                                .getJobTypeRepository()
-                                .get(job.getJobType())
-                                .toString(),
-                        false);
-            }
-            if (job.getExperience() != null) {
-                eb.addField(
-                        "Experience",
-                        this.jobController
-                                .getExperienceController()
-                                .getExperienceRepository()
-                                .get(job.getExperience())
-                                .toString(),
-                        false);
-            }
-
-            if (job.getLocation() != null) {
-                eb.addField(
-                        "Location",
-                        this.jobController
-                                .getLocationController()
-                                .getLocationRepository()
-                                .get(job.getLocation())
-                                .toString(),
-                        false);
-            }
-
-            if (job.getCreated() != null) {
-                eb.addField("Date posted", job.getCreated().toString(), false);
-            }
-
-            if (job.getSponsorship()) {
-                eb.addField("Visa sponsorship", "Yes", false);
-            }
-
-            if (job.getAnnualPay() != null) {
-                eb.addField("Annual pay", job.getAnnualPay().toString() + "+", false);
-            }
-
-            if (job.getStarRating() != null) {
-                eb.addField("Rating", job.getStarRating().toString(), false);
-            }
-            event.getChannel().sendMessage(eb.build()).queue();
+            EmbedBuilder embedBuilder = EmbedUtilities.generateJobEmbed(job, jobController);
+            event.getChannel().sendMessage(embedBuilder.build()).queue();
         }
     }
 
