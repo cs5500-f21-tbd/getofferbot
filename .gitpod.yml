@@ -1,0 +1,8 @@
+
+vscode:
+  extensions:
+    - gabrielbb.vscode-lombok
+    - redhat.java
+
+tasks:
+  - init: BOT_TOKEN=x ./gradlew build

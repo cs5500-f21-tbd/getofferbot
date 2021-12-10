@@ -13,6 +13,9 @@ plugins {
 
     // Spotless to format code easily
     id "com.diffplug.spotless"
+
+    // JaCoCo for code coverage analysis and reporting
+    id 'jacoco'
 }
 
 repositories {
@@ -53,6 +56,22 @@ dependencies {
         // Remove the next line if your bot needs voice support!
         exclude module: "opus-java"
     }
+
+    // Use dagger for dependency injection
+    implementation 'com.google.dagger:dagger:2.40'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.40'
+
+    // MongoDB client
+    implementation 'org.mongodb:mongodb-driver:3.12.10'
+
+    // Jsoup
+    implementation 'org.jsoup:jsoup:1.14.3'
+
+    // Gson to handle json data
+    implementation 'com.google.code.gson:gson:2.8.9'
+
+    // Jackson to handle json file
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.0'
 }
 
 application {
@@ -63,6 +82,7 @@ application {
 test {
     // Use junit platform for unit tests
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }
 
 // Target Java 1.8 - make sure system.properties matches this as well
@@ -96,5 +116,18 @@ spotless {
     java {
         targetExclude 'build/**'
         googleJavaFormat().aosp()
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
     }
 }
