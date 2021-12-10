@@ -6,13 +6,11 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
-import org.bson.types.ObjectId;
 
 public class FilterCommand implements Command {
 
@@ -59,22 +57,13 @@ public class FilterCommand implements Command {
         }
 
         jobListFiltered = jobListFiltered.subList(0, sizeToreturn);
-        ObjectId internID =
-                jobController.getExperienceController().getExperienceByLabel("intern").getId();
-        ObjectId jobID = jobList.get(21).getExperience();
 
-        // temp testing
-        System.out.println("testtesttesttesttesttesttesttesttesttesttesttest");
-        System.out.println(internID);
-        System.out.println(jobID);
-        System.out.println("testtesttesttesttesttesttesttesttesttesttesttest");
-
-        // System.out.println(Float.parseFloat(optionInput));
-
-        event.reply(category + " Here are the jobs filtered based on " + optionInput).queue();
-
-        Logger logger = Logger.getLogger("FilterCommandTest");
-        logger.info(String.valueOf(jobListFiltered.size()));
+        if (sizeToreturn == 0) {
+            event.reply("No result at this point, try another option or /help").queue();
+        } else {
+            event.reply("based on" + category + " Here are the jobs filtered by " + optionInput)
+                    .queue();
+        }
 
         for (Job job : jobListFiltered) {
             // job = (Job) castJob;
