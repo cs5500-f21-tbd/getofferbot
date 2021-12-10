@@ -14,10 +14,18 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import org.bson.types.ObjectId;
 
+/**
+ * FilterCommand is created by messageListenenr to filter job from jobList. When slashCommand
+ * /filter along with Option entered correctly on getofferbot enterd, the bot will return filtered
+ * jobs based on the specified option.
+ */
 public class FilterCommand implements Command {
 
     private JobController jobController;
     private List<String> commandList;
+    private List<String> experienceList;
+    private List<String> ratingList;
+    private List<String> payList;
 
     public FilterCommand(JobController jobController) {
         this.jobController = jobController;
@@ -32,6 +40,8 @@ public class FilterCommand implements Command {
                         "rating",
                         "annualpay",
                         "visa");
+
+        experienceList = Arrays.asList("intern", "entry", "mid", "senior");
     }
 
     @Override
@@ -39,10 +49,15 @@ public class FilterCommand implements Command {
         return "filter";
     }
 
+    /**
+     * This method retrieves all jobs from job repository in MongoDB, call filter funtion to start
+     * filter returned job list then rendered in embed format and returned back to discord.
+     *
+     * @param event discord command event
+     */
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
-        // String option = event.getOption("category").getAsString();
         String category = getCategory(event);
         String optionInput = event.getOption(category).getAsString();
         List<Job> jobListFiltered = filterJobs(jobList, category, optionInput);
@@ -51,21 +66,21 @@ public class FilterCommand implements Command {
         if (sizeToreturn > 6) {
             sizeToreturn = 6;
         }
+
         jobListFiltered = jobListFiltered.subList(0, sizeToreturn);
         ObjectId internID =
                 jobController.getExperienceController().getExperienceByLabel("intern").getId();
         ObjectId jobID = jobList.get(21).getExperience();
+
+        // temp testing
+        System.out.println("testtesttesttesttesttesttesttesttesttesttesttest");
         System.out.println(internID);
         System.out.println(jobID);
+        System.out.println("testtesttesttesttesttesttesttesttesttesttesttest");
 
-        // Float f = 3333f;
-        // System.out.println(
-        //         (Float.compare(jobList.get(21).getAnnualPay().floatValue(), f.floatValue()) ==
-        // 1));
+        // System.out.println(Float.parseFloat(optionInput));
 
         event.reply(category + " Here are the jobs filtered based on " + optionInput).queue();
-
-        // jobListFiltered = jobList.subList(2, 7);
 
         Logger logger = Logger.getLogger("FilterCommandTest");
         logger.info(String.valueOf(jobListFiltered.size()));
@@ -193,7 +208,7 @@ public class FilterCommand implements Command {
                         OptionType.STRING,
                         "experience",
                         "What job experience level do you'd like to filter for?");
-        for (String choice : Arrays.asList("intern", "entry", "mid", "senior")) {
+        for (String choice : experienceList) {
             experience.addChoice(choice, choice);
         }
 
@@ -202,7 +217,7 @@ public class FilterCommand implements Command {
                         OptionType.STRING,
                         "rating",
                         "What is the lowest star rating of jobs you want to filter for?");
-        for (String choice : Arrays.asList("3.0", "4.0", "4.5")) {
+        for (String choice : ratingList) {
             ratingOptions.addChoice(choice, choice);
         }
 
@@ -210,8 +225,8 @@ public class FilterCommand implements Command {
                 new OptionData(
                         OptionType.STRING,
                         "annualpay",
-                        "What is the min annual pay of jobs you want to filter for? (in USD)");
-        for (String choice : Arrays.asList("50000", "100000", "150000")) {
+                        "What is the min annual pay of jobs you want to filter for?");
+        for (String choice : payList) {
 
             annualPayOptions.addChoice(choice, choice);
         }
@@ -239,54 +254,34 @@ public class FilterCommand implements Command {
                         visaOptions);
     }
 
+    /**
+     * Filter Job based on command input
+     *
+     * @param jobList List<Job>, all jobs from repository
+     * @param category String, job field to filter \ * @param option String, subcommand for
+     *     category, specifies the entered option by user
+     * @return a list of filtered job
+     */
     private List<Job> filterJobs(List<Job> jobList, String Category, String Option) {
 
         List<Job> filteredJobList = new ArrayList<>();
-        // String x = "Software Engineer";
-
-        // for (Job job : jobList) {
-        //     System.out.println(job.getJobTitle());
-        //     if (job.getJobTitle().equals(Option)) {
-        //         filteredJobList.add(job);
-        //     }
-        // }
 
         switch (Category) {
-            case "title":
+            case "experience":
+                if (experienceList.indexOf(Option) == -1) {
+                    Option = "senior";
+                }
+                jobList = removeNullforexperience(jobList);
                 for (Job job : jobList) {
-                    if (containsKeyword(job.getJobTitle(), Option)) {
-                        // if (job.getJobTitle().equals(Option)) {
+                    if (job.getExperience()
+                            .equals(
+                                    jobController
+                                            .getExperienceController()
+                                            .getExperienceByLabel(Option)
+                                            .getId())) {
                         filteredJobList.add(job);
                     }
                 }
-
-            case "company":
-                for (Job job : jobList) {
-                    if (containsKeyword(job.getCompany(), Option)) {
-                        filteredJobList.add(job);
-                    }
-                }
-
-                // case "annualpay":
-                //     Float f = 6000f;
-                //     jobList = removeNullforAnnualpay(jobList);
-                //     for (Job job : jobList) {
-                //         if (job.getAnnualPay().floatValue() > f.floatValue()) {
-                //             filteredJobList.add(job);
-                //         }
-                //     }
-
-                // case "experience":
-                //     jobList = removeNullforAnnualpay(jobList);
-                //     for (Job job : jobList) {
-                //         if (job.getExperience()
-                //                 .equals(
-                //                         jobController
-                //                                 .getExperienceController()
-                //                                 .getExperienceByLabel(Option)
-                //                                 .getId())) {
-                //             filteredJobList.add(job);
-                //         }
 
             default:
         }
@@ -296,7 +291,6 @@ public class FilterCommand implements Command {
             size = filteredJobList.size();
         }
 
-        // return filteredJobList.subList(0, size);
         return filteredJobList;
     }
 
@@ -323,28 +317,35 @@ public class FilterCommand implements Command {
         return option;
     }
 
-    public Boolean containsKeyword(String title, String keyword) {
-        if (title.indexOf(keyword) != -1) {
-            return true;
-        }
-        return false;
-    }
-
+    /**
+     * Helper function to remove if the job's annualpay attribute is null
+     *
+     * @param jobList List, joblist to be removed
+     * @return jobList List, jobList after the removal
+     */
     public List<Job> removeNullforAnnualpay(List<Job> jobList) {
+        List<Job> newJobList = new ArrayList<>();
         for (Job job : jobList) {
-            if (job.getAnnualPay() == null) {
-                jobList.remove(job);
+            if (job.getAnnualPay() != null) {
+                newJobList.add(job);
             }
         }
-        return jobList;
+        return newJobList;
     }
 
     /**
-     * Helper function to handle the input size, set a default return size as 5, only update to user
-     * defined size when input is valid
+     * Helper function to remove the job if the experience attribute is null
      *
-     * @param inputSize String, user defined size
-     * @param repoSize Integer, the total number of jobs in repository
-     * @return returnSize, a valid integer represent the size of returning jobs
+     * @param jobList List, joblist to be removed
+     * @return jobList List, jobList after the removal
      */
+    public List<Job> removeNullforexperience(List<Job> jobList) {
+        List<Job> newJobList = new ArrayList<>();
+        for (Job job : jobList) {
+            if (job.getExperience() != null) {
+                newJobList.add(job);
+            }
+        }
+        return newJobList;
+    }
 }

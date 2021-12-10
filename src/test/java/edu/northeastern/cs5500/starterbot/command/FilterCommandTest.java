@@ -13,6 +13,7 @@ import edu.northeastern.cs5500.starterbot.model.JobType;
 import edu.northeastern.cs5500.starterbot.model.Location;
 import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,7 +58,16 @@ class FilterCommandTest {
         ArrayList<String> companyList = filterCommand.getCompanyNameList();
         Logger logger = Logger.getLogger("FilterCommandTest");
         logger.info(String.valueOf(companyList.size()));
-        System.out.println("c" + String.valueOf(companyList.size()));
+        System.out.println("company" + String.valueOf(companyList.size()));
         assertThat(companyList.size()).isAtLeast(20);
+    }
+
+    @Test
+    void testremoveNullforAnnualpay() {
+        List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
+        System.out.println("company before " + String.valueOf(jobList.size()));
+        List<Job> newjobList = filterCommand.removeNullforAnnualpay(jobList);
+        System.out.println("company" + String.valueOf(jobList.size()));
+        assertThat(jobList.size() > newjobList.size());
     }
 }
