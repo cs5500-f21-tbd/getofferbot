@@ -40,7 +40,7 @@ public class FilterCommand implements Command {
                         "visa");
 
         experienceList = Arrays.asList("intern", "entry", "mid", "senior");
-        ratingList = Arrays.asList("3.0", "4.0", "4.5");
+        ratingList = Arrays.asList("3.0", "3.5", "4.0", "4.5");
         payList = Arrays.asList("50000", "100000", "150000");
     }
 
@@ -221,6 +221,18 @@ public class FilterCommand implements Command {
                         filteredJobList.add(job);
                     }
                 }
+                case "rating":
+                if (payList.indexOf(Option) == -1) {
+                    Option = "50000";
+                }
+                jobList = removeNullforAnnualpay(jobList);
+                for (Job job : jobList) {
+                    if (job.getAnnualPay().floatValue() > Float.valueOf(Option)) {
+                        filteredJobList.add(job);
+                    }
+                }
+
+            
 
             default:
         }
