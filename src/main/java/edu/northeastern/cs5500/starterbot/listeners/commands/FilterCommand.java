@@ -72,10 +72,9 @@ public class FilterCommand implements Command {
         if (sizeToreturn == 0) {
             event.reply("No result at this point, try another option or /help").queue();
         } else {
-            event.reply("based on " + category + " Here are the jobs filtered by " + optionInput)
+            event.reply("based on" + category + " Here are the jobs filtered by " + optionInput)
                     .queue();
         }
-
         for (Job job : jobListFiltered) {
             EmbedBuilder embedBuilder = EmbedUtilities.generateJobEmbed(job, jobController);
             event.getChannel().sendMessage(embedBuilder.build()).queue();
@@ -184,11 +183,9 @@ public class FilterCommand implements Command {
     }
 
     /**
-     * filter function to filter jobs for all categories if the option input is valid type
-     *
-     * @param String Category, indicating filted to filter
+     * @param String Category, filter function to filter jobs for all categories if the option input is valid
      * @param String Option, user option input
-     * @return jobList List, jobList after the filter
+     * @return List jobList, jobList after filtering
      */
     private List<Job> filterJobs(List<Job> jobList, String Category, String Option) {
 
@@ -221,23 +218,11 @@ public class FilterCommand implements Command {
                         filteredJobList.add(job);
                     }
                 }
-                case "rating":
-                if (payList.indexOf(Option) == -1) {
-                    Option = "50000";
-                }
-                jobList = removeNullforAnnualpay(jobList);
-                for (Job job : jobList) {
-                    if (job.getAnnualPay().floatValue() > Float.valueOf(Option)) {
-                        filteredJobList.add(job);
-                    }
-                }
-
-            
 
             default:
         }
 
-        int size = 5;
+        int size = 6;
         if (filteredJobList.size() < size) {
             size = filteredJobList.size();
         }
@@ -245,6 +230,11 @@ public class FilterCommand implements Command {
         return filteredJobList;
     }
 
+    /**
+     * Helper function to update company list from jobController
+     *
+     * @return companyList extracted from job with company attribute
+     */
     public ArrayList<String> getCompanyNameList() {
         ArrayList<String> companyList = new ArrayList<>();
 
@@ -272,13 +262,6 @@ public class FilterCommand implements Command {
             }
         }
         return option;
-    }
-
-    public Boolean containsKeyword(String title, String keyword) {
-        if (title.indexOf(keyword) != -1) {
-            return true;
-        }
-        return false;
     }
 
     /**
