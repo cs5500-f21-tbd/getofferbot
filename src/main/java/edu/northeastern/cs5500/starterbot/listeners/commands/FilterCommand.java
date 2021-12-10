@@ -307,6 +307,12 @@ public class FilterCommand implements Command {
         return companyList;
     }
 
+    /**
+     * Helper function to see which category our user is using
+     *
+     * @param SlashCommandEvent event, JDA event passed in for matching
+     * @return String option, option being used
+     */
     public String getCategory(SlashCommandEvent event) {
         String option = null;
         for (String command : commandList) {
