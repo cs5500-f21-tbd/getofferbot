@@ -12,6 +12,7 @@ import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
+import org.bson.types.ObjectId;
 
 public class FilterCommand implements Command {
 
@@ -45,6 +46,23 @@ public class FilterCommand implements Command {
         String category = getCategory(event);
         String optionInput = event.getOption(category).getAsString();
         List<Job> jobListFiltered = filterJobs(jobList, category, optionInput);
+
+        int sizeToreturn = jobListFiltered.size();
+        if (sizeToreturn > 6) {
+            sizeToreturn = 6;
+        }
+        jobListFiltered = jobListFiltered.subList(0, sizeToreturn);
+        ObjectId internID =
+                jobController.getExperienceController().getExperienceByLabel("intern").getId();
+        ObjectId jobID = jobList.get(21).getExperience();
+        System.out.println(internID);
+        System.out.println(jobID);
+
+        // Float f = 3333f;
+        // System.out.println(
+        //         (Float.compare(jobList.get(21).getAnnualPay().floatValue(), f.floatValue()) ==
+        // 1));
+
         event.reply(category + " Here are the jobs filtered based on " + optionInput).queue();
 
         // jobListFiltered = jobList.subList(2, 7);
@@ -175,8 +193,7 @@ public class FilterCommand implements Command {
                         OptionType.STRING,
                         "experience",
                         "What job experience level do you'd like to filter for?");
-        for (String choice :
-                Arrays.asList("internship", "entry-level", "mid-level", "senior-level")) {
+        for (String choice : Arrays.asList("intern", "entry", "mid", "senior")) {
             experience.addChoice(choice, choice);
         }
 
@@ -251,13 +268,16 @@ public class FilterCommand implements Command {
                 }
 
                 // case "annualpay":
+                //     Float f = 6000f;
+                //     jobList = removeNullforAnnualpay(jobList);
                 //     for (Job job : jobList) {
-                //         // if (Option)
-                //         if (Float.compare(job.getAnnualPay(), 60000f) == 1) {
+                //         if (job.getAnnualPay().floatValue() > f.floatValue()) {
                 //             filteredJobList.add(job);
                 //         }
                 //     }
+
                 // case "experience":
+                //     jobList = removeNullforAnnualpay(jobList);
                 //     for (Job job : jobList) {
                 //         if (job.getExperience()
                 //                 .equals(
@@ -267,7 +287,7 @@ public class FilterCommand implements Command {
                 //                                 .getId())) {
                 //             filteredJobList.add(job);
                 //         }
-                //     }
+
             default:
         }
 
@@ -309,4 +329,22 @@ public class FilterCommand implements Command {
         }
         return false;
     }
+
+    public List<Job> removeNullforAnnualpay(List<Job> jobList) {
+        for (Job job : jobList) {
+            if (job.getAnnualPay() == null) {
+                jobList.remove(job);
+            }
+        }
+        return jobList;
+    }
+
+    /**
+     * Helper function to handle the input size, set a default return size as 5, only update to user
+     * defined size when input is valid
+     *
+     * @param inputSize String, user defined size
+     * @param repoSize Integer, the total number of jobs in repository
+     * @return returnSize, a valid integer represent the size of returning jobs
+     */
 }
