@@ -31,12 +31,13 @@ public class PreferenceCommand implements Command {
             showPreferences(user, event);
         } else {
             String zipcode = null;
-            Long radius = null;
+            Double radius = null;
             if (zipcodeOption != null) {
                 zipcode = zipcodeOption.getAsString();
             }
             if (radiusOption != null) {
-                radius = radiusOption.getAsLong();
+                // cast the long to double here
+                radius = (double) (radiusOption.getAsLong());
             }
             setPreferences(user, event, zipcode, radius);
         }
@@ -48,14 +49,42 @@ public class PreferenceCommand implements Command {
             return;
         }
         // TODO: tell the user what their preferences are. Does radius have a default?
+        // get users' zipcode and radius via getters of @Data and displayed them
+        String zipcode = user.getZipcode();
+        if (zipcode == null) {
+            event.reply("You have not set any zipcode yet.");
+        } else {
+            event.reply("Your zipcode is:" + zipcode);
+        }
+        Double radius = user.getSearchRadiusKilometers();
+        if (radius == null) {
+            event.reply("You have not set any radius yet.");
+        } else {
+            event.reply("Your search radius:" + radius);
+        }
     }
 
     void setPreferences(
             @Nullable User user,
             SlashCommandEvent event,
             @Nullable String zipcode,
-            @Nullable Long radius) {
+            @Nullable Double radius) {
         // TODO: call the correct methods of userController to set one or both of these preferences
+        if (user == null) {
+            event.reply("You have not set any preferences yet.");
+            return;
+        }
+        if (zipcode == null) {
+            event.reply("Please enter a 5 digit zipcode.");
+            return;
+        }
+
+        if (radius == null) {
+            event.reply("Please enter a search radius.");
+            return;
+        }
+        user.setZipcode(zipcode);
+        user.setSearchRadiusMiles(radius);
     }
 
     @Override
