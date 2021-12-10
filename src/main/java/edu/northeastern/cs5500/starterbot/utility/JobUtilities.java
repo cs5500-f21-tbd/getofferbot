@@ -197,7 +197,7 @@ public class JobUtilities {
     public Job generateJobExperience2() {
         Job jobExperience2 =
                 new Job(
-                        "Resume Platform – Staff Software Development Engineer",
+                        "Resume Platform - Staff Software Development Engineer",
                         "Indeed",
                         "https://m5.apply.indeed.com/beta/indeedapply/form/contact-info");
         jobExperience2.setExperience(experienceController.getExperienceByLabel("mid").getId());
