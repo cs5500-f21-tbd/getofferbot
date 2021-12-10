@@ -67,9 +67,12 @@ public class FilterCommand implements Command {
 
         jobListFiltered = jobListFiltered.subList(0, sizeToreturn);
 
-        event.reply("Based on " + category + " Here are the jobs filtered for " + optionInput)
-                .queue();
-
+        if (sizeToreturn == 0) {
+            event.reply("No result at this point, try another option or /help").queue();
+        } else {
+            event.reply("based on" + category + " Here are the jobs filtered by " + optionInput)
+                    .queue();
+        }
         for (Job job : jobListFiltered) {
             EmbedBuilder embedBuilder = EmbedUtilities.generateJobEmbed(job, jobController);
             event.getChannel().sendMessage(embedBuilder.build()).queue();
