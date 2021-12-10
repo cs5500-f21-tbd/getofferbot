@@ -183,7 +183,8 @@ public class FilterCommand implements Command {
     }
 
     /**
-     * @param String Category, filter function to filter jobs for all categories if the option input is valid
+     * @param String Category, filter function to filter jobs for all categories if the option input
+     *     is valid
      * @param String Option, user option input
      * @return List jobList, jobList after filtering
      */
