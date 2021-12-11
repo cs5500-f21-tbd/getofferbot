@@ -38,33 +38,33 @@ public class JobController {
             return;
         }
 
-        jobRepository.add(JobUtilities.generateJobAnnualPay1());
-        jobRepository.add(JobUtilities.generateJobAnnualPay2());
-        jobRepository.add(JobUtilities.generateJobAnnualPay3());
-        jobRepository.add(JobUtilities.generateJobAnnualPay4NoAnnualPay());
-        jobRepository.add(JobUtilities.generateJobStarRating1());
-        jobRepository.add(JobUtilities.generateJobStarRating2());
-        jobRepository.add(JobUtilities.generateJobStarRating3());
-        jobRepository.add(JobUtilities.generateJobStarRating4NoStarRating());
-        jobRepository.add(JobUtilities.generateJobCreated1());
-        jobRepository.add(JobUtilities.generateJobCreated2());
-        jobRepository.add(JobUtilities.generateJobCreated3());
-        jobRepository.add(JobUtilities.generateJobType1());
-        jobRepository.add(JobUtilities.generateJobType2());
-        jobRepository.add(JobUtilities.generateJobType3());
-        jobRepository.add(JobUtilities.generateJobType4());
-        jobRepository.add(JobUtilities.generateJobType5NoJobType());
-        jobRepository.add(JobUtilities.generateJobLocation1());
-        jobRepository.add(JobUtilities.generateJobLocation2());
-        jobRepository.add(JobUtilities.generateJobLocation3());
-        jobRepository.add(JobUtilities.generateJobLocation4NoLocation());
-        jobRepository.add(JobUtilities.generateJobExperience1());
-        jobRepository.add(JobUtilities.generateJobExperience2());
-        jobRepository.add(JobUtilities.generateJobExperience3());
-        jobRepository.add(JobUtilities.generateJobExperience4());
-        jobRepository.add(JobUtilities.generateJobSponsorship1());
-        jobRepository.add(JobUtilities.generateJobSponsorship2());
-        jobRepository.add(JobUtilities.generateJobSponsorship3());
+        jobRepository.add(JobUtilities.generateJobAnnualPay1(this));
+        jobRepository.add(JobUtilities.generateJobAnnualPay2(this));
+        jobRepository.add(JobUtilities.generateJobAnnualPay3(this));
+        jobRepository.add(JobUtilities.generateJobAnnualPay4NoAnnualPay(this));
+        jobRepository.add(JobUtilities.generateJobStarRating1(this));
+        jobRepository.add(JobUtilities.generateJobStarRating2(this));
+        jobRepository.add(JobUtilities.generateJobStarRating3(this));
+        jobRepository.add(JobUtilities.generateJobStarRating4NoStarRating(this));
+        jobRepository.add(JobUtilities.generateJobCreated1(this));
+        jobRepository.add(JobUtilities.generateJobCreated2(this));
+        jobRepository.add(JobUtilities.generateJobCreated3(this));
+        jobRepository.add(JobUtilities.generateJobType1(this));
+        jobRepository.add(JobUtilities.generateJobType2(this));
+        jobRepository.add(JobUtilities.generateJobType3(this));
+        jobRepository.add(JobUtilities.generateJobType4(this));
+        jobRepository.add(JobUtilities.generateJobType5NoJobType(this));
+        jobRepository.add(JobUtilities.generateJobLocation1(this));
+        jobRepository.add(JobUtilities.generateJobLocation2(this));
+        jobRepository.add(JobUtilities.generateJobLocation3(this));
+        jobRepository.add(JobUtilities.generateJobLocation4NoLocation(this));
+        jobRepository.add(JobUtilities.generateJobExperience1(this));
+        jobRepository.add(JobUtilities.generateJobExperience2(this));
+        jobRepository.add(JobUtilities.generateJobExperience3(this));
+        jobRepository.add(JobUtilities.generateJobExperience4(this));
+        jobRepository.add(JobUtilities.generateJobSponsorship1(this));
+        jobRepository.add(JobUtilities.generateJobSponsorship2(this));
+        jobRepository.add(JobUtilities.generateJobSponsorship3(this));
     }
 
     /**
