@@ -24,28 +24,24 @@ public class JobUtilities {
     }
 
     public Job generateJobAnnualPay2(JobController jobController) {
-        Job jobAnnualPay2 = new Job("Software Engineer", "Splunk", "splunk.com");
+        Job jobAnnualPay2 = new Job("Software Engineer", "Plunk", "Plunk.com");
         jobAnnualPay2.setCreated(LocalDate.of(2021, 11, 12));
-        jobAnnualPay2.setAnnualPay(80000f);
+        jobAnnualPay2.setAnnualPay(135000f);
         jobAnnualPay2.setLocation(
                 jobController.getLocationController().getLocationByZipCode("10001").getId());
         return jobAnnualPay2;
     }
 
     public Job generateJobAnnualPay3(JobController jobController) {
-        Job jobAnnualPay3 = new Job("Software Engineer", "Indeed", "indeed.com");
-        jobAnnualPay3.setJobType(
-                jobController.getJobTypeController().getJobTypeByLabel("fulltime").getId());
-        jobAnnualPay3.setStarRating(4.3f);
+        Job jobAnnualPay3 = new Job("Software Engineer", "Inneed", "inneed.com");
+        jobAnnualPay3.setStarRating(3.5f);
         jobAnnualPay3.setAnnualPay(132000f);
         return jobAnnualPay3;
     }
 
     public Job generateJobAnnualPay4NoAnnualPay(JobController jobController) {
         Job jobAnnualPay4NoAnnualPay =
-                new Job("Software Engineer II - New Growth Channels", "Uber", "uber.com");
-        jobAnnualPay4NoAnnualPay.setJobType(
-                jobController.getJobTypeController().getJobTypeByLabel("fulltime").getId());
+                new Job("Software Engineer II - New Growth Channels", "Weber", "weber.com");
         jobAnnualPay4NoAnnualPay.setStarRating(3.7f);
         jobAnnualPay4NoAnnualPay.setLocation(
                 jobController.getLocationController().getLocationByZipCode("98101").getId());
@@ -54,16 +50,16 @@ public class JobUtilities {
 
     public Job generateJobStarRating1(JobController jobController) {
         Job jobStarRating1 =
-                new Job("Backend Software Engineer-TikTok", "TikTok", "careers.tiktok.com");
+                new Job("Backend Software Engineer-QikQok", "QikQok", "careers.qikqok.com");
         jobStarRating1.setJobType(
                 jobController.getJobTypeController().getJobTypeByLabel("fulltime").getId());
-        jobStarRating1.setStarRating(3.6f);
+        jobStarRating1.setStarRating(4.8f);
         return jobStarRating1;
     }
 
     public Job generateJobStarRating2(JobController jobController) {
         Job jobStarRating2 = new Job("Software Engineer (Early Career)", "Apple", "apple.com");
-        jobStarRating2.setStarRating(4.2f);
+        jobStarRating2.setStarRating(4.5f);
         jobStarRating2.setCreated(LocalDate.of(2021, 11, 10));
         return jobStarRating2;
     }
@@ -88,7 +84,7 @@ public class JobUtilities {
                         "Software Engineer - Visualization Pipeline",
                         "Salesforce",
                         "salesforce.com");
-        jobCreated1.setCreated(LocalDate.of(2021, 11, 29));
+        jobCreated1.setCreated(LocalDate.of(2021, 12, 10));
         jobCreated1.setAnnualPay(98900f);
         jobCreated1.setJobType(
                 jobController.getJobTypeController().getJobTypeByLabel("fulltime").getId());
@@ -97,7 +93,7 @@ public class JobUtilities {
 
     public Job generateJobCreated2(JobController jobController) {
         Job jobCreated2 = new Job("Software Engineer", "HP", "hp.com");
-        jobCreated2.setCreated(LocalDate.of(2021, 11, 26));
+        jobCreated2.setCreated(LocalDate.of(2021, 12, 5));
         jobCreated2.setLocation(
                 jobController.getLocationController().getLocationByZipCode("80528").getId());
         jobCreated2.setJobType(
@@ -107,7 +103,7 @@ public class JobUtilities {
 
     public Job generateJobCreated3(JobController jobController) {
         Job jobCreated3 = new Job("Software Engineer I/II", "Microsoft", "microsoft.com");
-        jobCreated3.setCreated(LocalDate.of(2021, 11, 19));
+        jobCreated3.setCreated(LocalDate.of(2021, 12, 1));
         return jobCreated3;
     }
 
