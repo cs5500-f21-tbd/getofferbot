@@ -32,13 +32,21 @@ public class SearchCommand implements Command {
         event.reply("Here are the jobs:").queue();
 
         this.jobController.getJobRepository().getAll().stream()
-                .sorted((o1, o2) -> o2.getCreated().compareTo(o1.getCreated()))
+                .sorted(
+                        (o1, o2) -> {
+                            if (o1.getCreated() == null) {
+                                return 1;
+                            }
+                            if (o2.getCreated() == null) {
+                                return -1;
+                            }
+                            return o2.getCreated().compareTo(o1.getCreated());
+                        })
                 .limit(RESULT_SIZE)
                 .forEach(
                         job -> {
-                            EmbedBuilder embedBuilder =
-                                    EmbedUtilities.generateJobEmbed(job, jobController);
-                            event.getChannel().sendMessage(embedBuilder.build()).queue();
+                            EmbedBuilder eb = EmbedUtilities.generateJobEmbed(job, jobController);
+                            event.getChannel().sendMessage(eb.build()).queue();
                         });
     }
 
