@@ -14,25 +14,20 @@ import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
 import edu.northeastern.cs5500.starterbot.utility.JobUtilities;
 import java.util.ArrayList;
 import java.util.List;
-import net.dv8tion.jda.api.interactions.commands.build.CommandData;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class SearchCommandTest {
 
+    InMemoryRepository<Job> jobRepository;
     InMemoryRepository<JobType> jobTypeRepository;
     InMemoryRepository<Experience> experienceRepository;
     InMemoryRepository<Location> locationRepository;
-    InMemoryRepository<Job> jobRepository;
     JobTypeController jobTypeController;
     ExperienceController experienceController;
     LocationController locationController;
     JobController jobController;
-    List<Job> expectedJobList;
     SearchCommand searchCommand;
-    List<Job> jobListBeforeSearch;
-    String expectedName;
-    CommandData expectedCommandData;
 
     @BeforeEach
     void setUpReposAndControllers() {
@@ -44,42 +39,37 @@ public class SearchCommandTest {
         jobTypeController = new JobTypeController(jobTypeRepository);
         experienceController = new ExperienceController(experienceRepository);
         locationController = new LocationController(locationRepository);
-
         jobController =
                 new JobController(
                         jobRepository, jobTypeController, experienceController, locationController);
 
-        expectedJobList.add(0, JobUtilities.generateJobCreated1(jobController));
-        expectedJobList.add(1, JobUtilities.generateJobCreated2(jobController));
-        expectedJobList.add(2, JobUtilities.generateJobCreated3(jobController));
-        expectedJobList.add(3, JobUtilities.generateJobAnnualPay2(jobController));
-        expectedJobList.add(4, JobUtilities.generateJobStarRating2(jobController));
-
         searchCommand = new SearchCommand(jobController);
-
-        jobListBeforeSearch = new ArrayList<>(this.jobController.getJobRepository().getAll());
-
-        expectedName = "search";
-        String description = "Search for jobs";
-        expectedCommandData = new CommandData(expectedName, description);
     }
 
     @Test
     void testSearchJobsInList() {
-        List<Job> actualSearchList = searchCommand.searchJobsInList(jobListBeforeSearch);
+        List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
+        List<Job> actualSearchList = searchCommand.searchJobsInList(jobList);
         List<Job> actualTopFiveJobs = actualSearchList.subList(0, 5);
-        assertThat(actualTopFiveJobs).isEqualTo(expectedJobList);
+        List<Job> expectedList = new ArrayList<>();
+        expectedList.add(0, JobUtilities.generateJobCreated1(jobController));
+        expectedList.add(1, JobUtilities.generateJobCreated2(jobController));
+        expectedList.add(2, JobUtilities.generateJobCreated3(jobController));
+        expectedList.add(3, JobUtilities.generateJobAnnualPay2(jobController));
+        expectedList.add(4, JobUtilities.generateJobStarRating2(jobController));
+        assertThat(actualTopFiveJobs).isEqualTo(expectedList);
     }
 
     @Test
-    void testGetName() {
+    void testSearchHandleJobWithoutPostDate() {
+        List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
+        jobList = searchCommand.searchJobsInList(jobList);
+        assertThat(jobList.get(5).getCreated()).isEqualTo(null);
+    }
+
+    @Test
+    public void testGetName() {
         String actualName = searchCommand.getName();
-        assertThat(actualName).isEqualTo(expectedName);
-    }
-
-    @Test
-    void testGetCommandData() {
-        CommandData actualCommandData = searchCommand.getCommandData();
-        assertThat(actualCommandData).isEqualTo(expectedCommandData);
+        assertThat(actualName).isEqualTo("search");
     }
 }
