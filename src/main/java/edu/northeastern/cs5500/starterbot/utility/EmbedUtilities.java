@@ -3,10 +3,12 @@ package edu.northeastern.cs5500.starterbot.utility;
 import edu.northeastern.cs5500.starterbot.controller.JobController;
 import edu.northeastern.cs5500.starterbot.model.Job;
 import java.awt.Color;
+import lombok.experimental.UtilityClass;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 /** EmbedUtilities class contains the methods that generate embed messages. */
-public final class EmbedUtilities {
+@UtilityClass
+public class EmbedUtilities {
 
     /**
      * Genrates an EmbedBuilder based on input Job and Jobcontroller.
@@ -15,7 +17,7 @@ public final class EmbedUtilities {
      * @param jobController - JobController, input jobController
      * @return EmbedBuilder
      */
-    public static EmbedBuilder generateJobEmbed(Job job, JobController jobController) {
+    public EmbedBuilder generateJobEmbed(Job job, JobController jobController) {
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle(job.getJobTitle());
         embedBuilder.setColor(Color.CYAN);
@@ -76,7 +78,7 @@ public final class EmbedUtilities {
      *
      * @return EmbedBuilder
      */
-    public static EmbedBuilder generateHelpEmbed() {
+    public EmbedBuilder generateHelpEmbed() {
         // TODO: polish embed message such as adding emoji and using some fun fonts.
         // TODO: make sure commands and options in help menu matches the features supported by final
         // version
