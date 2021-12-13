@@ -24,7 +24,7 @@ GetOfferBot is a Discord bot that allows users to query for available job opport
 
 [Presentation](https://docs.google.com/presentation/d/1aNOYvS-qOhKsUIbTvduqPkikfQUFfyYsrBlwRQK_6IY/edit?usp=sharing)
 
-## Developer Instruction
+## Developer Instructions
 
 ### Setup Discord
 Follow the instructions [here](https://www.writebots.com/discord-bot-token/) to set up a Discord application, create a bot, add bot to your server, and obtain a bot token. Record the token somewhere (such as copying, *Ctrl/Cmd+C*), as you will need it in the next step.
@@ -37,7 +37,7 @@ Refer to this [link](https://docs.google.com/document/d/1csfXK2iwvSoEUhY86kXhekM
 1. Pull the git repository into the local machine.
 
 ```bash
-git clone [https://github.com/cs5500-f21-tbd/getofferbot](https://github.com/cs5500-f21-tbd/getofferbot)
+git clone https://github.com/cs5500-f21-tbd/getofferbot
 ```
 2. Set up environment variables
 ```
@@ -51,7 +51,7 @@ flyctl deploy
 ```
 4. Test in Discord with commands provided in the **User Manual** below.
 
-# User Manual
+## User Manual
 
 ### Search for 10 most recent SDE jobs
 ```
