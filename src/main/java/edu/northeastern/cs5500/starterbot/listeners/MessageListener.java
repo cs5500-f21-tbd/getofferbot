@@ -4,7 +4,6 @@ import edu.northeastern.cs5500.starterbot.controller.JobController;
 import edu.northeastern.cs5500.starterbot.listeners.commands.*;
 import java.util.HashMap;
 import java.util.Map;
-
 import lombok.Generated;
 import lombok.Getter;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;

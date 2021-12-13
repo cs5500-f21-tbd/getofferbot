@@ -6,7 +6,6 @@ import edu.northeastern.cs5500.starterbot.utility.EmbedUtilities;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import lombok.Generated;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
@@ -192,8 +191,8 @@ public class FilterCommand implements Command {
     }
 
     /**
-     * @param Category filter function to determine the filtering category and then filter
-     *     jobs for if the option input is valid
+     * @param Category filter function to determine the filtering category and then filter jobs for
+     *     if the option input is valid
      * @param Option user option input
      * @return List jobList, return a new jobList filtered from original jobList
      */
