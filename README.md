@@ -1,12 +1,12 @@
 # getofferbot
 
-# Introduction
+## Introduction
 
-College students and even current employees are constantly looking for new, existing opportunities. Today the job information is scattered across the Internet, employment services (LinkedIn, Indeed, etc), emails, career fairs, etc. Sometimes you may even have to go to each of the company websites in order to find the jobs you are interested in. There is no holistic way of seeing all the available jobs on the market and even filtering / sorting as you like.
+Computer science and software engineering are exciting fields of work and study; as a result, there are various new and existing opportunities for college sophomores, master's program graduates, experienced software engineers, and everyone in between. Nowadays, job information in the field of software engineering is scattered across the Internet, as well as employment services (LinkedIn, Indeed, etc), emails, career fairs, etc. Sometimes a job seeker may even have to go to each of the company's websites in order to find the jobs they are interested in. There is not a unified way of seeing all available jobs on the market, much less filtering and sorting these jobs to your liking.
 
-GetOfferBot is a Discord bot that allows users to query for available job opportunities on the market. It enables Discord users to interact with an online bot powered by [Fly.io]([https://fly.io/](https://fly.io/)) to retrieve job information in a dedicated Discord channel. An offline scraper will be running and refreshing job information in the database on a daily basis. Beyond simply listing all jobs, users can also filter or sort the jobs based on type, company, location, salary and even whether they sponsor a work visa. This is also accompanied by an existing feature to view recommended jobs that are trending on LinkedIn or Indeed. This wiki will walk you through how to set up the bot as a developer, and how to use this bot in Discord as a user.
+GetOfferBot is a Discord bot that allows users to query for available job opportunities on the market. It enables Discord users to interact with an online bot powered by [Fly.io]([https://fly.io/](https://fly.io/)) to retrieve job information in a dedicated Discord channel. An offline scraper will be running and refreshing job information in the database on a daily basis. Beyond simply listing all jobs, the bot can also filter or sort the jobs based on type, company, location, salary and even whether they sponsor a work visa. This is also accompanied by an existing feature to view recommended jobs that are trending on LinkedIn or Indeed. This wiki will walk you through how to set up the bot as a developer, and how to use this bot on Discord as a user.
 
-# Contributors
+## Contributors
 
 | Github Alias | Name | Email Address |
 | ------------- | ----------- | ---------------------------- |
@@ -16,20 +16,20 @@ GetOfferBot is a Discord bot that allows users to query for available job opport
 | xxjingxx | Jing Xie | [xie.jing@northeastern.edu](mailto:xie.jing@northeastern.edu) |
 | yiranwangg | Yiran Wang | [wang.yiran@northeastern.edu](mailto:wang.yiran@northeastern.edu) |
 | yiyuzhang0604 | Yiyu Zhang | [zhang.yiyu1@northeastern.edu](mailto:zhang.yiyu1@northeastern.edu) |
-| Pxie2016 | Zimeng Xie | [xie.zim@northeastern.edu](mailto:xie.zim@northeastern.edu) |
+| pxie2016 | Zimeng Xie | [xie.zim@northeastern.edu](mailto:xie.zim@northeastern.edu) |
 
-# Documents
+## Documents
 
 [Design Document](https://docs.google.com/document/d/1qZTnP_CzsbbyK67JpjvUq0xAGtNxPXyEOdnjc8I90ak/edit?usp=sharing)
 
 [Presentation](https://docs.google.com/presentation/d/1aNOYvS-qOhKsUIbTvduqPkikfQUFfyYsrBlwRQK_6IY/edit?usp=sharing)
 
-# Developer Instruction
+## Developer Instruction
 
-## Setup Discord
-Follow the instructions [here](https://www.writebots.com/discord-bot-token/) to set up a Discord application, create a Bot, add bot to your server and get a bot token. Copy the token as you will need it in the next step.
+### Setup Discord
+Follow the instructions [here](https://www.writebots.com/discord-bot-token/) to set up a Discord application, create a bot, add bot to your server, and obtain a bot token. Record the token somewhere (such as copying, *Ctrl/Cmd+C*), as you will need it in the next step.
 
-## Setup MongoDB
+### Setup MongoDB
 Refer to this [link](https://docs.google.com/document/d/1csfXK2iwvSoEUhY86kXhekMM3bHfVUiO0Kd6eZ-s4Os/edit?usp=sharing) for the MongoDB setup instructions.
 
 ## Bot Installation
@@ -49,7 +49,7 @@ flyctl secrets set BOT_TOKEN={Bot token from Setup Discord step}
 ```bash
 flyctl deploy
 ```
-4. Test in Discord with commands provided in below **User Manual**
+4. Test in Discord with commands provided in the **User Manual** below.
 
 # User Manual
 
