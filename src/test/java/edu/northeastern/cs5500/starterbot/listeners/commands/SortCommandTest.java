@@ -86,6 +86,13 @@ public class SortCommandTest {
     }
 
     @Test
+    void testSortByRatingDECHandleJobWithoutRating() {
+        List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
+        jobList = sortCommand.sortJob(jobList, "rating", "des", "10");
+        assertThat(jobList.get(6).getStarRating()).isEqualTo(null);
+    }
+
+    @Test
     void testSortByPostDateDEC() {
         List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
         jobList = sortCommand.sortJob(jobList, "post date", "des", "2");
@@ -96,6 +103,13 @@ public class SortCommandTest {
     }
 
     @Test
+    void testSortByRatingDECHandleJobWithoutPostDate() {
+        List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
+        jobList = sortCommand.sortJob(jobList, "post date", "des", "10");
+        assertThat(jobList.get(5).getCreated()).isEqualTo(null);
+    }
+
+    @Test
     void testSortByAnnualPayDEC() {
         List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
         jobList = sortCommand.sortJob(jobList, "annual pay", "des", "2");
@@ -103,6 +117,13 @@ public class SortCommandTest {
         expectedList.add(JobUtilities.generateJobAnnualPay1(jobController));
         expectedList.add(JobUtilities.generateJobAnnualPay2(jobController));
         assertThat(jobList).isEqualTo(expectedList);
+    }
+
+    @Test
+    void testSortByRatingDECHandleJobWithoutAnnualPay() {
+        List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
+        jobList = sortCommand.sortJob(jobList, "annual pay", "des", "10");
+        assertThat(jobList.get(4).getAnnualPay()).isEqualTo(null);
     }
 
     @Test

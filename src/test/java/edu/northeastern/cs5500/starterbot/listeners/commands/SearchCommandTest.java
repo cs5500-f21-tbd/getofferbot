@@ -61,6 +61,13 @@ public class SearchCommandTest {
     }
 
     @Test
+    void testSearchHandleJobWithoutPostDate() {
+        List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
+        jobList = searchCommand.searchJobsInList(jobList);
+        assertThat(jobList.get(5).getCreated()).isEqualTo(null);
+    }
+
+    @Test
     public void testGetName() {
         String actualName = searchCommand.getName();
         assertThat(actualName).isEqualTo("search");
