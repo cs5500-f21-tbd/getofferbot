@@ -19,6 +19,6 @@ public class Location implements Model {
 
     @Override
     public String toString() {
-        return (city + ", " + state + zipCode + ", " + country);
+        return (city + ", " + state + " " + zipCode + ", " + country);
     }
 }

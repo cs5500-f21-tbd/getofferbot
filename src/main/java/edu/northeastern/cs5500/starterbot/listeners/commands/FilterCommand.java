@@ -30,7 +30,6 @@ public class FilterCommand implements Command {
 
     @Override
     public CommandData getCommandData() {
-        // TODO: This will be connected to the DB in Sprint 4
         OptionData titleOptions =
                 new OptionData(
                         OptionType.STRING, "title", "What job titles do you want to display?");

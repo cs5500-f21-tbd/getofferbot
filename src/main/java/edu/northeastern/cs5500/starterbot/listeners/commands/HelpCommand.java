@@ -19,7 +19,6 @@ public class HelpCommand implements Command {
     }
 
     @Override
-    //
     public CommandData getCommandData() {
         return new CommandData("help", "Help menu of the bot");
     }
