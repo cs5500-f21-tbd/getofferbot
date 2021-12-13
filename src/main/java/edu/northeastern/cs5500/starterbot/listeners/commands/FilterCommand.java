@@ -42,7 +42,7 @@ public class FilterCommand implements Command {
                         "visa");
 
         experienceList = Arrays.asList("intern", "entry", "mid", "senior");
-        ratingList = Arrays.asList("3.0", "3.5", "4.0", "4.5");
+        ratingList = Arrays.asList("2", "3", "4", "5");
         payList = Arrays.asList("50000", "80000", "110000", "130000");
 
         numToRetuen = 6;
@@ -65,6 +65,21 @@ public class FilterCommand implements Command {
         List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
         String category = getCategory(event);
         String optionInput = event.getOption(category).getAsString();
+        System.out.println("------------++++++++++++");
+
+        // List<Job> jobListFiltered = new ArrayList<>();
+        // String Option = "rating";
+        // jobList = removeNullforexperience(jobList, Option);
+        // System.out.println(jobList.size());
+        // for (Job job : jobList) {
+        //     System.out.println("+++++++++++++++");
+        //     System.out.println(job.getStarRating());
+        //     if (job.getStarRating() > Float.valueOf(Option)) {
+        //         jobListFiltered.add(job);
+        //         System.out.println(job);
+        //     }
+        // }
+
         List<Job> jobListFiltered = filterJobs(jobList, category, optionInput);
 
         int sizeToreturn = jobListFiltered.size();
@@ -77,7 +92,11 @@ public class FilterCommand implements Command {
         if (sizeToreturn == 0) {
             event.reply("No result at this point, try another option or /help").queue();
         } else {
-            event.reply("based on" + category + " Here are the jobs filtered by " + optionInput)
+            event.reply(
+                            "Filtering on "
+                                    + category
+                                    + ", Here are the jobs filtered by "
+                                    + optionInput)
                     .queue();
         }
         for (Job job : jobListFiltered) {
@@ -101,7 +120,7 @@ public class FilterCommand implements Command {
                         OptionType.STRING,
                         "jobtype",
                         "What type of job do you want to filter for?");
-        for (String choice : Arrays.asList("Full-time", "Part-time")) {
+        for (String choice : Arrays.asList("fulltime", "parttime")) {
             typeOptions.addChoice(choice, choice);
         }
 
@@ -165,11 +184,8 @@ public class FilterCommand implements Command {
         }
 
         OptionData visaOptions =
-                new OptionData(
-                        OptionType.STRING,
-                        "visa",
-                        "Do you want to ignore jobs that does not sponsor work visa in the US?");
-        for (String choice : Arrays.asList("Yes", "No")) {
+                new OptionData(OptionType.STRING, "visa", "Do you require a job visa in the US?");
+        for (String choice : Arrays.asList("true", "false")) {
             visaOptions.addChoice(choice, choice);
         }
 
@@ -198,11 +214,49 @@ public class FilterCommand implements Command {
         List<Job> filteredJobList = new ArrayList<>();
 
         switch (Category) {
-            case "experience":
-                if (experienceList.indexOf(Option) == -1) {
-                    Option = "senior";
+            case "title":
+                for (Job job : jobList) {
+                    if (containsKeyword(job.getJobTitle(), Option)) {
+                        filteredJobList.add(job);
+                    }
                 }
-                jobList = removeNullforexperience(jobList);
+
+            case "jobtype":
+                for (Job job : jobList) {
+                    if (containsKeyword(job.getJobTitle(), Option)) {
+                        filteredJobList.add(job);
+                    }
+                }
+
+            case "visa":
+                for (Job job : jobList) {
+                    if (job.getSponsorship() == Boolean.valueOf(Option)) {
+                        // if (job.getJobTitle().equals(Option)) {
+                        filteredJobList.add(job);
+                    }
+                }
+
+            case "rating":
+                jobList = removeNullforRating(jobList);
+
+                if (ratingList.indexOf(Option) == -1) {
+                    Option = "3";
+                }
+                for (Job job : jobList) {
+                    System.out.println("option " + Float.valueOf(Option));
+                    System.out.println("job rating " + job.getStarRating());
+                    System.out.println(job.getStarRating() > Float.valueOf(Option));
+                    if (job.getStarRating() > Float.valueOf(Option)) {
+                        filteredJobList.add(job);
+                    }
+                }
+
+            case "experience":
+                jobList = removeJobswithNullValue(jobList);
+
+                if (experienceList.indexOf(Option) == -1) {
+                    Option = "entry";
+                }
                 for (Job job : jobList) {
                     if (job.getExperience()
                             .equals(
@@ -226,11 +280,6 @@ public class FilterCommand implements Command {
                 }
 
             default:
-        }
-
-        int size = 6;
-        if (filteredJobList.size() < size) {
-            size = filteredJobList.size();
         }
 
         return filteredJobList;
@@ -292,7 +341,7 @@ public class FilterCommand implements Command {
      * @param jobList List, original joblist to be filtered on experience
      * @return jobList List, a new jobList without experience
      */
-    public List<Job> removeNullforexperience(List<Job> jobList) {
+    public List<Job> removeJobswithNullValue(List<Job> jobList) {
         List<Job> newJobList = new ArrayList<>();
         for (Job job : jobList) {
             if (job.getExperience() != null) {
@@ -300,5 +349,29 @@ public class FilterCommand implements Command {
             }
         }
         return newJobList;
+    }
+
+    public List<Job> removeNullforRating(List<Job> jobList) {
+        List<Job> newJobList = new ArrayList<>();
+        for (Job job : jobList) {
+            if (job.getStarRating() != null) {
+                newJobList.add(job);
+            }
+        }
+        return newJobList;
+    }
+
+    /**
+     * Helper function to check if a string contains a certain substring
+     *
+     * @param String title, input string
+     * @param String keyword, keyword we are looking for
+     * @return Boolean, true when the text contains keyword
+     */
+    public Boolean containsKeyword(String text, String keyword) {
+        if (text.indexOf(keyword) != -1) {
+            return true;
+        }
+        return false;
     }
 }
