@@ -14,6 +14,7 @@ public class HelpCommand implements Command {
 
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
+
         EmbedBuilder embedBuilder = EmbedUtilities.generateHelpEmbed();
         event.replyEmbeds(embedBuilder.build()).queue();
     }

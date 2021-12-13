@@ -1,7 +1,12 @@
 package edu.northeastern.cs5500.starterbot.listeners.commands;
 
 import edu.northeastern.cs5500.starterbot.controller.JobController;
+import edu.northeastern.cs5500.starterbot.model.Job;
 import edu.northeastern.cs5500.starterbot.utility.EmbedUtilities;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -29,21 +34,32 @@ public class SearchCommand implements Command {
      */
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
-        event.reply("Here are the jobs:").queue();
 
-        this.jobController.getJobRepository().getAll().stream()
-                .sorted((o1, o2) -> o2.getCreated().compareTo(o1.getCreated()))
-                .limit(RESULT_SIZE)
-                .forEach(
-                        job -> {
-                            EmbedBuilder embedBuilder =
-                                    EmbedUtilities.generateJobEmbed(job, jobController);
-                            event.getChannel().sendMessage(embedBuilder.build()).queue();
-                        });
+        List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
+
+        jobList = searchJobsInList(jobList);
+
+        event.reply("Here are the jobs:").queue();
+        Job job = null;
+        for (Job j : jobList) {
+            job = j;
+            EmbedBuilder eb = EmbedUtilities.generateJobEmbed(job, jobController);
+            event.getChannel().sendMessage(eb.build()).queue();
+        }
     }
 
     @Override
     public CommandData getCommandData() {
         return new CommandData(this.getName(), "Search for jobs.");
+    }
+
+    public List<Job> searchJobsInList(List<Job> jobList) {
+
+        Collections.sort(
+                jobList,
+                Comparator.comparing(
+                                Job::getCreated, Comparator.nullsFirst(Comparator.naturalOrder()))
+                        .reversed());
+        return jobList.subList(0, RESULT_SIZE);
     }
 }
