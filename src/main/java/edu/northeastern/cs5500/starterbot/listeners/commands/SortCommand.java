@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import lombok.Generated;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -39,6 +41,7 @@ public class SortCommand implements Command {
      * @param event discord command event
      */
     @Override
+    @Generated
     public void onSlashCommand(SlashCommandEvent event) {
 
         List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
@@ -58,6 +61,7 @@ public class SortCommand implements Command {
     }
 
     @Override
+    @Generated
     public CommandData getCommandData() {
         OptionData categoryOptions =
                 new OptionData(OptionType.STRING, "category", "What category do you want to sort?");
