@@ -35,12 +35,10 @@ public class FilterCommand implements Command {
                         "title",
                         "jobtype",
                         "company",
-                        "distance",
                         "time_posted",
                         "experience",
                         "rating",
-                        "annualpay",
-                        "visa");
+                        "annualpay");
 
         experienceList = Arrays.asList("intern", "entry", "mid", "senior");
         ratingList = Arrays.asList("3.0", "3.5", "4.0", "4.5");
@@ -117,19 +115,6 @@ public class FilterCommand implements Command {
             companyOptions.addChoice(choice, choice);
         }
 
-        OptionData distanceOptions =
-                new OptionData(
-                        OptionType.STRING,
-                        "distance",
-                        "What are the farthest jobs do you want to filter for?");
-        for (String choice :
-                Arrays.asList(
-                        "10 miles/locally",
-                        "50 miles/in the same metro",
-                        "1500 miles/on the same coast")) {
-            distanceOptions.addChoice(choice, choice);
-        }
-
         OptionData postTimeOptions =
                 new OptionData(
                         OptionType.STRING,
@@ -167,27 +152,16 @@ public class FilterCommand implements Command {
             annualPayOptions.addChoice(choice, choice);
         }
 
-        OptionData visaOptions =
-                new OptionData(
-                        OptionType.STRING,
-                        "visa",
-                        "Do you want to ignore jobs that does not sponsor work visa in the US?");
-        for (String choice : Arrays.asList("Yes", "No")) {
-            visaOptions.addChoice(choice, choice);
-        }
-
         return new CommandData(this.getName(), "Filter for jobs.")
                 .addOptions(
                         // categoryOptions.setRequired(true),
                         titleOptions,
                         typeOptions,
                         companyOptions,
-                        distanceOptions,
                         experience,
                         postTimeOptions,
                         ratingOptions,
-                        annualPayOptions,
-                        visaOptions);
+                        annualPayOptions);
     }
 
     /**
