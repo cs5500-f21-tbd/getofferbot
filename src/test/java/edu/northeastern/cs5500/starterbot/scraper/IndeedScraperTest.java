@@ -8,6 +8,15 @@ import org.junit.jupiter.api.Test;
 
 public class IndeedScraperTest {
     @Test
+    void testIndeedScraperNoInput() {
+        List<Job> jobs = new IndeedScraper().scrape("", "");
+        assertThat(jobs.size()).isEqualTo(15);
+        for (Job job : jobs) {
+            assertThat(job).isNotNull();
+        }
+    }
+
+    @Test
     void testIndeedScraperWOKeyword() {
         List<Job> jobs = new IndeedScraper().scrape("", "Seattle, WA");
         assertThat(jobs.size()).isEqualTo(15);
