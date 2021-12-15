@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import lombok.Generated;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -28,7 +29,7 @@ public class FilterCommand implements Command {
     private List<String> payList;
     private List<String> jobTypeList;
     private List<String> periodList;
-    private int numToRetuen;
+    private int numToReturn;
 
     public FilterCommand(JobController jobController) {
         this.jobController = jobController;
@@ -37,12 +38,10 @@ public class FilterCommand implements Command {
                         "title",
                         "jobtype",
                         "company",
-                        "distance",
                         "time_posted",
                         "experience",
                         "rating",
-                        "annualpay",
-                        "visa");
+                        "annualpay");
 
         experienceList = Arrays.asList("intern", "entry", "mid", "senior");
         ratingList = Arrays.asList("2", "3", "4", "5");
@@ -50,7 +49,7 @@ public class FilterCommand implements Command {
         jobTypeList = Arrays.asList("fulltime", "parttime");
         periodList = Arrays.asList("1 day", "3 days", "1 week", "1 month");
 
-        numToRetuen = 6;
+        numToReturn = 6;
     }
 
     @Override
@@ -66,6 +65,7 @@ public class FilterCommand implements Command {
      * @param event discord command event
      */
     @Override
+    @Generated
     public void onSlashCommand(SlashCommandEvent event) {
 
         List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
@@ -75,8 +75,8 @@ public class FilterCommand implements Command {
         List<Job> jobListFiltered = filterJobs(jobList, category, optionInput);
 
         int sizeToreturn = jobListFiltered.size();
-        if (sizeToreturn > numToRetuen) {
-            sizeToreturn = numToRetuen;
+        if (sizeToreturn > numToReturn) {
+            sizeToreturn = numToReturn;
         }
 
         jobListFiltered = jobListFiltered.subList(0, sizeToreturn);
@@ -98,6 +98,7 @@ public class FilterCommand implements Command {
     }
 
     @Override
+    @Generated
     public CommandData getCommandData() {
 
         OptionData titleOptions =
@@ -123,19 +124,6 @@ public class FilterCommand implements Command {
         for (String choice : getCompanyNameList()) {
 
             companyOptions.addChoice(choice, choice);
-        }
-
-        OptionData distanceOptions =
-                new OptionData(
-                        OptionType.STRING,
-                        "distance",
-                        "What are the farthest jobs do you want to filter for?");
-        for (String choice :
-                Arrays.asList(
-                        "10 miles/locally",
-                        "50 miles/in the same metro",
-                        "1500 miles/on the same coast")) {
-            distanceOptions.addChoice(choice, choice);
         }
 
         OptionData postTimeOptions =
@@ -187,18 +175,16 @@ public class FilterCommand implements Command {
                         titleOptions,
                         typeOptions,
                         companyOptions,
-                        distanceOptions,
                         experience,
                         postTimeOptions,
                         ratingOptions,
-                        annualPayOptions,
-                        visaOptions);
+                        annualPayOptions);
     }
 
     /**
-     * @param String Category, filter function to determine the filtering category and then filter
-     *     jobs for if the option input is valid
-     * @param String Option, user option input
+     * @param Category filter function to determine the filtering category and then filter jobs for
+     *     if the option input is valid
+     * @param Option user option input
      * @return List jobList, return a new jobList filtered from original jobList
      */
     private List<Job> filterJobs(List<Job> jobList, String Category, String Option) {
@@ -258,11 +244,12 @@ public class FilterCommand implements Command {
                 }
 
             case "experience":
-                jobList = removeJobswithNullValue(jobList);
 
+            
                 if (experienceList.indexOf(Option) == -1) {
                     Option = "entry";
                 }
+                jobList = removeNullForExperience(jobList);
                 for (Job job : jobList) {
                     if (job.getExperience()
                             .equals(
@@ -278,7 +265,7 @@ public class FilterCommand implements Command {
                 if (payList.indexOf(Option) == -1) {
                     Option = "50000";
                 }
-                jobList = removeNullforAnnualpay(jobList);
+                jobList = removeNullForAnnualPay(jobList);
                 for (Job job : jobList) {
                     if (job.getAnnualPay().floatValue() > Float.valueOf(Option)) {
                         filteredJobList.add(job);
@@ -311,7 +298,7 @@ public class FilterCommand implements Command {
     /**
      * Helper function to see which filter category our user is using
      *
-     * @param SlashCommandEvent event, JDA event passed in for matching
+     * @param event, JDA event passed in for matching
      * @return String option, option being used
      */
     public String getCategory(SlashCommandEvent event) {
@@ -326,12 +313,19 @@ public class FilterCommand implements Command {
     }
 
     /**
+<<<<<<< HEAD
      * Helper functions to return a new list of job with non_null attribute
      *
      * @param jobList List, original joblist to be filtered
      * @return jobList List, a new jobList containing jobs with valid attribute
+=======
+     * Helper function to remove if the job's annual pay attribute is null
+     *
+     * @param jobList List, jobList to be removed
+     * @return jobList List, jobList after the removal
+>>>>>>> main
      */
-    public List<Job> removeNullforAnnualpay(List<Job> jobList) {
+    public List<Job> removeNullForAnnualPay(List<Job> jobList) {
         List<Job> newJobList = new ArrayList<>();
         for (Job job : jobList) {
             if (job.getAnnualPay() != null) {
@@ -341,7 +335,13 @@ public class FilterCommand implements Command {
         return newJobList;
     }
 
-    public List<Job> removeJobswithNullValue(List<Job> jobList) {
+    /**
+     * Helper function to return a new list of job with experience attribute that is not null
+     *
+     * @param jobList List, original joblist to be filtered on experience
+     * @return jobList List, a new jobList without experience
+     */
+    public List<Job> removeNullForExperience(List<Job> jobList) {
         List<Job> newJobList = new ArrayList<>();
         for (Job job : jobList) {
             if (job.getExperience() != null) {

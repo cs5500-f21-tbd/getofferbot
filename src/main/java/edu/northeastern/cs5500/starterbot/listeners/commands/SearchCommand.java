@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import lombok.Generated;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -33,6 +34,7 @@ public class SearchCommand implements Command {
      * @param event discord command event.
      */
     @Override
+    @Generated
     public void onSlashCommand(SlashCommandEvent event) {
 
         List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
@@ -49,6 +51,7 @@ public class SearchCommand implements Command {
     }
 
     @Override
+    @Generated
     public CommandData getCommandData() {
         return new CommandData(this.getName(), "Search for jobs.");
     }

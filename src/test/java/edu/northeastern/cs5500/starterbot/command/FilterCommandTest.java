@@ -66,7 +66,7 @@ class FilterCommandTest {
     void testremoveNullforAnnualpay() {
         List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
         System.out.println("company before " + String.valueOf(jobList.size()));
-        List<Job> newjobList = filterCommand.removeNullforAnnualpay(jobList);
+        List<Job> newjobList = filterCommand.removeNullForAnnualPay(jobList);
         System.out.println("company" + String.valueOf(jobList.size()));
         assertThat(jobList.size() > newjobList.size());
     }
