@@ -200,7 +200,7 @@ public class FilterCommand implements Command {
                 }
 
             case "jobtype":
-                jobList = removeNullforType(jobList);
+                jobList = removeNullForType(jobList);
 
                 if (jobTypeList.indexOf(Option) == -1) {
                     Option = "parttime";
@@ -224,7 +224,7 @@ public class FilterCommand implements Command {
                 }
 
             case "time_posted":
-                jobList = removeNullforCreated(jobList);
+                jobList = removeNullForCreated(jobList);
                 for (Job job : jobList) {
                     if (job.getCreated().isAfter(parsingDate(Option))) {
                         filteredJobList.add(job);
@@ -232,7 +232,7 @@ public class FilterCommand implements Command {
                 }
 
             case "rating":
-                jobList = removeNullforRating(jobList);
+                jobList = removeNullForRating(jobList);
 
                 if (ratingList.indexOf(Option) == -1) {
                     Option = "3";
@@ -244,8 +244,6 @@ public class FilterCommand implements Command {
                 }
 
             case "experience":
-
-            
                 if (experienceList.indexOf(Option) == -1) {
                     Option = "entry";
                 }
@@ -313,17 +311,13 @@ public class FilterCommand implements Command {
     }
 
     /**
-<<<<<<< HEAD
-     * Helper functions to return a new list of job with non_null attribute
+     * <<<<<<< HEAD Helper functions to return a new list of job with non_null attribute
      *
      * @param jobList List, original joblist to be filtered
-     * @return jobList List, a new jobList containing jobs with valid attribute
-=======
-     * Helper function to remove if the job's annual pay attribute is null
-     *
+     * @return jobList List, a new jobList containing jobs with valid attribute ======= Helper
+     *     function to remove if the job's annual pay attribute is null
      * @param jobList List, jobList to be removed
-     * @return jobList List, jobList after the removal
->>>>>>> main
+     * @return jobList List, jobList after the removal >>>>>>> main
      */
     public List<Job> removeNullForAnnualPay(List<Job> jobList) {
         List<Job> newJobList = new ArrayList<>();
@@ -351,7 +345,7 @@ public class FilterCommand implements Command {
         return newJobList;
     }
 
-    public List<Job> removeNullforRating(List<Job> jobList) {
+    public List<Job> removeNullForRating(List<Job> jobList) {
         List<Job> newJobList = new ArrayList<>();
         for (Job job : jobList) {
             if (job.getStarRating() != null) {
@@ -361,7 +355,7 @@ public class FilterCommand implements Command {
         return newJobList;
     }
 
-    public List<Job> removeNullforType(List<Job> jobList) {
+    public List<Job> removeNullForType(List<Job> jobList) {
         List<Job> newJobList = new ArrayList<>();
         for (Job job : jobList) {
             if (job.getJobType() != null) {
@@ -371,7 +365,7 @@ public class FilterCommand implements Command {
         return newJobList;
     }
 
-    public List<Job> removeNullforCreated(List<Job> jobList) {
+    public List<Job> removeNullForCreated(List<Job> jobList) {
         List<Job> newJobList = new ArrayList<>();
         for (Job job : jobList) {
             if (job.getCreated() != null) {
