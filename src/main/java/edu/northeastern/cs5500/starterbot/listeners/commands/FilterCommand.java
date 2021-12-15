@@ -328,7 +328,7 @@ public class FilterCommand implements Command {
     /**
      * Helper functions to return a new list of job with non_null attribute
      *
-     * @param jobList List, original joblist to be filtered 
+     * @param jobList List, original joblist to be filtered
      * @return jobList List, a new jobList containing jobs with valid attribute
      */
     public List<Job> removeNullforAnnualpay(List<Job> jobList) {
