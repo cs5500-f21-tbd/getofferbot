@@ -3,11 +3,13 @@ package edu.northeastern.cs5500.starterbot.utility;
 import edu.northeastern.cs5500.starterbot.controller.JobController;
 import edu.northeastern.cs5500.starterbot.model.Job;
 import java.awt.Color;
+import lombok.Generated;
 import lombok.experimental.UtilityClass;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 /** EmbedUtilities class contains the methods that generate embed messages. */
 @UtilityClass
+@Generated
 public class EmbedUtilities {
 
     /**
