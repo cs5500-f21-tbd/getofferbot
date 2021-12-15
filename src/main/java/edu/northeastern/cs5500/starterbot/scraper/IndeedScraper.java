@@ -244,7 +244,7 @@ public class IndeedScraper implements Scraper {
             search_link.append("+software+development+engineer");
         }
 
-       if (location != null) {
+        if (location != null) {
             if (!location.equalsIgnoreCase("")) {
                 search_link.append("&l=");
                 search_link.append(location);
