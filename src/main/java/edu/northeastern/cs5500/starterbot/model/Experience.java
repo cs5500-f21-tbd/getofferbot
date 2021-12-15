@@ -13,9 +13,4 @@ public class Experience implements Model {
     private ObjectId id;
     @Nonnull private String label;
     @Nonnull private String displayName;
-
-    @Override
-    public String toString() {
-        return this.displayName;
-    }
 }

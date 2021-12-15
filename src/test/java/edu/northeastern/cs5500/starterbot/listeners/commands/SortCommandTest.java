@@ -1,5 +1,3 @@
-// TODO : continue sort command test
-
 package edu.northeastern.cs5500.starterbot.listeners.commands;
 
 import static com.google.common.truth.Truth.assertThat;
