@@ -1,4 +1,6 @@
-# getofferbot
+
+
+# GetOfferBot
 
 ## Introduction
 
@@ -19,6 +21,7 @@ GetOfferBot is a Discord bot that allows users to query for available job opport
 | pxie2016 | Zimeng Xie | [xie.zim@northeastern.edu](mailto:xie.zim@northeastern.edu) |
 
 ## Documents
+[Team Document Folder](https://drive.google.com/drive/folders/1qumKav0J6wYlSWN20D1wMoB0DpaXbNnA?usp=sharing)
 
 [Design Document](https://docs.google.com/document/d/1qZTnP_CzsbbyK67JpjvUq0xAGtNxPXyEOdnjc8I90ak/edit?usp=sharing)
 
@@ -28,6 +31,8 @@ GetOfferBot is a Discord bot that allows users to query for available job opport
 
 ### Setup Discord
 Follow the instructions [here](https://www.writebots.com/discord-bot-token/) to set up a Discord application, create a bot, add bot to your server, and obtain a bot token. Record the token somewhere (such as copying, *Ctrl/Cmd+C*), as you will need it in the next step.
+
+[Discord invite link](https://discord.gg/2qs8GDVZmH)
 
 ### Setup MongoDB
 Refer to this [link](https://docs.google.com/document/d/1csfXK2iwvSoEUhY86kXhekMM3bHfVUiO0Kd6eZ-s4Os/edit?usp=sharing) for the MongoDB setup instructions.
@@ -90,6 +95,10 @@ Example Command
 ```
 /help
 ```
+
+# Code Coverage Goals
+We are focusing on achieving 70% branch coverage.
+
 # Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
