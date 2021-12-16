@@ -295,7 +295,7 @@ public class FilterCommand implements Command {
     }
 
     /**
-     * Helper function to see which filter category our user is using
+     * Helper function to see which category our user is using
      *
      * @param event, JDA event passed in for matching
      * @return String option, option being used
