@@ -1,4 +1,5 @@
 
+
 # GetOfferBot
 
 ## Introduction
@@ -34,7 +35,7 @@ Follow the instructions [here](https://www.writebots.com/discord-bot-token/) to 
 [Discord invite link](https://discord.gg/2qs8GDVZmH)
 
 ### Setup MongoDB
-We are using MongoDB as the database of the Bot. Refer to this [link](https://docs.google.com/document/d/1csfXK2iwvSoEUhY86kXhekMM3bHfVUiO0Kd6eZ-s4Os/edit?usp=sharing) for the MongoDB setup instructions.
+Refer to this [link](https://docs.google.com/document/d/1csfXK2iwvSoEUhY86kXhekMM3bHfVUiO0Kd6eZ-s4Os/edit?usp=sharing) for the MongoDB setup instructions.
 
 ## Bot Installation
 
@@ -93,6 +94,7 @@ Example Command
 ### Get help with available commands
 ```
 /help
+```
 
 # Code Coverage Goals
 We are focusing on achieving 70% branch coverage.
