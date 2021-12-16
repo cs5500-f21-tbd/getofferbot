@@ -28,6 +28,12 @@ class FilterCommandTest {
     LocationController locationController;
     JobController jobController;
     FilterCommand filterCommand;
+    String text1;
+    String text2;
+
+    String keyword1;
+    String keyword2;
+    String keyword3;
 
     @BeforeEach
     void setUpReposAndControllers() {
@@ -38,6 +44,13 @@ class FilterCommandTest {
         jobTypeController = new JobTypeController(jobTypeRepository);
         experienceController = new ExperienceController(experienceRepository);
         locationController = new LocationController(locationRepository);
+
+        text1 = "Get Offer Bot";
+        text2 = "TeamTBD";
+
+        keyword1 = "bot";
+        keyword2 = "Get Offer";
+        keyword3 = "TBD";
 
         jobController =
                 new JobController(
@@ -57,16 +70,16 @@ class FilterCommandTest {
         ArrayList<String> companyList = filterCommand.getCompanyNameList();
         Logger logger = Logger.getLogger("FilterCommandTest");
         logger.info(String.valueOf(companyList.size()));
-        System.out.println("company" + String.valueOf(companyList.size()));
         assertThat(companyList.size()).isAtLeast(20);
     }
 
-    // @Test
-    // void testremoveNullforAnnualpay() {
-    //     List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
-    //     System.out.println("company before " + String.valueOf(jobList.size()));
-    //     List<Job> newjobList = filterCommand.removeNullForAnnualPay(jobList);
-    //     System.out.println("company" + String.valueOf(jobList.size()));
-    //     assertThat(jobList.size() > newjobList.size());
-    // }
+    @Test
+    void testContainsKeyword() {
+        assertThat(filterCommand.containsKeyword(text1, keyword2));
+        assertThat(filterCommand.containsKeyword(text1, keyword1));
+        assertThat(filterCommand.containsKeyword(text1, keyword2));
+        assertThat(filterCommand.containsKeyword(text2, keyword3));
+
+        assertThat(filterCommand.containsKeyword(text2, keyword1).equals(false));
+    }
 }

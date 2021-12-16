@@ -84,11 +84,7 @@ public class FilterCommand implements Command {
         if (sizeAfterFilter == 0) {
             event.reply("No result at this point, try another option or use /help").queue();
         } else {
-            event.reply(
-                            "Filtering on "
-                                    + category
-                                    + ", Here are the jobs by "
-                                    + optionInput)
+            event.reply("Filtering on " + category + ", Here are the jobs by " + optionInput)
                     .queue();
         }
         for (Job job : jobListFiltered) {
@@ -195,7 +191,6 @@ public class FilterCommand implements Command {
                 break;
 
             case "jobtype":
-
                 if (jobTypeList.indexOf(Option) == -1) {
                     Option = "parttime";
                 }
@@ -214,7 +209,6 @@ public class FilterCommand implements Command {
                 break;
 
             case "date_posted":
-
                 for (Job job : jobList) {
                     if (job.getCreated() != null) {
                         if (job.getCreated().isAfter(parsingDate(Option))) {
@@ -225,7 +219,6 @@ public class FilterCommand implements Command {
                 break;
 
             case "company":
-
                 for (Job job : jobList) {
                     if (containsKeyword(job.getCompany(), Option)) {
                         filteredJobList.add(job);
@@ -234,7 +227,6 @@ public class FilterCommand implements Command {
                 break;
 
             case "rating":
-
                 if (ratingList.indexOf(Option) == -1) {
                     Option = "3";
                 }
@@ -248,7 +240,6 @@ public class FilterCommand implements Command {
                 break;
 
             case "experience":
-
                 if (experienceList.indexOf(Option) == -1) {
                     Option = "entry";
                 }
@@ -268,7 +259,6 @@ public class FilterCommand implements Command {
                 break;
 
             case "annualpay":
-            
                 if (payList.indexOf(Option) == -1) {
                     Option = "50000";
                 }
