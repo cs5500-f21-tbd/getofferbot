@@ -30,7 +30,7 @@ public class FilterCommand implements Command {
     private List<String> jobTypeList;
     private List<String> periodList;
     private List<String> companyList;
-    private int numToReturn;
+    private int sizeToreturn = 8;
 
     public FilterCommand(JobController jobController) {
         this.jobController = jobController;
@@ -39,7 +39,7 @@ public class FilterCommand implements Command {
                         "title",
                         "jobtype",
                         "company",
-                        "time_posted",
+                        "date_posted",
                         "experience",
                         "rating",
                         "annualpay");
@@ -50,7 +50,6 @@ public class FilterCommand implements Command {
         jobTypeList = Arrays.asList("fulltime", "parttime");
         periodList = Arrays.asList("1 day", "3 days", "1 week", "1 month");
         companyList = getCompanyNameList();
-        numToReturn = 6;
     }
 
     @Override
@@ -75,20 +74,20 @@ public class FilterCommand implements Command {
 
         List<Job> jobListFiltered = filterJobs(jobList, category, optionInput);
 
-        int sizeToreturn = jobListFiltered.size();
-        if (sizeToreturn > numToReturn) {
-            sizeToreturn = numToReturn;
+        int sizeAfterFilter = jobListFiltered.size();
+        if (sizeAfterFilter > sizeToreturn) {
+            sizeAfterFilter = sizeToreturn;
         }
 
-        jobListFiltered = jobListFiltered.subList(0, sizeToreturn);
+        jobListFiltered = jobListFiltered.subList(0, sizeAfterFilter);
 
-        if (sizeToreturn == 0) {
-            event.reply("No result at this point, try another option or /help").queue();
+        if (sizeAfterFilter == 0) {
+            event.reply("No result at this point, try another option or use /help").queue();
         } else {
             event.reply(
                             "Filtering on "
                                     + category
-                                    + ", Here are the jobs filtered by "
+                                    + ", Here are the jobs by "
                                     + optionInput)
                     .queue();
         }
@@ -130,7 +129,7 @@ public class FilterCommand implements Command {
         OptionData postTimeOptions =
                 new OptionData(
                         OptionType.STRING,
-                        "time_posted",
+                        "date_posted",
                         "What are the earliest jobs posted do you'd like to filter for?");
         for (String choice : periodList) {
             postTimeOptions.addChoice(choice, choice);
@@ -177,7 +176,7 @@ public class FilterCommand implements Command {
 
     /**
      * Function that uses switch cases to carry out filtering operations accordingly
-     * 
+     *
      * @param Category indicates what the filter type
      * @param Option option entered for that filter
      * @return List jobList, return a new jobList filtered from original jobList
@@ -196,33 +195,37 @@ public class FilterCommand implements Command {
                 break;
 
             case "jobtype":
-                jobList = removeNullForType(jobList);
 
                 if (jobTypeList.indexOf(Option) == -1) {
                     Option = "parttime";
                 }
                 for (Job job : jobList) {
-                    if (job.getJobType()
-                            .equals(
-                                    jobController
-                                            .getJobTypeController()
-                                            .getJobTypeByLabel(Option)
-                                            .getId())) {
-                        filteredJobList.add(job);
+                    if (job.getJobType() != null) {
+                        if (job.getJobType()
+                                .equals(
+                                        jobController
+                                                .getJobTypeController()
+                                                .getJobTypeByLabel(Option)
+                                                .getId())) {
+                            filteredJobList.add(job);
+                        }
                     }
                 }
                 break;
 
-            case "time_posted":
-                jobList = removeNullForCreated(jobList);
+            case "date_posted":
+
                 for (Job job : jobList) {
-                    if (job.getCreated() != null & job.getCreated().isAfter(parsingDate(Option))) {
-                        filteredJobList.add(job);
+                    if (job.getCreated() != null) {
+                        if (job.getCreated().isAfter(parsingDate(Option))) {
+                            filteredJobList.add(job);
+                        }
                     }
                 }
                 break;
 
             case "company":
+
                 for (Job job : jobList) {
                     if (containsKeyword(job.getCompany(), Option)) {
                         filteredJobList.add(job);
@@ -231,43 +234,51 @@ public class FilterCommand implements Command {
                 break;
 
             case "rating":
-                jobList = removeNullForRating(jobList);
 
                 if (ratingList.indexOf(Option) == -1) {
                     Option = "3";
                 }
                 for (Job job : jobList) {
-                    if (job.getStarRating() > Float.valueOf(Option)) {
-                        filteredJobList.add(job);
+                    if (job.getStarRating() != null) {
+                        if (job.getStarRating() > Float.valueOf(Option)) {
+                            filteredJobList.add(job);
+                        }
                     }
                 }
                 break;
 
             case "experience":
+
                 if (experienceList.indexOf(Option) == -1) {
                     Option = "entry";
                 }
-                jobList = removeNullForExperience(jobList);
                 for (Job job : jobList) {
-                    if (job.getExperience()
-                            .equals(
-                                    jobController
-                                            .getExperienceController()
-                                            .getExperienceByLabel(Option)
-                                            .getId())) {
-                        filteredJobList.add(job);
+                    if (job.getExperience() != null) {
+
+                        if (job.getExperience()
+                                .equals(
+                                        jobController
+                                                .getExperienceController()
+                                                .getExperienceByLabel(Option)
+                                                .getId())) {
+                            filteredJobList.add(job);
+                        }
                     }
                 }
                 break;
 
             case "annualpay":
+            
                 if (payList.indexOf(Option) == -1) {
                     Option = "50000";
                 }
-                jobList = removeNullForAnnualPay(jobList);
+
                 for (Job job : jobList) {
-                    if (job.getAnnualPay().floatValue() > Float.valueOf(Option)) {
-                        filteredJobList.add(job);
+                    if (job.getAnnualPay() != null) {
+
+                        if (job.getAnnualPay().floatValue() > Float.valueOf(Option)) {
+                            filteredJobList.add(job);
+                        }
                     }
                 }
                 break;
@@ -311,66 +322,6 @@ public class FilterCommand implements Command {
     }
 
     /**
-     * @param jobList List, original joblist to be filtered
-     * @return jobList List, a new jobList containing jobs with valid attribute
-     */
-    public List<Job> removeNullForAnnualPay(List<Job> jobList) {
-        List<Job> newJobList = new ArrayList<>();
-        for (Job job : jobList) {
-            if (job.getAnnualPay() != null) {
-                newJobList.add(job);
-            }
-        }
-        return newJobList;
-    }
-
-    /**
-     * Helper functions to return a new list of job with the attribute that is not null
-     *
-     * @param jobList List, original joblist to be filtered on
-     * @return jobList List, a new jobList with all jobs that have null attribute removed
-     */
-    public List<Job> removeNullForExperience(List<Job> jobList) {
-        List<Job> newJobList = new ArrayList<>();
-        for (Job job : jobList) {
-            if (job.getExperience() != null) {
-                newJobList.add(job);
-            }
-        }
-        return newJobList;
-    }
-
-    public List<Job> removeNullForRating(List<Job> jobList) {
-        List<Job> newJobList = new ArrayList<>();
-        for (Job job : jobList) {
-            if (job.getStarRating() != null) {
-                newJobList.add(job);
-            }
-        }
-        return newJobList;
-    }
-
-    public List<Job> removeNullForType(List<Job> jobList) {
-        List<Job> newJobList = new ArrayList<>();
-        for (Job job : jobList) {
-            if (job.getJobType() != null) {
-                newJobList.add(job);
-            }
-        }
-        return newJobList;
-    }
-
-    public List<Job> removeNullForCreated(List<Job> jobList) {
-        List<Job> newJobList = new ArrayList<>();
-        for (Job job : jobList) {
-            if (job.getCreated() != null) {
-                newJobList.add(job);
-            }
-        }
-        return newJobList;
-    }
-
-    /**
      * Helper function to check if a string contains a certain substring
      *
      * @param String text, input string
@@ -385,8 +336,8 @@ public class FilterCommand implements Command {
     }
 
     /**
-     * Helper function that create and return a LocalDate object that subtract current date by 
-     * speified time 
+     * Helper function that create and return a LocalDate object that subtract current date by
+     * speified time
      *
      * @param String time, date back to...
      * @return LocalDate, parsed date.
