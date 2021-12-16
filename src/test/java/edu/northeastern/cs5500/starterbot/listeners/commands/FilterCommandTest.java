@@ -1,4 +1,4 @@
-package edu.northeastern.cs5500.starterbot.command;
+package edu.northeastern.cs5500.starterbot.listeners.commands;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -6,7 +6,6 @@ import edu.northeastern.cs5500.starterbot.controller.ExperienceController;
 import edu.northeastern.cs5500.starterbot.controller.JobController;
 import edu.northeastern.cs5500.starterbot.controller.JobTypeController;
 import edu.northeastern.cs5500.starterbot.controller.LocationController;
-import edu.northeastern.cs5500.starterbot.listeners.commands.FilterCommand;
 import edu.northeastern.cs5500.starterbot.model.Experience;
 import edu.northeastern.cs5500.starterbot.model.Job;
 import edu.northeastern.cs5500.starterbot.model.JobType;
