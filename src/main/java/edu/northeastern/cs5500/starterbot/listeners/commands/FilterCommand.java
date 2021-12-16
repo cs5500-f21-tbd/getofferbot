@@ -176,9 +176,10 @@ public class FilterCommand implements Command {
     }
 
     /**
-     * @param Category filter function to determine the filtering category and then filter jobs for
-     *     if the option input is valid
-     * @param Option user option input
+     * Function that uses switch cases to carry out filtering operations accordingly
+     * 
+     * @param Category indicates what the filter type
+     * @param Option option entered for that filter
      * @return List jobList, return a new jobList filtered from original jobList
      */
     private List<Job> filterJobs(List<Job> jobList, String Category, String Option) {
@@ -270,8 +271,6 @@ public class FilterCommand implements Command {
                     }
                 }
                 break;
-
-                // default:
         }
 
         return filteredJobList;
@@ -280,7 +279,7 @@ public class FilterCommand implements Command {
     /**
      * Helper function to update company list from jobController
      *
-     * @return companyList extracted from job with company attribute
+     * @return companyList extracted from jobs that have company attribute
      */
     public ArrayList<String> getCompanyNameList() {
         ArrayList<String> companyList = new ArrayList<>();
@@ -312,13 +311,8 @@ public class FilterCommand implements Command {
     }
 
     /**
-     * <<<<<<< HEAD Helper functions to return a new list of job with non_null attribute
-     *
      * @param jobList List, original joblist to be filtered
-     * @return jobList List, a new jobList containing jobs with valid attribute ======= Helper
-     *     function to remove if the job's annual pay attribute is null
-     * @param jobList List, jobList to be removed
-     * @return jobList List, jobList after the removal >>>>>>> main
+     * @return jobList List, a new jobList containing jobs with valid attribute
      */
     public List<Job> removeNullForAnnualPay(List<Job> jobList) {
         List<Job> newJobList = new ArrayList<>();
@@ -331,10 +325,10 @@ public class FilterCommand implements Command {
     }
 
     /**
-     * Helper function to return a new list of job with experience attribute that is not null
+     * Helper functions to return a new list of job with the attribute that is not null
      *
-     * @param jobList List, original joblist to be filtered on experience
-     * @return jobList List, a new jobList without experience
+     * @param jobList List, original joblist to be filtered on
+     * @return jobList List, a new jobList with all jobs that have null attribute removed
      */
     public List<Job> removeNullForExperience(List<Job> jobList) {
         List<Job> newJobList = new ArrayList<>();
@@ -379,7 +373,7 @@ public class FilterCommand implements Command {
     /**
      * Helper function to check if a string contains a certain substring
      *
-     * @param String title, input string
+     * @param String text, input string
      * @param String keyword, keyword we are looking for
      * @return Boolean, true when the text contains keyword
      */
@@ -391,22 +385,22 @@ public class FilterCommand implements Command {
     }
 
     /**
-     * Helper function to check if a string contains a certain substring
+     * Helper function that create and return a LocalDate object that subtract current date by 
+     * speified time 
      *
-     * @param String title, input string
-     * @param String keyword, keyword we are looking for
-     * @return Boolean, true when the text contains keyword
+     * @param String time, date back to...
+     * @return LocalDate, parsed date.
      */
-    public LocalDate parsingDate(String period) {
+    public LocalDate parsingDate(String time) {
+
         LocalDate date = LocalDate.now();
         LocalDate returnvalue = date;
-        // LocalDate returnvalue1 = LocalDate.of(2021, 12, 1);
 
-        if (period.equals("1 day")) {
+        if (time.equals("1 day")) {
             returnvalue = date.minusDays(1);
-        } else if (period.equals("1 week")) {
+        } else if (time.equals("1 week")) {
             returnvalue = date.minusWeeks(1);
-        } else if (period.equals("3 days")) {
+        } else if (time.equals("3 days")) {
             returnvalue = date.minusDays(3);
         } else {
             returnvalue = date.minusMonths(1);
