@@ -29,6 +29,7 @@ public class FilterCommand implements Command {
     private List<String> payList;
     private List<String> jobTypeList;
     private List<String> periodList;
+    private List<String> companyList;
     private int numToReturn;
 
     public FilterCommand(JobController jobController) {
@@ -48,7 +49,7 @@ public class FilterCommand implements Command {
         payList = Arrays.asList("50000", "80000", "110000", "130000");
         jobTypeList = Arrays.asList("fulltime", "parttime");
         periodList = Arrays.asList("1 day", "3 days", "1 week", "1 month");
-
+        companyList = getCompanyNameList();
         numToReturn = 6;
     }
 
@@ -121,7 +122,7 @@ public class FilterCommand implements Command {
                 new OptionData(
                         OptionType.STRING, "company", "What company do you want to filter for?");
 
-        for (String choice : getCompanyNameList()) {
+        for (String choice : companyList) {
 
             companyOptions.addChoice(choice, choice);
         }
@@ -163,15 +164,8 @@ public class FilterCommand implements Command {
             annualPayOptions.addChoice(choice, choice);
         }
 
-        OptionData visaOptions =
-                new OptionData(OptionType.STRING, "visa", "Do you require a job visa in the US?");
-        for (String choice : Arrays.asList("true", "false")) {
-            visaOptions.addChoice(choice, choice);
-        }
-
         return new CommandData(this.getName(), "Filter for jobs.")
                 .addOptions(
-                        // categoryOptions.setRequired(true),
                         titleOptions,
                         typeOptions,
                         companyOptions,
@@ -198,6 +192,7 @@ public class FilterCommand implements Command {
                         filteredJobList.add(job);
                     }
                 }
+                break;
 
             case "jobtype":
                 jobList = removeNullForType(jobList);
@@ -215,21 +210,24 @@ public class FilterCommand implements Command {
                         filteredJobList.add(job);
                     }
                 }
-
-            case "visa":
-                for (Job job : jobList) {
-                    if (job.getSponsorship() == Boolean.valueOf(Option)) {
-                        filteredJobList.add(job);
-                    }
-                }
+                break;
 
             case "time_posted":
                 jobList = removeNullForCreated(jobList);
                 for (Job job : jobList) {
-                    if (job.getCreated().isAfter(parsingDate(Option))) {
+                    if (job.getCreated() != null & job.getCreated().isAfter(parsingDate(Option))) {
                         filteredJobList.add(job);
                     }
                 }
+                break;
+
+            case "company":
+                for (Job job : jobList) {
+                    if (containsKeyword(job.getCompany(), Option)) {
+                        filteredJobList.add(job);
+                    }
+                }
+                break;
 
             case "rating":
                 jobList = removeNullForRating(jobList);
@@ -242,6 +240,7 @@ public class FilterCommand implements Command {
                         filteredJobList.add(job);
                     }
                 }
+                break;
 
             case "experience":
                 if (experienceList.indexOf(Option) == -1) {
@@ -258,6 +257,7 @@ public class FilterCommand implements Command {
                         filteredJobList.add(job);
                     }
                 }
+                break;
 
             case "annualpay":
                 if (payList.indexOf(Option) == -1) {
@@ -269,8 +269,9 @@ public class FilterCommand implements Command {
                         filteredJobList.add(job);
                     }
                 }
+                break;
 
-            default:
+                // default:
         }
 
         return filteredJobList;
