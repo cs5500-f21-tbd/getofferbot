@@ -41,7 +41,8 @@ We are using MongoDB as the database of the Bot. Refer to this [link](https://do
 1. Pull the git repository into the local machine.
 
 ```bash
-git clone https://github.com/cs5500-f21-tbd/getofferbot```
+git clone https://github.com/cs5500-f21-tbd/getofferbot
+```
 2. Set up environment variables
 ```
 flyctl secrets set FLY_API_TOKEN={Calculated by the permission calculator in Discord developer portal}
@@ -50,7 +51,8 @@ flyctl secrets set BOT_TOKEN={Bot token from Setup Discord step}
 ```
 3. Deploy with Fly
 ```bash
-flyctl deploy```
+flyctl deploy
+```
 4. Test in Discord with commands provided in the **User Manual** below.
 
 ## User Manual
