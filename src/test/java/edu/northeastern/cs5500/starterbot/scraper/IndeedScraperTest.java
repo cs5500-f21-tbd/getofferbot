@@ -28,6 +28,7 @@ public class IndeedScraperTest {
     @Test
     void testIndeedScraperWOKeyword() {
         List<Job> jobs = new IndeedScraper().scrape("", "Seattle, WA");
+        assertThat(jobs).isNotNull();
         assertThat(jobs.size()).isEqualTo(15);
         for (Job job : jobs) {
             assertThat(job).isNotNull();
@@ -37,6 +38,7 @@ public class IndeedScraperTest {
     @Test
     void testIndeedScraperWKeyword() {
         List<Job> jobs = new IndeedScraper().scrape("amazon", "Seattle, WA");
+        assertThat(jobs).isNotNull();
         assertThat(jobs.size()).isEqualTo(15);
         for (Job job : jobs) {
             assertThat(job).isNotNull();
