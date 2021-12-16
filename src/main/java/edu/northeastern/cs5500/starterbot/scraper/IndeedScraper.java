@@ -245,7 +245,7 @@ public class IndeedScraper implements Scraper {
         }
 
         // a location is required or Indeed.com will display a pop-up, breaking the scraper
-        if (location == null || StringUtils.isBlank(location)) {
+        if (location == null || location.equalsIgnoreCase("")) {
             location = "Seattle, WA";
         }
         search_link.append("&l=");
