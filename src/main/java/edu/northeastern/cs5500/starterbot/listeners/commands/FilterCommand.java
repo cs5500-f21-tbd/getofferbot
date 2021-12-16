@@ -177,7 +177,7 @@ public class FilterCommand implements Command {
      * @param Option option entered for that filter
      * @return List jobList, return a new jobList filtered from original jobList
      */
-    private List<Job> filterJobs(List<Job> jobList, String Category, String Option) {
+    public List<Job> filterJobs(List<Job> jobList, String Category, String Option) {
 
         List<Job> filteredJobList = new ArrayList<>();
 
@@ -300,7 +300,7 @@ public class FilterCommand implements Command {
      * @param event, JDA event passed in for matching
      * @return String option, option being used
      */
-    public String getCategory(SlashCommandEvent event) {
+    private String getCategory(SlashCommandEvent event) {
         String option = null;
         for (String command : commandList) {
             if (event.getOption(command) != null) {
