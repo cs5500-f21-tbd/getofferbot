@@ -244,12 +244,12 @@ public class IndeedScraper implements Scraper {
             search_link.append("+software+development+engineer");
         }
 
-        if (location != null) {
-            if (!location.equalsIgnoreCase("")) {
-                search_link.append("&l=");
-                search_link.append(location);
-            }
+        // a location is required or Indeed.com will display a pop-up, breaking the scraper
+        if (location == null || location.equalsIgnoreCase("")) {
+            location = "Seattle, WA";
         }
+        search_link.append("&l=");
+        search_link.append(location);
 
         try {
             return scrape(search_link.toString());
