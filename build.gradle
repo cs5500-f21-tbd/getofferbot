@@ -131,4 +131,15 @@ jacocoTestReport {
         csv.required = false
         html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
     }
+
+    // Excluding starter code
+    // Reference: https://stackoverflow.com/questions/29887805/filter-jacoco-coverage-reports-with-gradle
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: ['**/repository/**',
+                              '**/service/**'
+                              ])
+        }))
+    }
 }
