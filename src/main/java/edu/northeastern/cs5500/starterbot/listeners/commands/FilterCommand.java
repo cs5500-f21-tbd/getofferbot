@@ -30,7 +30,7 @@ public class FilterCommand implements Command {
     private List<String> jobTypeList;
     private List<String> periodList;
     private List<String> companyList;
-    private int sizeToreturn = 8;
+    private static final int SIZE_TO_RETURN = 8;
 
     public FilterCommand(JobController jobController) {
         this.jobController = jobController;
@@ -75,8 +75,8 @@ public class FilterCommand implements Command {
         List<Job> jobListFiltered = filterJobs(jobList, category, optionInput);
 
         int sizeAfterFilter = jobListFiltered.size();
-        if (sizeAfterFilter > sizeToreturn) {
-            sizeAfterFilter = sizeToreturn;
+        if (sizeAfterFilter > SIZE_TO_RETURN) {
+            sizeAfterFilter = SIZE_TO_RETURN;
         }
 
         jobListFiltered = jobListFiltered.subList(0, sizeAfterFilter);

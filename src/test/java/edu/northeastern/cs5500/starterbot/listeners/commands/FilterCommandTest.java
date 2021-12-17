@@ -11,6 +11,7 @@ import edu.northeastern.cs5500.starterbot.model.Job;
 import edu.northeastern.cs5500.starterbot.model.JobType;
 import edu.northeastern.cs5500.starterbot.model.Location;
 import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
+import edu.northeastern.cs5500.starterbot.utility.JobUtilities;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +34,6 @@ class FilterCommandTest {
     String keyword1;
     String keyword2;
     String keyword3;
-
-    Job jobAnnualPay;
-    Job jobStarRating;
-    Job jobType;
-    Job jobCreated;
-    Job jobExperience;
 
     List<Job> rawJobList;
     List<Job> filteredJobList;
@@ -67,48 +62,6 @@ class FilterCommandTest {
                         jobRepository, jobTypeController, experienceController, locationController);
 
         filterCommand = new FilterCommand(jobController);
-
-        Job jobAnnualPay1 =
-                new Job("University Grad Software Engineer (USA)", "Pinterest", "pinterest.com");
-        jobAnnualPay1.setAnnualPay(140000f);
-        jobAnnualPay1.setSponsorship(true);
-        jobAnnualPay1.setLocation(
-                jobController.getLocationController().getLocationByZipCode("98101").getId());
-
-        Job jobStarRating1 =
-                new Job("Backend Software Engineer-QikQok", "QikQok", "careers.qikqok.com");
-        jobStarRating1.setJobType(
-                jobController.getJobTypeController().getJobTypeByLabel("parttime").getId());
-        jobStarRating1.setStarRating(4.8f);
-
-        Job jobExperience1 =
-                new Job(
-                        "Database Engineer (Early Career)",
-                        "Apple",
-                        "https://jobs.apple.com/en-us/details/200303605/database-engineer-early-career?team=SFTWR");
-        jobExperience1.setExperience(
-                jobController.getExperienceController().getExperienceByLabel("entry").getId());
-
-        Job jobType2 = new Job("Backend Software Engineer (US)", "Sence", "sence.com");
-        jobType2.setJobType(
-                jobController.getJobTypeController().getJobTypeByLabel("fulltime").getId());
-
-        Job jobCreated1 =
-                new Job(
-                        "Software Engineer - Visualization Pipeline",
-                        "Salesforce",
-                        "salesforce.com");
-        jobCreated1.setCreated(LocalDate.of(2021, 12, 10));
-        jobCreated1.setAnnualPay(98900f);
-        jobCreated1.setJobType(
-                jobController.getJobTypeController().getJobTypeByLabel("fulltime").getId());
-
-        rawJobList = new ArrayList<>();
-        rawJobList.add(jobAnnualPay1);
-        rawJobList.add(jobStarRating1);
-        rawJobList.add(jobType2);
-        rawJobList.add(jobCreated1);
-        rawJobList.add(jobExperience1);
     }
 
     @Test
@@ -129,7 +82,6 @@ class FilterCommandTest {
         assertThat(filterCommand.containsKeyword(text1, keyword1));
         assertThat(filterCommand.containsKeyword(text1, keyword2));
         assertThat(filterCommand.containsKeyword(text2, keyword3));
-
         assertThat(filterCommand.containsKeyword(text2, keyword1).equals(false));
     }
 
@@ -147,20 +99,51 @@ class FilterCommandTest {
     }
 
     @Test
-    void testFilterJobs() {
-        filteredJobList = filterCommand.filterJobs(rawJobList, "annualpay", "110000");
-        assertThat(rawJobList.contains(jobAnnualPay));
-        filteredJobList = filterCommand.filterJobs(rawJobList, "rating", "4f");
-        assertThat(rawJobList.contains(jobStarRating));
-        filteredJobList = filterCommand.filterJobs(rawJobList, "jobtype", "parttime");
-        assertThat(rawJobList.contains(jobType));
-        filteredJobList = filterCommand.filterJobs(rawJobList, "experience", "entry");
-        assertThat(rawJobList.contains(jobStarRating));
-        filteredJobList = filterCommand.filterJobs(rawJobList, "date_posted", "1 month");
-        assertThat(rawJobList.contains(jobCreated));
-        filteredJobList = filterCommand.filterJobs(rawJobList, "title", "Software Engineer");
-        assertThat(rawJobList.contains(jobType));
-        filteredJobList = filterCommand.filterJobs(rawJobList, "company", "Apple");
-        assertThat(rawJobList.contains(jobExperience));
+    void testFilterByExperience() {
+        List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
+        jobList = filterCommand.filterJobs(jobList, "experience", "intern");
+        assertThat(jobList).contains(JobUtilities.generateJobExperience4(jobController));
+    }
+
+    @Test
+    void testFilterByPay() {
+        List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
+        jobList = filterCommand.filterJobs(jobList, "annualpay", "130000");
+        assertThat(jobList).contains(JobUtilities.generateJobAnnualPay1(jobController));
+        assertThat(jobList).contains(JobUtilities.generateJobAnnualPay2(jobController));
+        assertThat(jobList).contains(JobUtilities.generateJobAnnualPay2(jobController));
+    }
+
+    @Test
+    void testFilterByRating() {
+        List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
+        jobList = filterCommand.filterJobs(jobList, "rating", "4");
+        assertThat(jobList).contains(JobUtilities.generateJobStarRating1(jobController));
+        assertThat(jobList).contains(JobUtilities.generateJobStarRating2(jobController));
+    }
+
+    @Test
+    void testFilterByCompany() {
+        List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
+        jobList = filterCommand.filterJobs(jobList, "company", "Apple");
+        assertThat(jobList).contains(JobUtilities.generateJobExperience1(jobController));
+        assertThat(jobList).contains(JobUtilities.generateJobStarRating2(jobController));
+    }
+
+    @Test
+    void testFilterPayByCreated() {
+        List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
+        jobList = filterCommand.filterJobs(jobList, "date_posted", "1 month");
+        assertThat(jobList).contains(JobUtilities.generateJobCreated1(jobController));
+        assertThat(jobList).contains(JobUtilities.generateJobCreated2(jobController));
+        assertThat(jobList).contains(JobUtilities.generateJobCreated3(jobController));
+    }
+
+    @Test
+    void testFilterPayByJobtype() {
+        List<Job> jobList = new ArrayList<>(this.jobController.getJobRepository().getAll());
+        jobList = filterCommand.filterJobs(jobList, "jobtype", "parttime");
+        assertThat(jobList).contains(JobUtilities.generateJobType3(jobController));
+        assertThat(jobList).contains(JobUtilities.generateJobType4(jobController));
     }
 }
