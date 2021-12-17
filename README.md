@@ -67,9 +67,10 @@ Filter Conditions
 | Condition Name | Description | Required | Sample Values |
 | ----------- | ------------- | -------- | -------|
 | title | The title of a job posting. | No | Software Engineer |
-| type | The type of a job posting. | No | Full-time/Part-time |
+| jobtype | The type of a job posting. | No | fulltime/parttime |
+| experience | The experience level of a job posting. | No | entry/mid/senior |
 | company | The name of the company associated with a job posting. | No | Amazon |
-| timeposted | The time when a job posting is posted. Optional argument defaults to filtering jobs less than X days old. | No | 1 day |
+| dateposted | The time when a job posting is posted. Optional argument defaults to filtering jobs less than X days old. | No | 1 day |
 | rating | The rating of the company associated with a job posting. Optional argument defaults to filtering jobs with star ratings greater than X stars. | No | 4.0 |
 | annualpay | The annual salary of a job posting. Optional argument defaults to filtering jobs with annual salary greater than X US dollars. | No | 50000 |
 
