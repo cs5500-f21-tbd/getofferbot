@@ -69,11 +69,9 @@ Filter Conditions
 | title | The title of a job posting. | No | Software Engineer |
 | type | The type of a job posting. | No | Full-time/Part-time |
 | company | The name of the company associated with a job posting. | No | Amazon |
-| location | The location of a job posting. | No | Seattle |
 | timeposted | The time when a job posting is posted. Optional argument defaults to filtering jobs less than X days old. | No | 1 day |
 | rating | The rating of the company associated with a job posting. Optional argument defaults to filtering jobs with star ratings greater than X stars. | No | 4.0 |
 | annualpay | The annual salary of a job posting. Optional argument defaults to filtering jobs with annual salary greater than X US dollars. | No | 50000 |
-| visa | The visa sponsorship possibility of a job posting. | No | Yes |
 
 Example Command
 ```
