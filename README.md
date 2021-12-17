@@ -25,7 +25,7 @@ GetOfferBot is a Discord bot that allows users to query for available job opport
 
 [Design Document](https://docs.google.com/document/d/1qZTnP_CzsbbyK67JpjvUq0xAGtNxPXyEOdnjc8I90ak/edit?usp=sharing)
 
-[Presentation](https://docs.google.com/presentation/d/1aNOYvS-qOhKsUIbTvduqPkikfQUFfyYsrBlwRQK_6IY/edit?usp=sharing)
+[Final Presentation](https://www.youtube.com/watch?v=VIAjotHrMos)
 
 ## Developer Instructions
 
